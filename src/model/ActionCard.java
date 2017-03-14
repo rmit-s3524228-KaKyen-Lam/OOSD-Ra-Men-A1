@@ -1,3 +1,5 @@
-public class ActionCard extends Card{
+package model;
+
+public class ActionCard extends Card {
 
 }

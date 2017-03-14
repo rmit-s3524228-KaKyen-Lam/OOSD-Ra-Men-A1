@@ -1,15 +1,17 @@
+package model;
+
 public class PathCard extends Card{
     private boolean isValid;
-    private north boolean;
-    private west boolean;
-    private south boolean;
-    private east boolean;
-    private centre boolean;
+    private boolean north ;
+    private boolean west ;
+    private boolean south ;
+    private boolean east ;
+    private boolean centre ;
 
-    private static rotate(){
+    private void rotate(){
     }
 
-    private boolean static updateIsValid(){
+    private boolean updateIsValid(){
         return true;
     }
 }
