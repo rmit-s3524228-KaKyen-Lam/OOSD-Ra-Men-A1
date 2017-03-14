@@ -7,7 +7,7 @@ public class Card {
     private boolean discarded;
 
     public static void main(String[] args) {
-        System.out.println("teting");
+        System.out.println("testing");
     }
 
     public static void cardAction() {
