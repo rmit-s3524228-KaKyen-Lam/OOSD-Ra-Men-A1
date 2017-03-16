@@ -7,8 +7,6 @@ public class Card {
 
         public Card(String id) {
             this.id = id;
-    }
-
-    public void type(int i) {
+            System.out.print(id);
     }
 }
