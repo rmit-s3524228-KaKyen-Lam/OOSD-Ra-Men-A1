@@ -8,6 +8,10 @@ public class PathCard extends Card{
     private boolean east ;
     private boolean centre ;
 
+    public PathCard(String id) {
+        super(id);
+    }
+
     private void rotate(){
     }
 

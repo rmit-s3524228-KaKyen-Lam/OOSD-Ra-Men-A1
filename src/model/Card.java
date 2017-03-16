@@ -2,15 +2,13 @@ package model;
 
 public class Card {
     private String id;
-    private Board board;
     /*private Player player[];*/
     private boolean discarded;
 
-    public static void main(String[] args) {
-        System.out.println("testing");
+        public Card(String id) {
+            this.id = id;
     }
 
-    public static void cardAction() {
-
+    public void type(int i) {
     }
 }
