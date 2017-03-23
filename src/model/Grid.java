@@ -6,7 +6,7 @@ public class Grid {
     private Card card;
     private String id;
 
-    public Grid (int x, int y, Card card)
+    public Grid (Card card)
     {
         this.x = x;
         this.y = y;
