@@ -1,0 +1,11 @@
+    public final static int T_SHAPE = 1;                10
+    public final static int T_SHAPE_DEAD = 2;           2
+    public final static int LINE_SHAPE = 3;             7
+    public final static int LINE_SHAPE_DEAD = 4;        2
+    public final static int CROSS_SHAPE = 5;            6
+    public final static int CROSS_SHAPE_DEAD = 6;       1
+    public final static int L_SHAPE = 7;                9
+    public final static int L_SHAPE_DEAD = 8;           2
+    public final static int DEAD = 9;                   2
+    public final static int EMPTY = 10;
+

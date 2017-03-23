@@ -1,12 +1,19 @@
 package model;
 
-public class Card {
+public class Card extends Drawable{
     private String id;
-    /*private Player player[];*/
+    private Board board;
     private boolean discarded;
+    /*private Player player[];*/
 
-        public Card(String id) {
-            this.id = id;
-            System.out.print(id);
+    public Card(String imageResource){
+        super(imageResource);
+    }
+
+    public static void main(String[] args) {
+    }
+
+    public static void cardAction() {
+
     }
 }
