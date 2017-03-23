@@ -22,6 +22,11 @@ public class GameController implements Initializable {
 
     private GridDraw[][] gd;
     private Grid[][] grid2d;
+    private Game game;
+
+    public GameController(Game game) {
+        this.game = game;
+    }
 
     @FXML
     protected void gridGameBoard_click(MouseEvent event) {
