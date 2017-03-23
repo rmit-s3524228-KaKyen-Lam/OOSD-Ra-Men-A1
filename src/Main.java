@@ -12,7 +12,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("resources/gameLayout.fxml"));
-        primaryStage.setTitle("Hello World");
+        primaryStage.setTitle("RA-MEN Game");
         primaryStage.setScene(new Scene(root, WIDTH, HEIGHT));
         primaryStage.show();
     }

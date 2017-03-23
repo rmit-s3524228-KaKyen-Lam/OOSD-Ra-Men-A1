@@ -13,6 +13,10 @@ public class Grid {
         this.card = card;
     }
 
+    public Card getCard(){
+        return card;
+    }
+
 
     public void placeCardonGrid(Card card) {
 

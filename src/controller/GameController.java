@@ -2,7 +2,6 @@ package controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import model.Board;
@@ -12,7 +11,6 @@ import model.PathCard;
 import view.GridDraw;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class GameController implements Initializable {
@@ -28,8 +26,6 @@ public class GameController implements Initializable {
     @FXML
     protected void gridGameBoard_click(MouseEvent event) {
         System.out.println("Game board clicked at location: "); // + rowIndex + "," + colIndex);
-        iv = new ImageView("resources/Cross.png");
-        gridGameBoard.add(iv, 0, 0);
     }
 
     @FXML
