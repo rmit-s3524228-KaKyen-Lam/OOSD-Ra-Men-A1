@@ -9,7 +9,7 @@ public class Game {
     private final int DECK_SIZE = 60;
     private final int NUM_OF_PLAYER = 2;
 
-    private Board board;
+    private Board board = new Board();
     private Deck deck = new Deck();
 //    private Player[] players;
 
@@ -19,10 +19,13 @@ public class Game {
 
     public void resetBoard() {
         board.initBoard();
-//        deck.initalizeDeck();
+        deck = new Deck();
     }
 
     public void gameStart(GameController gc) {
+        resetBoard();
+        gc.redrawGrid(board.getGrid());
+
         int turnNumber = 0;
         while (true) {
             turnNumber++;

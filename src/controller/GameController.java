@@ -18,7 +18,6 @@ public class GameController implements Initializable {
     private GridPane gridPlayerDeck;
 
     private GridDraw[][] gd;
-    Grid[][] grid2d;
     private Game game;
 
     public GameController() {
@@ -39,23 +38,20 @@ public class GameController implements Initializable {
         gd = new GridDraw[model.Board.GRID_MAX_WIDTH][model.Board.GRID_MAX_HEIGHT];
         game = new Game();
 
-        game.resetBoard();
-        redrawBoard();
 
         game.gameStart(this);
 
     }
 
-    public void redrawBoard() {
+    public void redrawGrid(Grid[][] grid2d) {
         for (int i = 0; i < model.Board.GRID_MAX_WIDTH; i++) {
             for (int j = 0; j < model.Board.GRID_MAX_HEIGHT; j++) {
-                redrawGrid(i, j);
+                redrawGrid(i, j, grid2d);
             }
-
         }
     }
 
-    public void redrawGrid(int x, int y) {
+    public void redrawGrid(int x, int y, Grid[][] grid2d) {
         if (grid2d[x][y].getCard() == null) {
             //TODO draw brown rectangle
         } else if (grid2d[x][y].getCard() instanceof PathCard) {
@@ -64,6 +60,10 @@ public class GameController implements Initializable {
             //TODO do switch case to find if it's hidden, or a revealed gold/coal card
         }
         //grid2d[x][y].getCard().getImageSource();
+    }
+
+    public void redrawDeck(Card[] currentPlayerHand){
+
     }
 
     // ACCESSOR
@@ -78,9 +78,5 @@ public class GameController implements Initializable {
 
     public GridDraw[][] getGd() {
         return gd;
-    }
-
-    public Grid[][] getGrid2d() {
-        return grid2d;
     }
 }
