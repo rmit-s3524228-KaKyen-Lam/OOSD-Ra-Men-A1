@@ -31,46 +31,27 @@ public class Board {
     private Card startCard;
     private Grid gridElem;
 
-    public Grid[][] getGrid() {
-        return grid;
-    }
 
     public void initBoard() {
 
         for (int i = 0; i < GRID_MAX_HEIGHT; i++) {
             for (int j = 0; j < GRID_MAX_WIDTH; j++) {
-
-                boolean coal_one_pos_x = j == START_GOAL_X;
-                boolean coal_one_pos_y = i == COAL_ONE_Y;
-                boolean coal_two_pos_x = j == START_GOAL_X;
-                boolean coal_two_pos_y = i == COAL_TWO_Y;
-                boolean gold_pos_x = j == START_GOAL_X;
-                boolean gold_pos_y = i == GOLD_Y;
-                boolean start_pos_x = j == START_X;
-                boolean start_pos_y = i == START_Y;
-
-                if ((coal_one_pos_y && coal_one_pos_x) || (coal_two_pos_y && coal_two_pos_x)) {
-                    coalCard = new GoalCard("coal");
-                } else if (gold_pos_y && gold_pos_x) {
-                    goldCard = new GoalCard("gold");
-                } else if (start_pos_y && start_pos_x) {
-                    startCard = new PathCard("s");
+                if ((i == COAL_ONE_Y || i == COAL_TWO_Y) && j == START_GOAL_X) {
+                    grid[j][i] = new Grid(j, i, new GoalCard("resources/Coal.png"));
+                } else if (i == GOLD_Y && j == START_GOAL_X) {
+                    grid[j][i] = new Grid(j, i, new GoalCard("resources/Gold.png"));
+                } else if (i == START_Y && j == START_X) {
+                    grid[j][i] = new Grid(j, i, new PathCard(PathCard.CROSS_SHAPE, "resources/Shape_Plus.png"));
                 } else {
-                    System.out.printf("[]");
+                    grid[j][i] = new Grid(j, i, new PathCard(PathCard.EMPTY, "resources/Unexplored.png"));
                 }
-                System.out.printf("\t");
             }
             System.out.println();
         }
-
     }
 
-    public void placeCard(Card card, int x, int y) {
-
-    }
-
-    public void removeCard(int x, int y) {
-
+    public Grid[][] getGrid() {
+        return grid;
     }
 
     public void goldIsFound() {
@@ -81,6 +62,4 @@ public class Board {
         Board bd = new Board();
         bd.initBoard();
     }
-
-
 }
