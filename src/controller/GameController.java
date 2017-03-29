@@ -4,10 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import model.Board;
-import model.GoalCard;
-import model.Grid;
-import model.PathCard;
+import model.*;
 import view.GridDraw;
 
 import java.net.URL;
@@ -21,11 +18,10 @@ public class GameController implements Initializable {
     private GridPane gridPlayerDeck;
 
     private GridDraw[][] gd;
-    private Grid[][] grid2d;
+    Grid[][] grid2d;
     private Game game;
 
-    public GameController(Game game) {
-        this.game = game;
+    public GameController() {
     }
 
     @FXML
@@ -40,9 +36,14 @@ public class GameController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Board board = new Board();
-        grid2d = board.getGrid();
         gd = new GridDraw[model.Board.GRID_MAX_WIDTH][model.Board.GRID_MAX_HEIGHT];
+        game = new Game();
+
+        game.resetBoard();
+        redrawBoard();
+
+        game.gameStart(this);
+
     }
 
     public void redrawBoard() {
@@ -56,11 +57,30 @@ public class GameController implements Initializable {
 
     public void redrawGrid(int x, int y) {
         if (grid2d[x][y].getCard() == null) {
-            //draw brown rectangle
+            //TODO draw brown rectangle
         } else if (grid2d[x][y].getCard() instanceof PathCard) {
-            //do switch case to find right type of patch card and right orientation
+            //TODO do switch case to find right type of patch card and right orientation
         } else if (grid2d[x][y].getCard() instanceof GoalCard) {
-            //do switch case to find if it's hidden, or a revealed gold/coal card
+            //TODO do switch case to find if it's hidden, or a revealed gold/coal card
         }
+        //grid2d[x][y].getCard().getImageSource();
+    }
+
+    // ACCESSOR
+
+    public GridPane getGridGameBoard() {
+        return gridGameBoard;
+    }
+
+    public GridPane getGridPlayerDeck() {
+        return gridPlayerDeck;
+    }
+
+    public GridDraw[][] getGd() {
+        return gd;
+    }
+
+    public Grid[][] getGrid2d() {
+        return grid2d;
     }
 }

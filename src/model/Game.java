@@ -1,16 +1,47 @@
 package model;
 
+import controller.GameController;
+
 /**
  * Created by HP on 23/03/2017.
  */
 public class Game {
     private final int DECK_SIZE = 60;
+    private final int NUM_OF_PLAYER = 2;
 
     private Board board;
     private Deck deck = new Deck();
+//    private Player[] players;
 
-    public Game(){
-        board = new Board();
+    public Game() {
+        resetBoard();
+    }
+
+    public void resetBoard() {
+        board.initBoard();
+//        deck.initalizeDeck();
+    }
+
+    public void gameStart(GameController gc) {
+        int turnNumber = 0;
+        while (true) {
+            turnNumber++;
+            playerTurn();
+//            if (board.goldIsFound() == true) {
+//                int playerWon = turnNumber % NUM_OF_PLAYER;
+//                if (players[playerWon].getRole().equals("miner")){
+//                    //share gold
+//                } else {
+//                    //saboteur win
+//                }
+//            }
+            return;
+        }
+    }
+
+    private void playerTurn() {
+        // player place card on board or discard card
+        // player draw a card
 
     }
 
@@ -18,7 +49,7 @@ public class Game {
         return board;
     }
 
-    public Card[] getDeck() {
+    public Deck getDeck() {
         return deck;
     }
 }
