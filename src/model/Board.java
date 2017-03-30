@@ -1,9 +1,5 @@
 package model;
 
-import java.util.*;
-
-import static model.GoalCard.*;
-
 /*http://stackoverflow.com/questions/9369368/2d-arraylist-in-java
  * */
 
@@ -36,7 +32,7 @@ public class Board {
     }
 
     public void initBoard() {
-
+/*
         for (int i = 0; i < GRID_MAX_HEIGHT; i++) {
             for (int j = 0; j < GRID_MAX_WIDTH; j++) {
 
@@ -62,7 +58,7 @@ public class Board {
             }
             System.out.println();
         }
-
+*/
     }
 
     public void placeCard(Card card, int x, int y) {

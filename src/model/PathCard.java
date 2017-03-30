@@ -19,14 +19,14 @@ public class PathCard extends Card {
     public final static int EMPTY = 10;
 
     public static void main(String args[]){
-        PathCard pCard = new PathCard(1, "resources/Coal.png");
+        PathCard pCard = new PathCard(1, "resources/Coal.png", "dad");
         pCard.printCurrentDirections();
         pCard.rotate("right");
         pCard.printCurrentDirections();
     }
 
-    public PathCard (int configNo, String imgResource){
-        super(imgResource);
+    public PathCard (int configNo, String imgResource, String id){
+        super(imgResource, id);
         switch (configNo){
             case T_SHAPE:
                 south = true;

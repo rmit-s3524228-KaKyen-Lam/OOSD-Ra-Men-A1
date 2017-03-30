@@ -6,8 +6,12 @@ public class Card extends Drawable{
     private boolean discarded;
     /*private Player player[];*/
 
-    public Card(String imageResource){
+    public Card(String imageResource, String id){
         super(imageResource);
+        this.id = id;
+    }
+    public Card(){
+
     }
 
     public static void main(String[] args) {
@@ -16,4 +20,9 @@ public class Card extends Drawable{
     public static void cardAction() {
 
     }
+    public String getId() {
+        return id;
+    }
+
 }
+
