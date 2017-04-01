@@ -3,7 +3,7 @@ package view;
 import javafx.scene.image.ImageView;
 
 /**
- * Created by HP on 22/03/2017.
+ * @author David Limantoro s3503728
  */
 public class GridDraw extends ImageView {
     private int xAxis;

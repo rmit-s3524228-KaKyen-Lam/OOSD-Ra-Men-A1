@@ -10,15 +10,15 @@ import view.GridDraw;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * @author David Limantoro s3503728
+ */
 public class GameController implements Initializable {
 
     @FXML
     private GridPane gridGameBoard;
     @FXML
     private GridPane gridPlayerDeck;
-
-    public GameController() {
-    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -64,12 +64,12 @@ public class GameController implements Initializable {
     }
 
     public void redrawDeck(Card[] currentPlayerHand) {
-//        for (int i = 0; i < currentPlayerHand.length; i++) {
-//            ImageView iv = new ImageView(card.getImage());
-//            gridPlayerDeck.add(iv, i, 0);
-//            iv.setOnMouseClicked(mouseEvent -> {
-//                System.out.printf("You clicked card number %d in player deck", i);
-//            });
-//        }
+        for (int i = 0; i < currentPlayerHand.length; i++) {
+            ImageView iv = new ImageView(card.getImage());
+            gridPlayerDeck.add(iv, i, 0);
+            iv.setOnMouseClicked(mouseEvent -> {
+                System.out.printf("You clicked card number %d in player deck", i);
+            });
+        }
     }
 }

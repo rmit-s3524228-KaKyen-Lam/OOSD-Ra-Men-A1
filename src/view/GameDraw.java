@@ -1,13 +1,18 @@
+package view;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class Main extends Application {
+/**
+ * @author David Limantoro s3503728
+ */
+public class GameDraw extends Application {
 
     public final static int WIDTH = 900;
-    public final static int HEIGHT = 886;
+    public final static int HEIGHT = 900;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
