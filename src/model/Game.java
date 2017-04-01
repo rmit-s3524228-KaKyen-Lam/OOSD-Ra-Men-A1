@@ -25,11 +25,11 @@ public class Game {
     public void gameStart(GameController gc) {
         resetBoard();
         gc.redrawGrid(board.getGrid());
-
-        int turnNumber = 0;
-        while (true) {
-            turnNumber++;
-            playerTurn();
+        gc.redrawGridXY(0,0,new Grid(0,0, new GoalCard("resources/Gold.png")));
+//        int turnNumber = 0;
+//        while (true) {
+//            turnNumber++;
+//            playerTurn();
 //            if (board.goldIsFound() == true) {
 //                int playerWon = turnNumber % NUM_OF_PLAYER;
 //                if (players[playerWon].getRole().equals("miner")){
@@ -38,8 +38,8 @@ public class Game {
 //                    //saboteur win
 //                }
 //            }
-            return;
-        }
+//            return;
+//        }
     }
 
     private void playerTurn() {

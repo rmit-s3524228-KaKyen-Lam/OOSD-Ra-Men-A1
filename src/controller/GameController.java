@@ -2,7 +2,7 @@ package controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import model.*;
 import view.GridDraw;
@@ -17,66 +17,59 @@ public class GameController implements Initializable {
     @FXML
     private GridPane gridPlayerDeck;
 
-    private GridDraw[][] gd;
-    private Game game;
-
     public GameController() {
-    }
-
-    @FXML
-    protected void gridGameBoard_click(MouseEvent event) {
-        System.out.println("Game board clicked at location: "); // + rowIndex + "," + colIndex);
-    }
-
-    @FXML
-    protected void gridPlayerDeck_click(MouseEvent event) {
-        System.out.println("Player deck clicked at location: "); // + rowIndex + "," + colIndex);
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        gd = new GridDraw[model.Board.GRID_MAX_WIDTH][model.Board.GRID_MAX_HEIGHT];
-        game = new Game();
 
-
+        Game game = new Game();
         game.gameStart(this);
-
     }
 
     public void redrawGrid(Grid[][] grid2d) {
         for (int i = 0; i < model.Board.GRID_MAX_WIDTH; i++) {
             for (int j = 0; j < model.Board.GRID_MAX_HEIGHT; j++) {
-                redrawGrid(i, j, grid2d);
+                redrawGridXY(i, j, grid2d[i][j]);
             }
         }
     }
 
-    public void redrawGrid(int x, int y, Grid[][] grid2d) {
-        if (grid2d[x][y].getCard() == null) {
+    public void redrawGridXY(int x, int y, Grid grid) {
+
+        GridDraw gd = null;
+        Card currentGridCard = grid.getCard();
+        if (currentGridCard == null) {
             //TODO draw brown rectangle
-        } else if (grid2d[x][y].getCard() instanceof PathCard) {
+            gd = new GridDraw("resources/Unexplored.png", x, y, "game");
+        } else if (currentGridCard instanceof PathCard) {
             //TODO do switch case to find right type of patch card and right orientation
-        } else if (grid2d[x][y].getCard() instanceof GoalCard) {
+            gd = new GridDraw("resources/Unexplored.png", x, y, "game");
+        } else if (currentGridCard instanceof GoalCard) {
             //TODO do switch case to find if it's hidden, or a revealed gold/coal card
+            if (((GoalCard) currentGridCard).isHidden()) {
+                gd = new GridDraw("resources/Goal.png", x, y, "game");
+            } else if (((GoalCard) currentGridCard).isGold()) {
+                gd = new GridDraw("resources/Gold.png", x, y, "game");
+            } else {
+                gd = new GridDraw("resources/Coal.png", x, y, "game");
+            }
         }
-        //grid2d[x][y].getCard().getImageSource();
+        gridGameBoard.add(gd, x, y);
+        if (gd != null) {
+            gd.setOnMouseClicked(mouseEvent -> {
+                System.out.printf("You clicked game board at %d,%d \n", x + 1, y + 1);
+            });
+        }
     }
 
-    public void redrawDeck(Card[] currentPlayerHand){
-
-    }
-
-    // ACCESSOR
-
-    public GridPane getGridGameBoard() {
-        return gridGameBoard;
-    }
-
-    public GridPane getGridPlayerDeck() {
-        return gridPlayerDeck;
-    }
-
-    public GridDraw[][] getGd() {
-        return gd;
+    public void redrawDeck(Card[] currentPlayerHand) {
+//        for (int i = 0; i < currentPlayerHand.length; i++) {
+//            ImageView iv = new ImageView(card.getImage());
+//            gridPlayerDeck.add(iv, i, 0);
+//            iv.setOnMouseClicked(mouseEvent -> {
+//                System.out.printf("You clicked card number %d in player deck", i);
+//            });
+//        }
     }
 }
