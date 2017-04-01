@@ -20,10 +20,12 @@ public class GameController implements Initializable {
     @FXML
     private GridPane gridPlayerDeck;
 
+    private Game game;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        Game game = new Game();
+        game = new Game();
         game.gameStart(this);
     }
 
@@ -37,29 +39,26 @@ public class GameController implements Initializable {
 
     public void redrawGridXY(int x, int y, Grid grid) {
 
-        GridDraw gd = null;
+        // This code could be better when Drawable superclass is fully working
+        ImageView gd = null;
         Card currentGridCard = grid.getCard();
         if (currentGridCard == null) {
-            //TODO draw brown rectangle
-            gd = new GridDraw("resources/Unexplored.png", x, y, "game");
+            gd = new ImageView("resources/Unexplored.png");
         } else if (currentGridCard instanceof PathCard) {
             //TODO do switch case to find right type of patch card and right orientation
-            gd = new GridDraw("resources/Unexplored.png", x, y, "game");
+            gd = new ImageView("resources/Unexplored.png"); //change this line
         } else if (currentGridCard instanceof GoalCard) {
-            //TODO do switch case to find if it's hidden, or a revealed gold/coal card
             if (((GoalCard) currentGridCard).isHidden()) {
-                gd = new GridDraw("resources/Goal.png", x, y, "game");
+                gd = new ImageView("resources/Goal.png");
             } else if (((GoalCard) currentGridCard).isGold()) {
-                gd = new GridDraw("resources/Gold.png", x, y, "game");
+                gd = new ImageView("resources/Gold.png");
             } else {
-                gd = new GridDraw("resources/Coal.png", x, y, "game");
+                gd = new ImageView("resources/Coal.png");
             }
         }
         gridGameBoard.add(gd, x, y);
         if (gd != null) {
-            gd.setOnMouseClicked(mouseEvent -> {
-                System.out.printf("You clicked game board at %d,%d \n", x + 1, y + 1);
-            });
+            gd.setOnMouseClicked(new gameBoardListener(x, y, game));
         }
     }
 
@@ -67,9 +66,7 @@ public class GameController implements Initializable {
         for (int i = 0; i < currentPlayerHand.length; i++) {
             ImageView iv = new ImageView(card.getImage());
             gridPlayerDeck.add(iv, i, 0);
-            iv.setOnMouseClicked(mouseEvent -> {
-                System.out.printf("You clicked card number %d in player deck", i);
-            });
+            iv.setOnMouseClicked(new playerHandListener(i, game));
         }
     }
 }

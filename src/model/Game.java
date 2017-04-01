@@ -111,17 +111,18 @@ public class Game {
     }
 
     /**
-     * Method to place a path card on the board (precondition, card must be a path card)
+     * Method to place a path card on the board
      *
-     * @param cardToPlace card to be placed in the board at location x,y
+     * precondition, selectedCard must be a path card
+     *
      * @param x           column number of the board
      * @param y           row number of the board
      * @return true if card is placed on the board successfully, otherwise false
      */
-    public boolean placeCard(Card cardToPlace, int x, int y) {
+    public boolean placeCard(int x, int y) {
         if (selectedCard != null) {
-            if (cardCheck(cardToPlace, x, y)) {
-                board.getGrid()[x][y].setCard(cardToPlace);
+            if (cardCheck(selectedCard, x, y)) {
+                board.getGrid()[x][y].setCard(selectedCard);
                 //TODO check if touches goalCard, if yes, flip it
                 //TODO check if gold card is found
                 return true;
@@ -144,6 +145,13 @@ public class Game {
     private boolean cardCheck(Card cardToPlace, int x, int y) {
         //TODO do the checking if the card is allowed to be placed here or not, for now always set to true
         return true;
+    }
+
+    /**
+     * Handle action cards
+     */
+    public void handleActionCard(Object targetObject){
+        //TODO handle action card
     }
 
     /**
@@ -175,5 +183,13 @@ public class Game {
 
     public void setSelectedCard(Card selectedCard) {
         this.selectedCard = selectedCard;
+    }
+
+    public int getGameTurnNumber() {
+        return gameTurnNumber;
+    }
+
+    public int getPlayerTurnNumber() {
+        return playerTurnNumber;
     }
 }
