@@ -47,8 +47,11 @@ public class Player {
         return hand;
     }
 
-    public void setHand(ArrayList<Card> hand) {
-        this.hand = hand;
+    public void setHand(Card[] hand) {
+        this.hand = new ArrayList<Card>();
+        for (Card newCard: hand) {
+            this.hand.add(newCard);
+        }
     }
 
     public int getSelectedCard(Card card) {
