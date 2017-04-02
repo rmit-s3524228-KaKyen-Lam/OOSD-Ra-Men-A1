@@ -50,11 +50,11 @@ public class Board {
                 boolean start_pos_y = i == START_Y;
 
                 if ((coal_one_pos_y && coal_one_pos_x) || (coal_two_pos_y && coal_two_pos_x)) {
-                    coalCard = new GoalCard("coal");
+                    coalCard = new GoalCard("resources/Goal.png", "resources/Coal.png", "200");
                 } else if (gold_pos_y && gold_pos_x) {
-                    goldCard = new GoalCard("gold");
+                    goldCard = new GoalCard("resources/Goal.png", "resources/Gold.png", "201");
                 } else if (start_pos_y && start_pos_x) {
-                    startCard = new PathCard("s");
+                    startCard = new PathCard(PathCard.CROSS_SHAPE, "resources/Shape_Plus.png", "201");
                 } else {
                     System.out.printf("[]");
                 }

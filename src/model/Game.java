@@ -9,20 +9,25 @@ import java.util.Random;
  * @author David Limantoro s3503728
  */
 public class Game {
-    private final int DECK_SIZE = 60;
-    private final int NUM_OF_PLAYER = 2;
+    private final int NUM_OF_PLAYER = 4;
 
     private GameController gameCon;
     private Board board = new Board();
     private Deck deck = new Deck();
     private Player[] players;
+
     private int gameTurnNumber = 0;
     private int playerTurnNumber = 0;
+    private int numOfSaboteours = 0;
 
     private Card selectedCard = null;
 
     public Game() {
         resetBoard();
+        players = new Player[NUM_OF_PLAYER];
+        for (int i = 0; i < players.length; i++) {
+            players[i] = new Player(0, "miner", new String[3], null);
+        }
     }
 
     public void resetBoard() {
@@ -38,13 +43,16 @@ public class Game {
     public void gameStart(GameController gc) {
         gameCon = gc;
         resetBoard();
-        for (int i=0;i<players.length;i++){
+        deck.initialiseDeck();
+        numOfSaboteours = 0;
+        for (int i = 0; i < players.length; i++) {
             players[i].resetHand();
-
-            players[i].resetHand();
+            //TODO change their role here perhaps
+            //TODO if someone is saboteurs, do numOfSaboteurs++;
         }
         gameCon.redrawGrid(board.getGrid());
-        gameCon.redrawDeck(players.getHand());
+        gameCon.redrawDeck(players[playerTurnNumber].getHand());
+
     }
 
     /**
@@ -53,25 +61,23 @@ public class Game {
      * @param winnerPlayerNumber the player number that wins the game.
      */
     private void shareGold(int winnerPlayerNumber) {
-        ArrayList<Integer> goldPool = getGoldPool();
-        // winning player get highest gold
-        players[winnerPlayerNumber].setScore(players[winnerPlayerNumber].getScore() + getMax(goldPool));
-
+        ArrayList<Integer> goldPool = deck.getGoldPool(NUM_OF_PLAYER - numOfSaboteours); //TODO find number of miners
+        //TODO finish this method
     }
 
     /**
      * Method to place a path card on the board
-     *
+     * <p>
      * precondition, selectedCard must be a path card
      *
-     * @param x           column number of the board
-     * @param y           row number of the board
+     * @param x column number of the board
+     * @param y row number of the board
      * @return true if card is placed on the board successfully, otherwise false
      */
     public boolean placeCard(int x, int y) {
         if (selectedCard != null) {
             if (cardCheck(selectedCard, x, y)) {
-                board.getGrid()[x][y].setCard(selectedCard);
+                board.placeCard(selectedCard, x, y);
                 //TODO check if touches goalCard, if yes, flip it
                 //TODO check if gold card is found
                 return true;
@@ -99,7 +105,7 @@ public class Game {
     /**
      * Handle action cards
      */
-    public void handleActionCard(Object targetObject){
+    public void handleActionCard(Object targetObject) {
         //TODO handle action card
     }
 
@@ -109,7 +115,7 @@ public class Game {
     private void nextTurn() {
         gameTurnNumber++;
         playerTurnNumber++;
-        if (playerTurnNumber >= MAX_PLAYER {
+        if (playerTurnNumber >= NUM_OF_PLAYER {
             playerTurnNumber = 0;
         }
         // TODO player draw a card
@@ -142,5 +148,9 @@ public class Game {
 
     public int getPlayerTurnNumber() {
         return playerTurnNumber;
+    }
+
+    public Player[] getPlayers() {
+        return players;
     }
 }

@@ -52,7 +52,7 @@ public class Deck {
      *
      * @throws IOException if file specified (card configuration) is not valid
      */
-    private void initialiseDeck() throws IOException {
+    public void initialiseDeck() throws IOException {
         initialiseGold();
         String[] tokens;
         String line;
@@ -146,7 +146,7 @@ public class Deck {
      *
      * @return an arraylist containing gold cards
      */
-    private ArrayList<Integer> getGoldPool(int numOfCards) {
+    public ArrayList<Integer> getGoldPool(int numOfCards) {
         // Take X amount of gold card from gold deck where X is numOfCards
         ArrayList<Integer> goldPool = new ArrayList<>();
         Random randomNum = new Random();
