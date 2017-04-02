@@ -25,7 +25,6 @@ public class Board {
 
 
     private Grid[][] grid = new Grid[GRID_MAX_WIDTH][GRID_MAX_HEIGHT];
-    private boolean goldDiscovered;
     private Grid goldLocation;
 
 
@@ -34,14 +33,14 @@ public class Board {
         for (int i = 0; i < GRID_MAX_HEIGHT; i++) {
             for (int j = 0; j < GRID_MAX_WIDTH; j++) {
                 if ((i == COAL_ONE_Y || i == COAL_TWO_Y) && j == START_GOAL_X) {
-                    grid[j][i] = new Grid(j, i, new GoalCard("resources/Coal.png"));
+                    grid[j][i] = new Grid(j, i, new GoalCard("resources/Goal.png", "resources/Coal.png", "coal"));
                 } else if (i == GOLD_Y && j == START_GOAL_X) {
-                    grid[j][i] = new Grid(j, i, new GoalCard("resources/Gold.png"));
+                    grid[j][i] = new Grid(j, i, new GoalCard("resources/Goal.png", "resources/Coal.png", "gold"));
                     goldLocation = grid[j][i];
                 } else if (i == START_Y && j == START_X) {
-                    grid[j][i] = new Grid(j, i, new PathCard(PathCard.CROSS_SHAPE, "resources/Shape_Plus.png"));
+                    grid[j][i] = new Grid(j, i, new PathCard(PathCard.CROSS_SHAPE, "resources/Shape_Plus.png", "cross") );
                 } else {
-                    grid[j][i] = new Grid(j, i, new PathCard(PathCard.EMPTY, "resources/Unexplored.png"));
+                    grid[j][i] = new Grid(j, i, new PathCard(PathCard.EMPTY, "resources/Unexplored.png", "empty") );
                 }
             }
             System.out.println();
@@ -52,8 +51,8 @@ public class Board {
         return grid;
     }
 
-    public void goldIsFound() {
-
+    public boolean goldIsFound() {
+        return !((GoalCard)(goldLocation.getCard())).isHidden();
     }
 
     public static void main(String[] args) {
