@@ -76,7 +76,7 @@ public class Game {
     public boolean placeCard(int x, int y) {
         if (selectedCard != null) {
             if (cardCheck(selectedCard, x, y)) {
-                board.placeCard(selectedCard, x, y);
+                board.placeCardOnLocation(x, y, selectedCard);
                 //TODO check if touches goalCard, if yes, flip it
                 //TODO check if gold card is found
                 return true;
