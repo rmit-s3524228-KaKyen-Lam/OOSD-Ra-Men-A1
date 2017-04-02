@@ -1,6 +1,7 @@
 package model;
 
 public class PathCard extends Card {
+    private int rotateVal = 0;
     private boolean isValid = false;
     private boolean north = false;
     private boolean west = false;
@@ -71,6 +72,7 @@ public class PathCard extends Card {
         boolean temp [] = {tempNorth, tempWest, tempSouth, tempEast};
 
         if(direction.equals("cw")) {
+            rotateVal ++;
 
             if (temp[0]) {
                 east = true;
@@ -88,9 +90,8 @@ public class PathCard extends Card {
                 south = true;
                 east = false;
             }
-        }
-
-        if(direction.equals("acw")){
+        }else if(direction.equals("acw")) {
+            rotateVal--;
             if (temp[0]) {
                 west = true;
             }
@@ -103,6 +104,12 @@ public class PathCard extends Card {
             if (temp[3]) {
                 north = true;
             }
+        }
+
+        if(rotateVal < 0){
+            rotateVal = 3;
+        }else if (rotateVal > 3){
+            rotateVal = 0;
         }
     }
 
