@@ -9,18 +9,14 @@ public class Player {
 
     private int score;
     private String role;
-    private String[] brokenTool;
+    private ArrayList<String> brokenTool;
     private ArrayList<Card> hand;
 
-    public Player(int score, String role, String[] brokenTool, ArrayList<Card> hand) {
+    public Player(int score, String role, ArrayList<String> brokenTool, ArrayList<Card> hand) {
         this.score = score;
         this.role = role;
         this.brokenTool = brokenTool;
         this.hand = hand;
-    }
-
-    public boolean useCard(Card card) {
-        return false;
     }
 
     public int getScore() {
@@ -39,11 +35,11 @@ public class Player {
         this.role = role;
     }
 
-    public String[] getBrokenTool() {
+    public ArrayList<String> getBrokenTool() {
         return brokenTool;
     }
 
-    public void setBrokenTool(String[] brokenTool) {
+    public void setBrokenTool(ArrayList<String> brokenTool) {
         this.brokenTool = brokenTool;
     }
 
@@ -51,8 +47,11 @@ public class Player {
         return hand;
     }
 
-    public void setHand(ArrayList<Card> hand) {
-        this.hand = hand;
+    public void setHand(Card[] hand) {
+        this.hand = new ArrayList<Card>();
+        for (Card newCard: hand) {
+            this.hand.add(newCard);
+        }
     }
 
     public int getSelectedCard(Card card) {
@@ -64,6 +63,10 @@ public class Player {
 
     public void addCard(Card card) {
         hand.add(card);
+    }
+
+    public void removeCard(Card card) {
+        hand.remove(card);
     }
 
 }
