@@ -7,20 +7,14 @@ public class Grid {
     private int y;
     private Card card;
 
-    public Grid (int x, int y, Card card)
-    {
+    public Grid(int x, int y, Card card) {
         this.x = x;
         this.y = y;
         this.card = card;
     }
 
-    public Card getCard(){
+    public Card getCard() {
         return card;
-    }
-
-
-    public void placeCardonGrid(Card card) {
-        this.card=card;
     }
 
     public void removeCardonGrid(Card card) {
