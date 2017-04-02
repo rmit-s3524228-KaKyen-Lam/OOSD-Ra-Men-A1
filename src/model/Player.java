@@ -19,10 +19,6 @@ public class Player {
         this.hand = hand;
     }
 
-    public boolean useCard(Card card) {
-        return false;
-    }
-
     public int getScore() {
         return score;
     }
@@ -64,6 +60,10 @@ public class Player {
 
     public void addCard(Card card) {
         hand.add(card);
+    }
+
+    public void removeCard(Card card) {
+        hand.remove(card);
     }
 
 }
