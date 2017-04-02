@@ -17,8 +17,12 @@ public class Grid {
         return card;
     }
 
-    public void removeCardonGrid(Card card) {
-        this.card = new PathCard(PathCard.EMPTY, "resources/Unexplored.png", "0");
+    public void setCard(Card card) {
+        this.card = card;
+    }
+
+    public void removeCardonGrid() {
+        this.card = new PathCard(PathCard.EMPTY, "resources/Unexplored.png", "empty");
     }
 
     public int getX() {
