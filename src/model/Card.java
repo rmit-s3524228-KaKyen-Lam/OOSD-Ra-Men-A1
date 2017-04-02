@@ -1,6 +1,6 @@
 package model;
 
-public class Card extends Drawable{
+public abstract class Card extends Drawable{
     private String id;
     private Board board;
     private boolean discarded;
@@ -10,16 +10,9 @@ public class Card extends Drawable{
         super(imageResource);
         this.id = id;
     }
-    public Card(){
 
-    }
+    public abstract void cardAction();
 
-    public static void main(String[] args) {
-    }
-
-    public static void cardAction() {
-
-    }
     public String getId() {
         return id;
     }
