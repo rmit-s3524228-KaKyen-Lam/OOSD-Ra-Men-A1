@@ -25,7 +25,7 @@ public class Game {
         resetBoard();
         players = new Player[NUM_OF_PLAYER];
         for (int i = 0; i < players.length; i++) {
-            players[i] = new Player(0, "miner", new String[3], null);
+            players[i] = new Player(0, "miner", new ArrayList<>(), null);
         }
     }
 

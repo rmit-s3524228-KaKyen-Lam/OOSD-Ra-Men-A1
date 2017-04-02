@@ -16,7 +16,7 @@ public class GameDraw extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("resources/gameLayout.fxml"));
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("resources/gameLayout.fxml"));
         primaryStage.setTitle("RA-MEN Game");
         primaryStage.setScene(new Scene(root, WIDTH, HEIGHT));
         primaryStage.show();
