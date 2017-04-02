@@ -1,6 +1,7 @@
 package model;
 
 import controller.GameController;
+import controller.GameLogic;
 
 import java.util.ArrayList;
 
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 public class Game {
     private final int NUM_OF_PLAYER = 4;
 
+    private GameLogic gameLogic;
     private GameController gameCon;
     private Board board = new Board();
     private Deck deck = new Deck();
@@ -22,16 +24,10 @@ public class Game {
     private Card selectedCard = null;
 
     public Game() {
-        resetBoard();
         players = new Player[NUM_OF_PLAYER];
         for (int i = 0; i < players.length; i++) {
             players[i] = new Player(0, "miner", new ArrayList<>(), null);
         }
-    }
-
-    public void resetBoard() {
-        board.initBoard();
-        deck = new Deck();
     }
 
     /**
@@ -40,28 +36,39 @@ public class Game {
      * @param gc gameController object that
      */
     public void gameStart(GameController gc) {
-        gameCon = gc;
-        resetBoard();
+
+        board.initBoard();
         deck.initialiseDeck();
+
+        // Assigns the GameController so that Game can communicate with the viewer
+        gameCon = gc;
+        gameLogic = new GameLogic(board, gameCon);
+
+        // Initialize players
         numOfSaboteours = 0;
         for (int i = 0; i < players.length; i++) {
             players[i].setHand(deck.draw(7));
             //TODO change their role here perhaps
             //TODO if someone is saboteurs, do numOfSaboteurs++;
         }
+
         gameCon.redrawGrid();
         gameCon.redrawDeck(players[playerTurnNumber].getHand());
         gameCon.changePlayerLabel(playerTurnNumber);
     }
 
     /**
-     * Method to increase player's gold (this method is for when miner wins) (precondition, the player number must not be associated with saboteur)
+     * Method to increase player's score.
+     * <p>
+     * This method is for when miner wins.
+     * <p>
+     * (precondition, the player number must not be associated with saboteur)
      *
      * @param winnerPlayerNumber the player number that wins the game.
      */
     private void shareGold(int winnerPlayerNumber) {
         ArrayList<Integer> goldPool = deck.getGoldPool(NUM_OF_PLAYER - numOfSaboteours);
-        //TODO finish this method
+        //TODO add player's score accordingly in regards to goldPool
     }
 
     /**
@@ -75,14 +82,14 @@ public class Game {
      */
     public boolean placeCard(int x, int y) {
         if (selectedCard != null) {
-            if (cardCheck(selectedCard, x, y)) {
+            if (gameLogic.cardCheck(x, y, selectedCard)) {
                 board.placeCardOnLocation(x, y, selectedCard);
                 if (((PathCard) selectedCard).isCentre()) {
                     ((PathCard) selectedCard).setValid(true);
                 } else {
                     ((PathCard) selectedCard).setValid(false);
                 }
-                checkGoalCardNeighbor(x, y, (PathCard) selectedCard);
+                gameLogic.checkGoalCardNeighbor(x, y, (PathCard) selectedCard);
                 System.out.println(board.goldIsFound());
                 gameCon.redrawGridXY(x, y);
                 return true;
@@ -92,133 +99,6 @@ public class Game {
         } else {
             return false;
         }
-    }
-
-    /**
-     * @return Array containing 4 grids, where 0 is the west neighbor, 1 is the north neighbor,
-     * 2 is the east neighbor and 3 is the south neightbor
-     */
-    private void checkGoalCardNeighbor(int x, int y, PathCard card) {
-        if (card.isWest()) {
-            checkGoalCard(board.getGridAtLocation(x - 1, y));
-        }
-
-        if (card.isNorth()) {
-            checkGoalCard(board.getGridAtLocation(x, y + 1));
-        }
-
-        if (card.isEast()) {
-            checkGoalCard(board.getGridAtLocation(x + 1, y));
-        }
-
-        if (card.isSouth()) {
-            checkGoalCard(board.getGridAtLocation(x, y - 1));
-        }
-    }
-
-    /**
-     * @param neighbourGrid
-     */
-    private void checkGoalCard(Grid neighbourGrid) {
-        if (neighbourGrid != null && neighbourGrid.getCard() instanceof GoalCard) {
-            ((GoalCard) neighbourGrid.getCard()).setHidden(false);
-            gameCon.redrawGridXY(neighbourGrid.getX(), neighbourGrid.getY());
-        }
-    }
-
-    /**
-     * Game logic method that checks whether the path card is allowed to be placed at x,y or not
-     *
-     * @param cardToPlace card to be placed in the board at location x,y
-     * @param x           column number of the board
-     * @param y           row number of the board
-     * @return true if card placement is valid and selectedCard is not null, otherwise false
-     */
-    private boolean cardCheck(Card cardToPlace, int x, int y) { //TODO stuff when west path connect to null
-        return true; // set to always true for now
-//        PathCard currentPathCard = (PathCard) cardToPlace;
-//
-//        boolean westConnectCheck = false;
-//        boolean northConnectCheck = false;
-//        boolean eastConnectCheck = false;
-//        boolean southConnectCheck = false;
-//        boolean atLeastOneValidPath = false;
-//
-//        // WEST
-//        Grid westGrid = board.getGridAtLocation(x - 1, y);
-//        Card westCard = westGrid.getCard();
-//        if (westCard != null && (westCard instanceof GoalCard || westCard.getId().equals("empty"))) {
-//            westConnectCheck = true;
-//        } else {
-//            if (currentPathCard.isWest()) {
-//                if (((PathCard) westCard).isEast() && ((PathCard) westCard).isValid()) {
-//                    westConnectCheck = true;
-//                    atLeastOneValidPath = true;
-//                }
-//            } else {
-//                if (!((PathCard) westCard).isEast()) {
-//                    westConnectCheck = true;
-//                }
-//            }
-//        }
-//
-//        // NORTH
-//        Card northCard = board.getGridAtLocation(x, y - 1).getCard();
-//        if (northCard != null && (northCard instanceof GoalCard || northCard.getId().equals("empty"))) {
-//            northConnectCheck = true;
-//        } else {
-//            if (currentPathCard.isNorth()) {
-//                if (((PathCard) northCard).isSouth() && ((PathCard) northCard).isValid()) {
-//                    westConnectCheck = true;
-//                    atLeastOneValidPath = true;
-//                }
-//            } else {
-//                if (!((PathCard) northCard).isSouth()) {
-//                    westConnectCheck = true;
-//                }
-//            }
-//
-//        }
-//
-//        // EAST
-//        Card eastCard = board.getGridAtLocation(x + 1, y).getCard();
-//        if (eastCard != null && (eastCard instanceof GoalCard || eastCard.getId().equals("empty"))) {
-//            eastConnectCheck = true;
-//        } else {
-//            if (currentPathCard.isEast()) {
-//                if (((PathCard) eastCard).isWest() && ((PathCard) eastCard).isValid()) {
-//                    westConnectCheck = true;
-//                    atLeastOneValidPath = true;
-//                }
-//            } else {
-//                if (!((PathCard) eastCard).isWest()) {
-//                    westConnectCheck = true;
-//                }
-//            }
-//        }
-//
-//        // SOUTH
-//        Card southCard = board.getGridAtLocation(x, y + 1).getCard();
-//        if (southCard != null && (southCard instanceof GoalCard || southCard.getId().equals("empty"))) {
-//            southConnectCheck = true;
-//        } else {
-//            if (currentPathCard.isSouth()) {
-//                if (((PathCard) southCard).isNorth() && ((PathCard) southCard).isValid()) {
-//                    westConnectCheck = true;
-//                    atLeastOneValidPath = true;
-//                }
-//            } else {
-//                if (!((PathCard) southCard).isNorth()) {
-//                    westConnectCheck = true;
-//                }
-//            }
-//        }
-//
-//        if (westConnectCheck && northConnectCheck && eastConnectCheck && southConnectCheck && atLeastOneValidPath) {
-//            return true;
-//        } else {
-//            return false;
-//        }
     }
 
     /**
@@ -233,7 +113,10 @@ public class Game {
      */
     public void nextTurn() {
         gameTurnNumber++;
+        players[playerTurnNumber].removeCard(selectedCard);
         players[playerTurnNumber].addCard(deck.draw(1)[0]);
+
+        //TODO what to do if deck runs out of card
 
         playerTurnNumber++;
         if (playerTurnNumber >= NUM_OF_PLAYER) {
@@ -244,6 +127,8 @@ public class Game {
         gameCon.changePlayerLabel(playerTurnNumber);
         selectedCard = null;
     }
+
+    // Getters and Setters
 
     public Board getBoard() {
         return board;

@@ -42,7 +42,7 @@ public class GameController implements Initializable {
     }
 
     public void changePlayerLabel(int playerNum) {
-        playerLabel.setText("Player " + playerNum + "'s Hand");
+        playerLabel.setText("Player " + (playerNum + 1) + "'s Hand");
     }
 
     public void redrawGrid() {
