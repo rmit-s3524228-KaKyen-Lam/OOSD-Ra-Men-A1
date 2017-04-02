@@ -12,8 +12,8 @@ import java.util.*;
  */
 public class Board {
 
-    private static final int GRID_MAX_WIDTH = 9;
-    private static final int GRID_MAX_HEIGHT = 7;
+    public static final int GRID_MAX_WIDTH = 9;
+    public static final int GRID_MAX_HEIGHT = 7;
     private static final int START_GOAL_X = 8;
     private static ArrayList<Integer> START_GOAL_Y = new ArrayList<>();
     private static int GOAL_ONE = 1;
