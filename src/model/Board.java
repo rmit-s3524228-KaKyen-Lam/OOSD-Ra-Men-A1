@@ -2,15 +2,13 @@ package model;
 
 import java.util.*;
 
-import static model.GoalCard.*;
-
 /*http://stackoverflow.com/questions/9369368/2d-arraylist-in-java
  https://www.thoughtco.com/generating-unique-random-numbers-2034208*/
 
 /**
- * Board of game
- *
- * @author Lam Ka-Kyen
+ * Game board containing Grids.
+ * <p>
+ * Created by Ka Kyen Lam on 30-Mar-17.
  */
 public class Board {
 
@@ -24,10 +22,12 @@ public class Board {
     private static final int START_X = 0;
     private static final int START_Y = 3;
 
-
     private Grid[][] grid = new Grid[GRID_MAX_WIDTH][GRID_MAX_HEIGHT];
     private Grid goldLocation;
 
+    /**
+     * Randomise starting positions of GoalCards
+     */
     public void randomPosition() {
         START_GOAL_Y.add(GOAL_ONE);
         START_GOAL_Y.add(GOAL_TWO);
@@ -36,6 +36,9 @@ public class Board {
         Collections.shuffle(START_GOAL_Y);
     }
 
+    /**
+     * Initialise board
+     */
     public void initBoard() {
         randomPosition();
         for (int i = 0; i < GRID_MAX_HEIGHT; i++) {
@@ -46,29 +49,38 @@ public class Board {
                     grid[j][i] = new Grid(j, i, new GoalCard("resources/Goal.png", "resources/Gold.png", "gold"));
                     goldLocation = grid[j][i];
                 } else if (i == START_Y && j == START_X) {
-                    grid[j][i] = new Grid(j, i, new PathCard(PathCard.CROSS_SHAPE, "resources/Shape_Plus.png", "cross") );
+                    grid[j][i] = new Grid(j, i, new PathCard(PathCard.CROSS_SHAPE, "resources/Shape_Plus.png", "cross"));
+                    ((PathCard) (grid[j][i].getCard())).setValid(true);
                 } else {
-                    grid[j][i] = new Grid(j, i, new PathCard(PathCard.EMPTY, "resources/Unexplored.png", "empty") );
+                    grid[j][i] = new Grid(j, i, new PathCard(PathCard.EMPTY, "resources/Unexplored.png", "empty"));
                 }
             }
             System.out.println();
         }
     }
 
-    public Grid[][] getGrid() {
-        return grid;
-    }
 
+    /**
+     * Check if gold is found
+     *
+     * @return boolean
+     */
     public boolean goldIsFound() {
-        return !((GoalCard)(goldLocation.getCard())).isHidden();
+        return !((GoalCard) (goldLocation.getCard())).isHidden();
     }
 
+    /**
+     * Place card on selected x-y location
+     *
+     * @param x    position x on Board
+     * @param y    position y on Board
+     * @param card Card placed on Board
+     */
     public void placeCardOnLocation(int x, int y, Card card) {
         grid[x][y].setCard(card);
     }
 
-    public static void main(String[] args) {
-        Board bd = new Board();
-        bd.initBoard();
+    public Grid[][] getGrid() {
+        return grid;
     }
 }
