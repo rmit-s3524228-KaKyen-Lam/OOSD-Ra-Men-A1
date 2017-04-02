@@ -38,18 +38,13 @@ public class Game {
     public void gameStart(GameController gc) {
         gameCon = gc;
         resetBoard();
+        for (int i=0;i<players.length;i++){
+            players[i].resetHand();
+
+            players[i].resetHand();
+        }
         gameCon.redrawGrid(board.getGrid());
-//        while (true) {
-//            if (board.goldIsFound() == true) {
-//                int playerWon = turnNumber % NUM_OF_PLAYER;
-//                if (players[playerWon].getRole().equals("miner")) {
-//                    //share gold
-//                } else {
-//                    //saboteur win
-//                }
-//            }
-//            return;
-//        }
+        gameCon.redrawDeck(players.getHand());
     }
 
     /**
@@ -62,52 +57,6 @@ public class Game {
         // winning player get highest gold
         players[winnerPlayerNumber].setScore(players[winnerPlayerNumber].getScore() + getMax(goldPool));
 
-    }
-
-    /**
-     * Get a pool of gold cards from the deck
-     *
-     * @return an arraylist containing gold cards
-     */
-    private ArrayList<Integer> getGoldPool(int numOfCards) {
-        // Create gold deck
-        ArrayList<Integer> goldDeck = new ArrayList<>();
-        int i;
-        for (i = 0; i < 16; i++) {
-            goldDeck.add(1);
-        }
-        for (i = 0; i < 8; i++) {
-            goldDeck.add(2);
-        }
-        for (i = 0; i < 4; i++) {
-            goldDeck.add(3);
-        }
-
-        // Take X amount of gold card from gold deck where X is numOfCards
-        ArrayList<Integer> goldPool = new ArrayList<>();
-        Random randomNum = new Random();
-        for (i = 0; i < (numOfCards); i++) {
-            int temp = randomNum.nextInt(goldDeck.size());
-            goldPool.add(goldDeck.get(temp));
-            goldDeck.remove(temp);
-        }
-        return goldPool;
-    }
-
-    /**
-     * Get the highest integer in the arraylist (precondition, array must has at least one element)
-     *
-     * @param intArray ArrayList of integer
-     * @return the highest value in this array
-     */
-    private int getMax(ArrayList<Integer> intArray) {
-        int max = 0;
-        for (int i = 0; i < intArray.size(); i++) {
-            if (max < intArray.get(i)) {
-                max = intArray.get(i);
-            }
-        }
-        return max;
     }
 
     /**
@@ -164,8 +113,10 @@ public class Game {
             playerTurnNumber = 0;
         }
         // TODO player draw a card
+        players[playerTurnNumber].addCard(deck.draw(1)[0]);
 
         // TODO redraw the next player deck and change the label
+        gameCon.redrawDeck(players[playerTurnNumber].getHand());
         selectedCard = null;
     }
 
