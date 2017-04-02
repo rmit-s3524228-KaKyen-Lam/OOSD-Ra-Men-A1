@@ -26,10 +26,7 @@ public class Board {
 
     private Grid[][] grid = new Grid[GRID_MAX_WIDTH][GRID_MAX_HEIGHT];
     private boolean goldDiscovered;
-    private Card coalCard;
-    private Card goldCard;
-    private Card startCard;
-    private Grid gridElem;
+    private Grid goldLocation;
 
 
     public void initBoard() {
@@ -40,6 +37,7 @@ public class Board {
                     grid[j][i] = new Grid(j, i, new GoalCard("resources/Coal.png"));
                 } else if (i == GOLD_Y && j == START_GOAL_X) {
                     grid[j][i] = new Grid(j, i, new GoalCard("resources/Gold.png"));
+                    goldLocation = grid[j][i];
                 } else if (i == START_Y && j == START_X) {
                     grid[j][i] = new Grid(j, i, new PathCard(PathCard.CROSS_SHAPE, "resources/Shape_Plus.png"));
                 } else {
