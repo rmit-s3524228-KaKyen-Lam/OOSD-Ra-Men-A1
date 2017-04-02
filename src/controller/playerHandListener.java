@@ -20,13 +20,13 @@ public class playerHandListener implements EventHandler<MouseEvent> {
 
     @Override
     public void handle(MouseEvent event) {
-        Card card = game.getPlayers()[game.getPlayerTurnNumber()].getHand()[cardNum];
+        Card card = game.getPlayers()[game.getPlayerTurnNumber()].getHand().get(cardNum);
         game.setSelectedCard(card);
         if (card instanceof ActionCard) {
             // TODO Ask player whether they want to use the card on player or board
             // game.handleActionCard(2);
         } else {
-            //TODO highlight the card
+            // TODO highlight the card
         }
         System.out.printf("You clicked card number %d \n", cardNum);
     }
