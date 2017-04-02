@@ -55,6 +55,10 @@ public class Board {
         return !((GoalCard)(goldLocation.getCard())).isHidden();
     }
 
+    public void placeCardOnLocation(int x, int y, Card card) {
+        grid[x][y].setCard(card);
+    }
+
     public static void main(String[] args) {
         Board bd = new Board();
         bd.initBoard();
