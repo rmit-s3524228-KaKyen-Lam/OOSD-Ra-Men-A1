@@ -1,12 +1,5 @@
 package model;
 
-import java.util.*;
-
-import static model.GoalCard.*;
-
-/*http://stackoverflow.com/questions/9369368/2d-arraylist-in-java
- * */
-
 /**
  * Board of game
  *
@@ -35,12 +28,12 @@ public class Board {
                 if ((i == COAL_ONE_Y || i == COAL_TWO_Y) && j == START_GOAL_X) {
                     grid[j][i] = new Grid(j, i, new GoalCard("resources/Goal.png", "resources/Coal.png", "coal"));
                 } else if (i == GOLD_Y && j == START_GOAL_X) {
-                    grid[j][i] = new Grid(j, i, new GoalCard("resources/Goal.png", "resources/Coal.png", "gold"));
+                    grid[j][i] = new Grid(j, i, new GoalCard("resources/Goal.png", "resources/Gold.png", "gold"));
                     goldLocation = grid[j][i];
                 } else if (i == START_Y && j == START_X) {
-                    grid[j][i] = new Grid(j, i, new PathCard(PathCard.CROSS_SHAPE, "resources/Shape_Plus.png", "cross") );
+                    grid[j][i] = new Grid(j, i, new PathCard(PathCard.CROSS_SHAPE, "resources/Shape_Plus.png", "cross"));
                 } else {
-                    grid[j][i] = new Grid(j, i, new PathCard(PathCard.EMPTY, "resources/Unexplored.png", "empty") );
+                    grid[j][i] = new Grid(j, i, new PathCard(PathCard.EMPTY, "resources/Unexplored.png", "empty"));
                 }
             }
             System.out.println();
@@ -51,8 +44,16 @@ public class Board {
         return grid;
     }
 
+    public Grid getGridAtLocation(int x, int y) {
+        if (x < 0 || x >= GRID_MAX_WIDTH || y < 0 || y >= GRID_MAX_HEIGHT) {
+            return null;
+        } else {
+            return grid[x][y];
+        }
+    }
+
     public boolean goldIsFound() {
-        return !((GoalCard)(goldLocation.getCard())).isHidden();
+        return !((GoalCard) (goldLocation.getCard())).isHidden();
     }
 
     public void placeCardOnLocation(int x, int y, Card card) {

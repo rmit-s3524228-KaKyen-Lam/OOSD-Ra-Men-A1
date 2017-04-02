@@ -18,6 +18,10 @@ public class PlayerHandListener implements EventHandler<MouseEvent> {
         this.game = game;
     }
 
+    /**
+     *
+     * @param event MouseEvent related to the click
+     */
     @Override
     public void handle(MouseEvent event) {
         Card card = game.getPlayers()[game.getPlayerTurnNumber()].getHand().get(cardNum);
