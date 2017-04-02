@@ -9,10 +9,10 @@ public class Player {
 
     private int score;
     private String role;
-    private String[] brokenTool;
+    private ArrayList<String> brokenTool;
     private ArrayList<Card> hand;
 
-    public Player(int score, String role, String[] brokenTool, ArrayList<Card> hand) {
+    public Player(int score, String role, ArrayList<String> brokenTool, ArrayList<Card> hand) {
         this.score = score;
         this.role = role;
         this.brokenTool = brokenTool;
@@ -35,11 +35,11 @@ public class Player {
         this.role = role;
     }
 
-    public String[] getBrokenTool() {
+    public ArrayList<String> getBrokenTool() {
         return brokenTool;
     }
 
-    public void setBrokenTool(String[] brokenTool) {
+    public void setBrokenTool(ArrayList<String> brokenTool) {
         this.brokenTool = brokenTool;
     }
 
