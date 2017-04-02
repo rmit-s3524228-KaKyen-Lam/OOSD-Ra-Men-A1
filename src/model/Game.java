@@ -3,7 +3,6 @@ package model;
 import controller.GameController;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  * @author David Limantoro s3503728
@@ -46,7 +45,7 @@ public class Game {
         deck.initialiseDeck();
         numOfSaboteours = 0;
         for (int i = 0; i < players.length; i++) {
-            players[i].resetHand();
+            players[i].setHand(deck.draw(7));
             //TODO change their role here perhaps
             //TODO if someone is saboteurs, do numOfSaboteurs++;
         }
@@ -61,7 +60,7 @@ public class Game {
      * @param winnerPlayerNumber the player number that wins the game.
      */
     private void shareGold(int winnerPlayerNumber) {
-        ArrayList<Integer> goldPool = deck.getGoldPool(NUM_OF_PLAYER - numOfSaboteours); //TODO find number of miners
+        ArrayList<Integer> goldPool = deck.getGoldPool(NUM_OF_PLAYER - numOfSaboteours);
         //TODO finish this method
     }
 
@@ -112,11 +111,11 @@ public class Game {
     /**
      * This method is called after a card is selected from a player's hand and then aimed at other player or placed on the board
      */
-    private void nextTurn() {
+    public void nextTurn() {
         gameTurnNumber++;
         playerTurnNumber++;
-        if (playerTurnNumber >= NUM_OF_PLAYER {
-            playerTurnNumber = 0;
+        if (playerTurnNumber >= NUM_OF_PLAYER) {
+            playerTurnNumber %= NUM_OF_PLAYER;
         }
         // TODO player draw a card
         players[playerTurnNumber].addCard(deck.draw(1)[0]);
@@ -138,10 +137,6 @@ public class Game {
         return selectedCard;
     }
 
-    public void setSelectedCard(Card selectedCard) {
-        this.selectedCard = selectedCard;
-    }
-
     public int getGameTurnNumber() {
         return gameTurnNumber;
     }
@@ -152,5 +147,9 @@ public class Game {
 
     public Player[] getPlayers() {
         return players;
+    }
+
+    public void setSelectedCard(Card selectedCard) {
+        this.selectedCard = selectedCard;
     }
 }

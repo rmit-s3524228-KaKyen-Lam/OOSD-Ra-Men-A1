@@ -5,9 +5,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import model.*;
-import view.GridDraw;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 /**
@@ -40,33 +40,28 @@ public class GameController implements Initializable {
     public void redrawGridXY(int x, int y, Grid grid) {
 
         // This code could be better when Drawable superclass is fully working
-        ImageView gd = null;
+        ImageView gd;
         Card currentGridCard = grid.getCard();
-        if (currentGridCard == null) {
-            gd = new ImageView("resources/Unexplored.png");
-        } else if (currentGridCard instanceof PathCard) {
-            //TODO do switch case to find right type of patch card and right orientation
-            gd = new ImageView("resources/Unexplored.png"); //change this line
-        } else if (currentGridCard instanceof GoalCard) {
+
+        if (currentGridCard instanceof GoalCard) {
             if (((GoalCard) currentGridCard).isHidden()) {
-                gd = new ImageView("resources/Goal.png");
-            } else if (((GoalCard) currentGridCard).isGold()) {
-                gd = new ImageView("resources/Gold.png");
+                gd = new ImageView(((GoalCard) currentGridCard).getConcealedImageResource());
             } else {
-                gd = new ImageView("resources/Coal.png");
+                gd = new ImageView(currentGridCard.getImageResource());
             }
+        } else {
+            gd = new ImageView(currentGridCard.getImageResource());
         }
+
         gridGameBoard.add(gd, x, y);
-        if (gd != null) {
-            gd.setOnMouseClicked(new gameBoardListener(x, y, game));
-        }
+        gd.setOnMouseClicked(new GameBoardListener(x, y, game));
     }
 
-    public void redrawDeck(Card[] currentPlayerHand) {
-        for (int i = 0; i < currentPlayerHand.length; i++) {
-            ImageView iv = new ImageView(card.getImage());
+    public void redrawDeck(ArrayList<Card> currentPlayerHand) {
+        for (int i = 0; i < currentPlayerHand.size(); i++) {
+            ImageView iv = new ImageView(currentPlayerHand.get(i).getImageResource());
             gridPlayerDeck.add(iv, i, 0);
-            iv.setOnMouseClicked(new playerHandListener(i, game));
+            iv.setOnMouseClicked(new PlayerHandListener(i, game));
         }
     }
 }

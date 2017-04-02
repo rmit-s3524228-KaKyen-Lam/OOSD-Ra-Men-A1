@@ -9,11 +9,11 @@ import model.Game;
 /**
  * @author David Limantoro s3503728
  */
-public class playerHandListener implements EventHandler<MouseEvent> {
+public class PlayerHandListener implements EventHandler<MouseEvent> {
     private int cardNum;
     private Game game;
 
-    public playerHandListener(int cardNum, Game game) {
+    public PlayerHandListener(int cardNum, Game game) {
         this.cardNum = cardNum;
         this.game = game;
     }

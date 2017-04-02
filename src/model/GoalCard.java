@@ -8,7 +8,7 @@ public class GoalCard extends Card {
     public GoalCard(String concealedImageResource, String imageSource, String id) {
         super(imageSource, id);
         this.concealedImageResource = concealedImageResource;
-        if(imageSource.contains("Gold")){
+        if (imageSource.contains("Gold")) {
             gold = true;
         }
     }
@@ -30,11 +30,9 @@ public class GoalCard extends Card {
         return gold;
     }
 
-
     public String getConcealedImageResource() {
         return concealedImageResource;
     }
-
 
     public void setGold(boolean gold) {
         this.gold = gold;
