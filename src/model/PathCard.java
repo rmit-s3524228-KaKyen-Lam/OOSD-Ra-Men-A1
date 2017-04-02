@@ -18,15 +18,8 @@ public class PathCard extends Card {
     public final static int DEAD = 9;
     public final static int EMPTY = 10;
 
-    public static void main(String args[]){
-        PathCard pCard = new PathCard(1, "resources/Coal.png");
-        pCard.printCurrentDirections();
-        pCard.rotate("right");
-        pCard.printCurrentDirections();
-    }
-
-    public PathCard (int configNo, String imgResource){
-        super(imgResource);
+    public PathCard (int configNo, String imgResource, String id){
+        super(imgResource, id);
         switch (configNo){
             case T_SHAPE:
                 south = true;
@@ -113,9 +106,9 @@ public class PathCard extends Card {
         }
     }
 
-    private void printCurrentDirections(){
-        System.out.println("North: " + north + "\n" + "West: " + west + "\n" + "South: " + south + "\n" +
-                "East: " + east + "\n");
+    @Override
+    public void cardAction() {
+
     }
 
     public void setValid(boolean valid) {
