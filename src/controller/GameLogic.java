@@ -89,7 +89,6 @@ public class GameLogic {
                     ((PathCard) selectedCard).setValid(false);
                 }
                 checkGoalCardNeighbor(x, y, (PathCard) selectedCard);
-                System.out.println(board.goldIsFound());
                 gameCon.redrawGridXY(x, y);
                 return true;
             } else {
