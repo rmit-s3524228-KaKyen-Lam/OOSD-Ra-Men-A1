@@ -1,6 +1,13 @@
 package model;
 
+/**
+ * Class for path cards which contains logic for rotation and initial configuration
+ *
+ * @author Fabio Monsalve s3585826
+ */
 public class PathCard extends Card {
+
+    // Keep track of rotations invoked
     private int rotateVal = 0;
     private boolean isValid = false;
     private boolean north = false;
@@ -8,6 +15,8 @@ public class PathCard extends Card {
     private boolean south = false;
     private boolean east = false;
     private boolean centre = false;
+
+    // Configuration numbers relating to type of path card
     public final static int T_SHAPE = 1;
     public final static int T_SHAPE_DEAD = 2;
     public final static int LINE_SHAPE = 3;
@@ -19,6 +28,13 @@ public class PathCard extends Card {
     public final static int DEAD = 9;
     public final static int EMPTY = 10;
 
+    /**
+     * Every path card has 5 booleans attached to it, all representing path availability/existence. E.g. If a path card
+     * has all booleans set to true it must be a cross shaped path card in which all four possible paths available
+     * including the centre.
+     *
+     * @author Fabio Monsalve s3585826
+     */
     public PathCard (int configNo, String imgResource, String id){
         super(imgResource, id);
         switch (configNo){
@@ -64,11 +80,22 @@ public class PathCard extends Card {
         }
     }
 
+    /**
+     * Logic for rotation of path cards. Path cards can rotate 90 degrees clockwise ("cw") and anticlockwise ("acw").
+     * Every time this method is called all the boolean values change logically to suit the direction it's being rotates
+     * to. E.g. L shaped path card is being rotated clockwise and has its boolean values of north set as true, east as
+     * true, centre as true and the rest as false, after one rotation they will have changed to east as true, south as
+     * true, centre as true and the rest as false.
+     *
+     * @author Fabio Monsalve s3585826
+     */
     private void rotate(String direction) {
         boolean tempNorth = north;
         boolean tempWest = west;
         boolean tempSouth = south;
         boolean tempEast = east;
+
+        // Stores original boolean values so as to not modify the original
         boolean temp [] = {tempNorth, tempWest, tempSouth, tempEast};
 
         if(direction.equals("cw")) {

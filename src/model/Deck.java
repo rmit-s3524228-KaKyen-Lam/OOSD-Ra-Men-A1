@@ -5,6 +5,11 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * This is the class that contains all the information regarding the game itself.
+ *
+ * @author Fabio Monsalve s3585826
+ */
 public class Deck {
     private final int DECK_SIZE = 60;
     private static Card cards [];
@@ -30,6 +35,7 @@ public class Deck {
     }
 
     private void initialiseGold(){
+
         // Create gold deck
         int i;
         for (i = 0; i < 16; i++) {
@@ -50,6 +56,11 @@ public class Deck {
      */
     public void initialiseDeck(){
         initialiseGold();
+
+        /*
+         *Each token is a part of a line from the path card configuration file "cardConfig.txt". Token 0 refers to the
+         *shape of the card, token
+         */
         String[] tokens;
         String line;
 
@@ -147,6 +158,7 @@ public class Deck {
      * @return an arraylist containing gold cards
      */
     public ArrayList<Integer> getGoldPool(int numCards) {
+
         // Take X amount of gold card from gold deck where X is numOfCards
         ArrayList<Integer> goldPool = new ArrayList<>();
         Random randomNum = new Random();

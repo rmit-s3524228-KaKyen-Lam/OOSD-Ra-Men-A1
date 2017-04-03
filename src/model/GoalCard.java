@@ -1,5 +1,10 @@
 package model;
 
+/**
+ * This is the class that contains all the information regarding the game itself.
+ *
+ * @author Fabio Monsalve s3585826
+ */
 public class GoalCard extends Card {
     private boolean hidden = true;
     private boolean gold = false;
