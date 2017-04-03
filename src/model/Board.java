@@ -98,5 +98,4 @@ public class Board {
     public Grid[][] getGrid() {
         return grid;
     }
-
 }
