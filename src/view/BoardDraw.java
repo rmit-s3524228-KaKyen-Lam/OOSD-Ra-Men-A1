@@ -11,13 +11,22 @@ import model.GoalCard;
 import model.Grid;
 
 /**
- * Created by HP on 3/04/2017.
+ * This class is responsible for drawing the board and the label associated with it
+ *
+ * @author David Limantoro s3503728
  */
 public class BoardDraw {
     private GridPane gridGameBoard;
     private Label boardLabel;
     private Game game;
 
+    /**
+     * Creates a draw class for board section
+     *
+     * @param gridGameBoard JavaFX GridPane object of the game board
+     * @param boardLabel    JavaFX Label object of board label
+     * @param game          The game object
+     */
     public BoardDraw(GridPane gridGameBoard, Label boardLabel, Game game) {
         this.gridGameBoard = gridGameBoard;
         this.boardLabel = boardLabel;

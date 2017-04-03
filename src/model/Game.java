@@ -6,6 +6,8 @@ import controller.GameLogic;
 import java.util.ArrayList;
 
 /**
+ * This is the class that contains all the information regarding the game itself.
+ *
  * @author David Limantoro s3503728
  */
 public class Game {
@@ -23,6 +25,9 @@ public class Game {
 
     private Card selectedCard = null;
 
+    /**
+     * Creates a new Game object
+     */
     public Game() {
         players = new Player[NUM_OF_PLAYER];
         for (int i = 0; i < players.length; i++) {
