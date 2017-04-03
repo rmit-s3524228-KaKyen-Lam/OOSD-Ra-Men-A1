@@ -1,5 +1,10 @@
 package model;
 
+/**
+ * Abstract class to be used by all other classes that will be drawn or manifested on the board in the GUI itself
+ *
+ * @author Fabio Monsalve s3585826
+ */
 public abstract class Drawable{
 
     protected String imageResource = "";
@@ -7,6 +12,10 @@ public abstract class Drawable{
     public Drawable(){
     }
 
+    /**
+     *
+     * @param imageResource all objects that will appear on the board in the GUI will have a corresponding image
+     */
     public Drawable(String imageResource){
         this.imageResource = imageResource;
     }

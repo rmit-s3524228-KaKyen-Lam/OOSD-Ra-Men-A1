@@ -1,7 +1,7 @@
 package model;
 
 /**
- * Class for path cards which contains logic for rotation and initial configuration
+ * Class for path cards which contains logic for rotation and initial path card configuration
  *
  * @author Fabio Monsalve s3585826
  */
@@ -32,8 +32,6 @@ public class PathCard extends Card {
      * Every path card has 5 booleans attached to it, all representing path availability/existence. E.g. If a path card
      * has all booleans set to true it must be a cross shaped path card in which all four possible paths available
      * including the centre.
-     *
-     * @author Fabio Monsalve s3585826
      */
     public PathCard (int configNo, String imgResource, String id){
         super(imgResource, id);
@@ -87,7 +85,7 @@ public class PathCard extends Card {
      * true, centre as true and the rest as false, after one rotation they will have changed to east as true, south as
      * true, centre as true and the rest as false.
      *
-     * @author Fabio Monsalve s3585826
+     * @param direction clockwise or anticlockwise
      */
     private void rotate(String direction) {
         boolean tempNorth = north;
@@ -95,7 +93,7 @@ public class PathCard extends Card {
         boolean tempSouth = south;
         boolean tempEast = east;
 
-        // Stores original boolean values so as to not modify the original
+        // Stores original boolean values so as to not modify them twice
         boolean temp [] = {tempNorth, tempWest, tempSouth, tempEast};
 
         if(direction.equals("cw")) {
