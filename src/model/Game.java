@@ -1,15 +1,19 @@
 package model;
 
 import controller.GameController;
+import controller.GameLogic;
 
 import java.util.ArrayList;
 
 /**
+ * This is the class that contains all the information regarding the game itself.
+ *
  * @author David Limantoro s3503728
  */
 public class Game {
     private final int NUM_OF_PLAYER = 4;
 
+    private GameLogic gameLogic;
     private GameController gameCon;
     private Board board = new Board();
     private Deck deck = new Deck();
@@ -21,51 +25,62 @@ public class Game {
 
     private Card selectedCard = null;
 
+    /**
+     * Creates a new Game object
+     */
     public Game() {
-        resetBoard();
         players = new Player[NUM_OF_PLAYER];
         for (int i = 0; i < players.length; i++) {
             players[i] = new Player(0, "miner", new ArrayList<>(), null);
         }
     }
 
-    public void resetBoard() {
-        board.initBoard();
-        deck = new Deck();
-    }
-
     /**
-     * Start a new game
+     * Start a new game.
+     * Reinitialize the board, deck, each player's hand, and reassign player to different role.
+     * Lastly, redraw the game window.
      *
      * @param gc gameController object that
      */
     public void gameStart(GameController gc) {
-        gameCon = gc;
-        resetBoard();
+
+        board.initBoard();
         deck.initialiseDeck();
+
+        // Assigns the GameController so that Game can communicate with the viewer
+        gameCon = gc;
+        gameLogic = new GameLogic(board, gameCon);
+
+        // Initialize players
         numOfSaboteours = 0;
         for (int i = 0; i < players.length; i++) {
             players[i].setHand(deck.draw(7));
             //TODO change their role here perhaps
             //TODO if someone is saboteurs, do numOfSaboteurs++;
         }
-        gameCon.redrawGrid(board.getGrid());
-        gameCon.redrawDeck(players[playerTurnNumber].getHand());
 
+        gameCon.redrawGrid();
+        gameCon.redrawDeck(players[playerTurnNumber].getHand());
+        gameCon.changePlayerLabel(playerTurnNumber);
     }
 
     /**
-     * Method to increase player's gold (this method is for when miner wins) (precondition, the player number must not be associated with saboteur)
+     * Method to increase player's score.
+     * <p>
+     * This method is for when miner wins.
+     * <p>
+     * (precondition, the player number must not be associated with saboteur)
      *
      * @param winnerPlayerNumber the player number that wins the game.
      */
     private void shareGold(int winnerPlayerNumber) {
         ArrayList<Integer> goldPool = deck.getGoldPool(NUM_OF_PLAYER - numOfSaboteours);
-        //TODO finish this method
+        //TODO add player's score accordingly in regards to goldPool
     }
 
     /**
-     * Method to place a path card on the board
+     * Method to place a path card on the board.
+     * If a card is placed successfully, the specified location will be redrawn and the nextTurn() method is initiated.
      * <p>
      * precondition, selectedCard must be a path card
      *
@@ -74,35 +89,16 @@ public class Game {
      * @return true if card is placed on the board successfully, otherwise false
      */
     public boolean placeCard(int x, int y) {
-        if (selectedCard != null) {
-            if (cardCheck(selectedCard, x, y)) {
-                board.placeCardOnLocation(x, y, selectedCard);
-                //TODO check if touches goalCard, if yes, flip it
-                //TODO check if gold card is found
-                return true;
-            } else {
-                return false;
-            }
+        if (gameLogic.placeCard(x, y, selectedCard)) {
+            nextTurn();
+            return true;
         } else {
             return false;
         }
     }
 
     /**
-     * Game logic method that checks whether the path card is allowed to be placed at x,y or not
-     *
-     * @param cardToPlace card to be placed in the board at location x,y
-     * @param x           column number of the board
-     * @param y           row number of the board
-     * @return true if card placement is valid and selectedCard is not null, otherwise false
-     */
-    private boolean cardCheck(Card cardToPlace, int x, int y) {
-        //TODO do the checking if the card is allowed to be placed here or not, for now always set to true
-        return true;
-    }
-
-    /**
-     * Handle action cards
+     * Handle action cards (work in progress)
      */
     public void handleActionCard(Object targetObject) {
         //TODO handle action card
@@ -113,17 +109,22 @@ public class Game {
      */
     public void nextTurn() {
         gameTurnNumber++;
+        players[playerTurnNumber].removeCard(selectedCard);
+        players[playerTurnNumber].addCard(deck.draw(1)[0]);
+
+        //TODO handle the case when the deck runs out of card
+
         playerTurnNumber++;
         if (playerTurnNumber >= NUM_OF_PLAYER) {
             playerTurnNumber %= NUM_OF_PLAYER;
         }
-        // TODO player draw a card
-        players[playerTurnNumber].addCard(deck.draw(1)[0]);
 
-        // TODO redraw the next player deck and change the label
         gameCon.redrawDeck(players[playerTurnNumber].getHand());
+        gameCon.changePlayerLabel(playerTurnNumber);
         selectedCard = null;
     }
+
+    // Getters and Setters
 
     public Board getBoard() {
         return board;
