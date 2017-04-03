@@ -43,9 +43,9 @@ public class Board {
         randomPosition();
         for (int i = 0; i < GRID_MAX_HEIGHT; i++) {
             for (int j = 0; j < GRID_MAX_WIDTH; j++) {
-                if ((i == START_GOAL_Y.get(1) || i == START_GOAL_Y.get(2)) && j == START_GOAL_X) {
+                if ((i == START_GOAL_Y.get(0) || i == START_GOAL_Y.get(1)) && j == START_GOAL_X) {
                     grid[j][i] = new Grid(j, i, new GoalCard("resources/Goal.png", "resources/Coal.png", "coal"));
-                } else if (i == START_GOAL_Y.get(3) && j == START_GOAL_X) {
+                } else if (i == START_GOAL_Y.get(2) && j == START_GOAL_X) {
                     grid[j][i] = new Grid(j, i, new GoalCard("resources/Goal.png", "resources/Gold.png", "gold"));
                     goldLocation = grid[j][i];
                 } else if (i == START_Y && j == START_X) {
@@ -80,7 +80,23 @@ public class Board {
         grid[x][y].setCard(card);
     }
 
+    /**
+     * Get grid at specified location
+     *
+     * @param x position x on Board
+     * @param y position y on Board
+     * @return Grid object if x and y value is valid, otherwise return null
+     */
+    public Grid getGridAtLocation(int x, int y) {
+        if (x < 0 || x >= GRID_MAX_WIDTH || y < 0 || y >= GRID_MAX_HEIGHT) {
+            return null;
+        } else {
+            return grid[x][y];
+        }
+    }
+
     public Grid[][] getGrid() {
         return grid;
     }
+
 }
