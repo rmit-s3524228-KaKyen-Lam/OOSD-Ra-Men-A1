@@ -6,6 +6,8 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import model.*;
+import view.BoardDraw;
+import view.DeckHandDraw;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -22,11 +24,14 @@ public class GameController implements Initializable {
     @FXML
     private GridPane gridGameBoard;
     @FXML
+    private Label boardLabel;
+    @FXML
     private GridPane gridPlayerDeck;
     @FXML
     private Label playerLabel;
-    @FXML
-    private Label boardLabel;
+
+    private BoardDraw boardDraw;
+    private DeckHandDraw deckHandDraw;
 
     private Grid[][] gameBoard;
     private Game game;
@@ -34,6 +39,8 @@ public class GameController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         game = new Game();
+        boardDraw = new BoardDraw(gridGameBoard, boardLabel, game);
+        deckHandDraw = new DeckHandDraw(gridPlayerDeck, playerLabel, game);
         gameBoard = game.getBoard().getGrid();
         game.gameStart(this);
 
@@ -45,27 +52,14 @@ public class GameController implements Initializable {
      * @param text Text to be placed on the label
      */
     public void changeBoardLabel(String text) {
-        boardLabel.setText(text);
-    }
-
-    /**
-     * Change the player label in the game window and render it on game window
-     *
-     * @param playerNum The player number (before added by one) to be placed on the label
-     */
-    public void changePlayerLabel(int playerNum) {
-        playerLabel.setText("Player " + (playerNum + 1) + "'s Hand");
+        boardDraw.changeBoardLabel(text);
     }
 
     /**
      * Redraws the whole game board
      */
     public void redrawGrid() {
-        for (int i = 0; i < model.Board.GRID_MAX_WIDTH; i++) {
-            for (int j = 0; j < model.Board.GRID_MAX_HEIGHT; j++) {
-                redrawGridXY(i, j);
-            }
-        }
+        boardDraw.redrawGrid();
     }
 
     /**
@@ -75,22 +69,16 @@ public class GameController implements Initializable {
      * @param y y coordinate of the board to be redrawn
      */
     public void redrawGridXY(int x, int y) {
+        boardDraw.redrawGridXY(x, y);
+    }
 
-        ImageView gd;
-        Card currentGridCard = gameBoard[x][y].getCard();
-
-        if (currentGridCard instanceof GoalCard) {
-            if (((GoalCard) currentGridCard).isHidden()) {
-                gd = new ImageView(((GoalCard) currentGridCard).getConcealedImageResource());
-            } else {
-                gd = new ImageView(currentGridCard.getImageResource());
-            }
-        } else {
-            gd = new ImageView(currentGridCard.getImageResource());
-        }
-
-        gridGameBoard.add(gd, x, y);
-        gd.setOnMouseClicked(new GameBoardListener(x, y, game));
+    /**
+     * Change the player label in the game window and render it on game window
+     *
+     * @param playerNum The player number (before added by one) to be placed on the label
+     */
+    public void changePlayerLabel(int playerNum) {
+        deckHandDraw.changePlayerLabel(playerNum);
     }
 
     /**
@@ -99,10 +87,6 @@ public class GameController implements Initializable {
      * @param currentPlayerHand the hand of current player, in ArrayList of Card format
      */
     public void redrawDeck(ArrayList<Card> currentPlayerHand) {
-        for (int i = 0; i < currentPlayerHand.size(); i++) {
-            ImageView iv = new ImageView(currentPlayerHand.get(i).getImageResource());
-            gridPlayerDeck.add(iv, i, 0);
-            iv.setOnMouseClicked(new PlayerHandListener(i, game));
-        }
+        deckHandDraw.redrawDeck(currentPlayerHand);
     }
 }

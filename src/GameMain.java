@@ -1,5 +1,3 @@
-package view;
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,7 +7,7 @@ import javafx.stage.Stage;
 /**
  * @author David Limantoro s3503728
  */
-public class GameDraw extends Application {
+public class GameMain extends Application {
 
     public final static int WIDTH = 900;
     public final static int HEIGHT = 900;
