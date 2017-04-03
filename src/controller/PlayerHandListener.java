@@ -7,7 +7,7 @@ import model.Card;
 import model.Game;
 
 /**
- * This is a class specifically dedicated for listening to click events on player's hand
+ * This is a class specifically dedicated for listening to click events on player's hand GridPane
  *
  * @author David Limantoro s3503728
  */
@@ -15,6 +15,12 @@ public class PlayerHandListener implements EventHandler<MouseEvent> {
     private int cardNum;
     private Game game;
 
+    /**
+     * Creates a listener for the player hand GridPane
+     *
+     * @param cardNum The card position in the array
+     * @param game    The game entity
+     */
     public PlayerHandListener(int cardNum, Game game) {
         this.cardNum = cardNum;
         this.game = game;

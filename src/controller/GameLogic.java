@@ -14,6 +14,12 @@ public class GameLogic {
     private Board board;
     private GameController gameCon;
 
+    /**
+     * Creates a game logic object
+     *
+     * @param board   the game board
+     * @param gameCon the game controller object that communicates with the view class
+     */
     public GameLogic(Board board, GameController gameCon) {
         this.board = board;
         this.gameCon = gameCon;

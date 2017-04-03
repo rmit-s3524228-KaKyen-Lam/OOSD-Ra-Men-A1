@@ -11,7 +11,9 @@ import model.Game;
 import java.util.ArrayList;
 
 /**
- * Created by HP on 3/04/2017.
+ * This class is responsible for drawing player's card hand and the label associated with it
+ *
+ * @author David Limantoro s3503728
  */
 public class DeckHandDraw {
 
@@ -19,6 +21,13 @@ public class DeckHandDraw {
     private Label playerLabel;
     private Game game;
 
+    /**
+     * Creates a draw class for player hand section
+     *
+     * @param gridPlayerDeck JavaFX GridPane object of player's hand
+     * @param playerLabel    JavaFX Label object of player's label
+     * @param game           The game object
+     */
     public DeckHandDraw(GridPane gridPlayerDeck, Label playerLabel, Game game) {
         this.gridPlayerDeck = gridPlayerDeck;
         this.playerLabel = playerLabel;
