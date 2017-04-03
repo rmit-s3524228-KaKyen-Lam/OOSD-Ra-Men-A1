@@ -63,8 +63,9 @@ public class GameLogic {
      * @return true if card placement is valid and selectedCard is not null, otherwise false
      */
     public boolean cardCheck(int x, int y, Card cardToPlace) {
-        return true; // set to always true for now
-        //TODO do extra check when a path connect to a null location (i.e. beyond the edge of the board)
+        return true; // set to always true for now, work on this for assignment part 2
+        // TODO do extra check when a path connect to a null location (i.e. beyond the edge of the board)
+        // Ignore these lines, this is WIP
 //        PathCard currentPathCard = (PathCard) cardToPlace;
 //
 //        boolean westConnectCheck = false;
@@ -148,6 +149,37 @@ public class GameLogic {
 //        } else {
 //            return false;
 //        }
+    }
+
+    /**
+     * Method to place a path card on the board.
+     * If a card is placed successfully, the specified location will be redrawn and the nextTurn() method is initiated.
+     * <p>
+     * precondition, selectedCard must be a path card
+     *
+     * @param x column number of the board
+     * @param y row number of the board
+     * @return true if card is placed on the board successfully, otherwise false
+     */
+    public boolean placeCard(int x, int y, Card selectedCard) {
+        if (selectedCard != null && selectedCard instanceof PathCard) {
+            if (cardCheck(x, y, selectedCard)) {
+                board.placeCardOnLocation(x, y, selectedCard);
+                if (((PathCard) selectedCard).isCentre()) {
+                    ((PathCard) selectedCard).setValid(true);
+                } else {
+                    ((PathCard) selectedCard).setValid(false);
+                }
+                checkGoalCardNeighbor(x, y, (PathCard) selectedCard);
+                System.out.println(board.goldIsFound());
+                gameCon.redrawGridXY(x, y);
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
     }
 
 }

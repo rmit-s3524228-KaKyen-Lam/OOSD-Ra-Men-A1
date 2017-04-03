@@ -31,7 +31,9 @@ public class Game {
     }
 
     /**
-     * Start a new game
+     * Start a new game.
+     * Reinitialize the board, deck, each player's hand, and reassign player to different role.
+     * Lastly, redraw the game window.
      *
      * @param gc gameController object that
      */
@@ -72,7 +74,8 @@ public class Game {
     }
 
     /**
-     * Method to place a path card on the board
+     * Method to place a path card on the board.
+     * If a card is placed successfully, the specified location will be redrawn and the nextTurn() method is initiated.
      * <p>
      * precondition, selectedCard must be a path card
      *
@@ -81,28 +84,16 @@ public class Game {
      * @return true if card is placed on the board successfully, otherwise false
      */
     public boolean placeCard(int x, int y) {
-        if (selectedCard != null) {
-            if (gameLogic.cardCheck(x, y, selectedCard)) {
-                board.placeCardOnLocation(x, y, selectedCard);
-                if (((PathCard) selectedCard).isCentre()) {
-                    ((PathCard) selectedCard).setValid(true);
-                } else {
-                    ((PathCard) selectedCard).setValid(false);
-                }
-                gameLogic.checkGoalCardNeighbor(x, y, (PathCard) selectedCard);
-                System.out.println(board.goldIsFound());
-                gameCon.redrawGridXY(x, y);
-                return true;
-            } else {
-                return false;
-            }
+        if (gameLogic.placeCard(x, y, selectedCard)) {
+            nextTurn();
+            return true;
         } else {
             return false;
         }
     }
 
     /**
-     * Handle action cards
+     * Handle action cards (work in progress)
      */
     public void handleActionCard(Object targetObject) {
         //TODO handle action card
@@ -116,7 +107,7 @@ public class Game {
         players[playerTurnNumber].removeCard(selectedCard);
         players[playerTurnNumber].addCard(deck.draw(1)[0]);
 
-        //TODO what to do if deck runs out of card
+        //TODO handle the case when the deck runs out of card
 
         playerTurnNumber++;
         if (playerTurnNumber >= NUM_OF_PLAYER) {

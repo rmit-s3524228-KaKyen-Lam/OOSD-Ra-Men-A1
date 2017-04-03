@@ -12,6 +12,9 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 /**
+ * This is the JavaFX controller class that is responsible for talking to
+ * the game object (model) as well as talking to viewer
+ *
  * @author David Limantoro s3503728
  */
 public class GameController implements Initializable {
@@ -26,7 +29,6 @@ public class GameController implements Initializable {
     private Label boardLabel;
 
     private Grid[][] gameBoard;
-
     private Game game;
 
     @Override
@@ -37,14 +39,27 @@ public class GameController implements Initializable {
 
     }
 
+    /**
+     * Change the Label of the board in the game window
+     *
+     * @param text Text to be placed on the label
+     */
     public void changeBoardLabel(String text) {
         boardLabel.setText(text);
     }
 
+    /**
+     * Change the player label in the game window and render it on game window
+     *
+     * @param playerNum The player number (before added by one) to be placed on the label
+     */
     public void changePlayerLabel(int playerNum) {
         playerLabel.setText("Player " + (playerNum + 1) + "'s Hand");
     }
 
+    /**
+     * Redraws the whole game board
+     */
     public void redrawGrid() {
         for (int i = 0; i < model.Board.GRID_MAX_WIDTH; i++) {
             for (int j = 0; j < model.Board.GRID_MAX_HEIGHT; j++) {
@@ -53,9 +68,14 @@ public class GameController implements Initializable {
         }
     }
 
+    /**
+     * Redraws only part of the game board and render it on game window
+     *
+     * @param x x coordinate of the board to be redrawn
+     * @param y y coordinate of the board to be redrawn
+     */
     public void redrawGridXY(int x, int y) {
 
-        // This code could be better when Drawable superclass is fully working
         ImageView gd;
         Card currentGridCard = gameBoard[x][y].getCard();
 
@@ -73,6 +93,11 @@ public class GameController implements Initializable {
         gd.setOnMouseClicked(new GameBoardListener(x, y, game));
     }
 
+    /**
+     * Redraws the deck of a player and render it on game window
+     *
+     * @param currentPlayerHand the hand of current player, in ArrayList of Card format
+     */
     public void redrawDeck(ArrayList<Card> currentPlayerHand) {
         for (int i = 0; i < currentPlayerHand.size(); i++) {
             ImageView iv = new ImageView(currentPlayerHand.get(i).getImageResource());
