@@ -70,10 +70,10 @@ public class GameLogic {
      * @param cardToPlace card to be placed in the board at location x,y
      * @return true if card placement is valid and selectedCard is not null, otherwise false
      */
-    private boolean cardCheck(int x, int y, Card cardToPlace) {
+    public boolean cardPlacementCheck(int x, int y, Card cardToPlace) {
         return true; // set to always true for now, work on this for assignment part 2
         // TODO do extra check when a path connect to a null location (i.e. beyond the edge of the board)
-    }
+   }
 
     /**
      * Method to place a path card on the board.
@@ -87,7 +87,7 @@ public class GameLogic {
      */
     public boolean placeCard(int x, int y, Card selectedCard) {
         if (selectedCard != null && selectedCard instanceof PathCard) {
-            if (cardCheck(x, y, selectedCard)) {
+            if (cardPlacementCheck(x, y, selectedCard)) {
                 board.placeCardOnLocation(x, y, selectedCard);
                 if (((PathCard) selectedCard).isCentre()) {
                     ((PathCard) selectedCard).setValid(true);
