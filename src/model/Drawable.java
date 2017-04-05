@@ -9,9 +9,6 @@ public abstract class Drawable{
 
     protected String imageResource = "";
 
-    public Drawable(){
-    }
-
     /**
      *
      * @param imageResource all objects that will appear on the board in the GUI will have a corresponding image

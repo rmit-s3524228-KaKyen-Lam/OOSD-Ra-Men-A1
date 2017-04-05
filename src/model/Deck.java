@@ -36,6 +36,9 @@ public class Deck {
         return cardsOut;
     }
 
+    /**
+     * Randomise order of cards in cards array
+     */
     private void randomise(){
         // TODO randomise function
     }
@@ -61,7 +64,6 @@ public class Deck {
     /**
      * Create initial collection of Cards for deck
      *
-     * @throws IOException if file specified (card configuration) is not valid
      */
     public void initialiseDeck(){
         initialiseGold();
