@@ -36,7 +36,7 @@ public class GameLogic {
         }
 
         if (card.isNorth()) {
-            checkGoalCard(board.getGridAtLocation(x, y + 1));
+            checkGoalCard(board.getGridAtLocation(x, y - 1));
         }
 
         if (card.isEast()) {
@@ -44,7 +44,7 @@ public class GameLogic {
         }
 
         if (card.isSouth()) {
-            checkGoalCard(board.getGridAtLocation(x, y - 1));
+            checkGoalCard(board.getGridAtLocation(x, y + 1));
         }
     }
 
