@@ -20,6 +20,9 @@ public abstract class Card extends Drawable{
         this.id = id;
     }
 
+    /**
+     * Method for actions different types of cards might have. E.g. Breaking tools
+     */
     public abstract void cardAction();
 
     public String getId() {

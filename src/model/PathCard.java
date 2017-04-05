@@ -32,6 +32,10 @@ public class PathCard extends Card {
      * Every path card has 5 booleans attached to it, all representing path availability/existence. E.g. If a path card
      * has all booleans set to true it must be a cross shaped path card in which all four possible paths available
      * including the centre.
+     *
+     * @param configNo represent the type of card, e.g. L shape or cross shape
+     * @param imgResource location of image file
+     * @param id of path card
      */
     public PathCard (int configNo, String imgResource, String id){
         super(imgResource, id);
@@ -85,7 +89,7 @@ public class PathCard extends Card {
      * true, centre as true and the rest as false, after one rotation they will have changed to east as true, south as
      * true, centre as true and the rest as false.
      *
-     * @param direction clockwise or anticlockwise
+     * @param direction direction clockwise("cw") or anticlockwise("acw")
      */
     private void rotate(String direction) {
         boolean tempNorth = north;
@@ -140,7 +144,6 @@ public class PathCard extends Card {
 
     @Override
     public void cardAction() {
-
     }
 
     public void setValid(boolean valid) {
