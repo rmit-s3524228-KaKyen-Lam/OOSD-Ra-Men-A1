@@ -11,6 +11,13 @@ public class Grid {
     private int y;
     private Card card;
 
+    /**
+     * Creates a single grid object that contains a card and location information
+     *
+     * @param x    x location on the board
+     * @param y    y location on the board
+     * @param card place to store Card object
+     */
     public Grid(int x, int y, Card card) {
         this.x = x;
         this.y = y;
