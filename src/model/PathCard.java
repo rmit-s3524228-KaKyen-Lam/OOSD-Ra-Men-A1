@@ -45,36 +45,44 @@ public class PathCard extends Card {
                 west = true;
                 east = true;
                 centre = true;
-            case T_SHAPE_DEAD: south = true;
+            case T_SHAPE_DEAD:
+                south = true;
                 west = true;
                 east = true;
                 break;
-            case LINE_SHAPE: west = true;
+            case LINE_SHAPE:
+                west = true;
                 east = true;
-                centre = false;
+                centre = true;
                 break;
-            case LINE_SHAPE_DEAD: west = true;
+            case LINE_SHAPE_DEAD:
+                west = true;
                 east = true;
                 break;
-            case CROSS_SHAPE: north = true;
+            case CROSS_SHAPE:
+                north = true;
                 west = true;
                 east = true;
                 south = true;
                 centre = true;
                 break;
-            case CROSS_SHAPE_DEAD: north = true;
+            case CROSS_SHAPE_DEAD:
+                north = true;
                 west = true;
                 east = true;
                 south = true;
                 break;
-            case L_SHAPE: west = true;
-                south = true;
+            case L_SHAPE:
+                east = true;
+                north = true;
                 centre = true;
                 break;
-            case L_SHAPE_DEAD: north = true;
-                south = true;
+            case L_SHAPE_DEAD:
+                east = true;
+                north = true;
                 break;
-            case DEAD: north = true;
+            case DEAD:
+                north = true;
                 centre = false;
                 break;
             case EMPTY:
