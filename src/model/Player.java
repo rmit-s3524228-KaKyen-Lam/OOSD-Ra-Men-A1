@@ -14,12 +14,64 @@ public class Player {
     private ArrayList<String> brokenTool;
     private ArrayList<Card> hand;
 
+    /**
+     * Creates a player with initial values, if any (in case if the game implements save/load feature)
+     *
+     * @param score      score value of the player
+     * @param role       "saboteur" or "miner"
+     * @param brokenTool ArrayList of broken tools (this should be an empty ArrayList by default)
+     * @param hand       The cards of the player object is holding
+     */
     public Player(int score, String role, ArrayList<String> brokenTool, ArrayList<Card> hand) {
         this.score = score;
         this.role = role;
         this.brokenTool = brokenTool;
         this.hand = hand;
     }
+
+    /**
+     * Add card to hand
+     *
+     * @param card Card to be added
+     */
+    public void addCard(Card card) {
+        hand.add(card);
+    }
+
+    /**
+     * Remove card from hand
+     *
+     * @param card Card to be removed
+     */
+    public void removeCard(Card card) {
+        hand.remove(card);
+    }
+
+    /**
+     * Setting up hand in beginning of game
+     *
+     * @param hand Initial starting hand
+     */
+    public void setHand(Card[] hand) {
+        this.hand = new ArrayList<Card>();
+        for (Card newCard : hand) {
+            this.hand.add(newCard);
+        }
+    }
+
+    /**
+     * Get card selected on hand
+     *
+     * @param card Selected card
+     * @return Index of selected card
+     */
+    public int getSelectedCard(Card card) {
+        if (hand.contains(card)) {
+            return hand.indexOf(card);
+        }
+        return -1;
+    }
+
 
     public int getScore() {
         return score;
@@ -48,48 +100,4 @@ public class Player {
     public ArrayList<Card> getHand() {
         return hand;
     }
-
-    /**
-     * Setting up hand in beginning of game
-     *
-     * @param hand Initial starting hand
-     */
-    public void setHand(Card[] hand) {
-        this.hand = new ArrayList<Card>();
-        for (Card newCard : hand) {
-            this.hand.add(newCard);
-        }
-    }
-
-    /**
-     * Get card selected on hand
-     *
-     * @param card Selected card
-     * @return Index of selected card
-     */
-    public int getSelectedCard(Card card) {
-        if (hand.contains(card)) {
-            return hand.indexOf(card);
-        }
-        return -1;
-    }
-
-    /**
-     * Add card to hand
-     *
-     * @param card Card to be added
-     */
-    public void addCard(Card card) {
-        hand.add(card);
-    }
-
-    /**
-     * Remove card from hand
-     *
-     * @param card Card to be removed
-     */
-    public void removeCard(Card card) {
-        hand.remove(card);
-    }
-
 }

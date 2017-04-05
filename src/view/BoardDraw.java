@@ -61,21 +61,21 @@ public class BoardDraw {
      */
     public void redrawGridXY(int x, int y) {
 
-        ImageView gd;
+        ImageView imageToDrawOnGrid;
         Grid[][] gameBoard = game.getBoard().getGrid();
         Card currentGridCard = gameBoard[x][y].getCard();
 
         if (currentGridCard instanceof GoalCard) {
             if (((GoalCard) currentGridCard).isHidden()) {
-                gd = new ImageView(((GoalCard) currentGridCard).getConcealedImageResource());
+                imageToDrawOnGrid = new ImageView(((GoalCard) currentGridCard).getConcealedImageResource());
             } else {
-                gd = new ImageView(currentGridCard.getImageResource());
+                imageToDrawOnGrid = new ImageView(currentGridCard.getImageResource());
             }
         } else {
-            gd = new ImageView(currentGridCard.getImageResource());
+            imageToDrawOnGrid = new ImageView(currentGridCard.getImageResource());
         }
 
-        gridGameBoard.add(gd, x, y);
-        gd.setOnMouseClicked(new GameBoardListener(x, y, game));
+        gridGameBoard.add(imageToDrawOnGrid, x, y);
+        imageToDrawOnGrid.setOnMouseClicked(new GameBoardListener(x, y, game));
     }
 }
