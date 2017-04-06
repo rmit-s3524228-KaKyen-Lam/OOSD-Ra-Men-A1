@@ -30,7 +30,7 @@ public class GameLogic {
      * @param y    y coordinate on the board where the card is about to be placed
      * @param card card to be placed in the board at location x,y
      */
-    public void checkGoalCardNeighbor(int x, int y, PathCard card) {
+    private void checkGoalCardNeighbor(int x, int y, PathCard card) {
         if (card.isWest()) {
             checkGoalCard(board.getGridAtLocation(x - 1, y));
         }
@@ -165,7 +165,8 @@ public class GameLogic {
             southConnectCheck = true;
         }
 
-        return westConnectCheck && northConnectCheck && eastConnectCheck && southConnectCheck && atLeastOneValidPath;
+        //return westConnectCheck && northConnectCheck && eastConnectCheck && southConnectCheck && atLeastOneValidPath;
+        return true;
 
     }
 
