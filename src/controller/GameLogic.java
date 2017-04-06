@@ -68,93 +68,105 @@ public class GameLogic {
      * @param cardToPlace card to be placed in the board at location x,y
      * @return true if card placement is valid and selectedCard is not null, otherwise false
      */
-    public boolean cardPlacementCheck(int x, int y, Card cardToPlace) {
-        return true; // set to always true for now, work on this for assignment part 2
-        // TODO do extra check when a path connect to a null location (i.e. beyond the edge of the board)
-        // Ignore these lines, this is WIP
-//        PathCard currentPathCard = (PathCard) cardToPlace;
-//
-//        boolean westConnectCheck = false;
-//        boolean northConnectCheck = false;
-//        boolean eastConnectCheck = false;
-//        boolean southConnectCheck = false;
-//        boolean atLeastOneValidPath = false;
-//
-//        // WEST
-//        Grid westGrid = board.getGridAtLocation(x - 1, y);
-//        Card westCard = westGrid.getCard();
-//        if (westCard != null && (westCard instanceof GoalCard || westCard.getId().equals("empty"))) {
-//            westConnectCheck = true;
-//        } else {
-//            if (currentPathCard.isWest()) {
-//                if (((PathCard) westCard).isEast() && ((PathCard) westCard).isValid()) {
-//                    westConnectCheck = true;
-//                    atLeastOneValidPath = true;
-//                }
-//            } else {
-//                if (!((PathCard) westCard).isEast()) {
-//                    westConnectCheck = true;
-//                }
-//            }
-//        }
-//
-//        // NORTH
-//        Card northCard = board.getGridAtLocation(x, y - 1).getCard();
-//        if (northCard != null && (northCard instanceof GoalCard || northCard.getId().equals("empty"))) {
-//            northConnectCheck = true;
-//        } else {
-//            if (currentPathCard.isNorth()) {
-//                if (((PathCard) northCard).isSouth() && ((PathCard) northCard).isValid()) {
-//                    westConnectCheck = true;
-//                    atLeastOneValidPath = true;
-//                }
-//            } else {
-//                if (!((PathCard) northCard).isSouth()) {
-//                    westConnectCheck = true;
-//                }
-//            }
-//
-//        }
-//
-//        // EAST
-//        Card eastCard = board.getGridAtLocation(x + 1, y).getCard();
-//        if (eastCard != null && (eastCard instanceof GoalCard || eastCard.getId().equals("empty"))) {
-//            eastConnectCheck = true;
-//        } else {
-//            if (currentPathCard.isEast()) {
-//                if (((PathCard) eastCard).isWest() && ((PathCard) eastCard).isValid()) {
-//                    westConnectCheck = true;
-//                    atLeastOneValidPath = true;
-//                }
-//            } else {
-//                if (!((PathCard) eastCard).isWest()) {
-//                    westConnectCheck = true;
-//                }
-//            }
-//        }
-//
-//        // SOUTH
-//        Card southCard = board.getGridAtLocation(x, y + 1).getCard();
-//        if (southCard != null && (southCard instanceof GoalCard || southCard.getId().equals("empty"))) {
-//            southConnectCheck = true;
-//        } else {
-//            if (currentPathCard.isSouth()) {
-//                if (((PathCard) southCard).isNorth() && ((PathCard) southCard).isValid()) {
-//                    westConnectCheck = true;
-//                    atLeastOneValidPath = true;
-//                }
-//            } else {
-//                if (!((PathCard) southCard).isNorth()) {
-//                    westConnectCheck = true;
-//                }
-//            }
-//        }
-//
-//        if (westConnectCheck && northConnectCheck && eastConnectCheck && southConnectCheck && atLeastOneValidPath) {
-//            return true;
-//        } else {
-//            return false;
-//        }
+    private boolean cardPlacementCheck(int x, int y, Card cardToPlace) {
+        PathCard currentPathCard = (PathCard) cardToPlace;
+
+        boolean westConnectCheck = false;
+        boolean northConnectCheck = false;
+        boolean eastConnectCheck = false;
+        boolean southConnectCheck = false;
+        boolean atLeastOneValidPath = false;
+
+        // WEST
+        Grid westGrid = board.getGridAtLocation(x - 1, y);
+        if (westGrid != null) {
+            Card westCard = westGrid.getCard();
+            if (westCard != null && (westCard instanceof GoalCard || westCard.getId().equals("empty"))) {
+                westConnectCheck = true;
+            } else {
+                if (currentPathCard.isWest()) {
+                    if (((PathCard) westCard).isEast() && ((PathCard) westCard).isValid()) {
+                        westConnectCheck = true;
+                        atLeastOneValidPath = true;
+                    }
+                } else {
+                    if (!((PathCard) westCard).isEast()) {
+                        westConnectCheck = true;
+                    }
+                }
+            }
+        } else {
+            westConnectCheck = true;
+        }
+
+        // NORTH
+        Grid northGrid = board.getGridAtLocation(x, y - 1);
+        if (northGrid != null) {
+            Card northCard = northGrid.getCard();
+            if (northCard != null && (northCard instanceof GoalCard || northCard.getId().equals("empty"))) {
+                northConnectCheck = true;
+            } else {
+                if (currentPathCard.isNorth()) {
+                    if (((PathCard) northCard).isSouth() && ((PathCard) northCard).isValid()) {
+                        northConnectCheck = true;
+                        atLeastOneValidPath = true;
+                    }
+                } else {
+                    if (!((PathCard) northCard).isSouth()) {
+                        northConnectCheck = true;
+                    }
+                }
+            }
+        } else {
+            northConnectCheck = true;
+        }
+
+        // EAST
+        Grid eastGrid = board.getGridAtLocation(x + 1, y);
+        if (eastGrid != null) {
+            Card eastCard = eastGrid.getCard();
+            if (eastCard != null && (eastCard instanceof GoalCard || eastCard.getId().equals("empty"))) {
+                eastConnectCheck = true;
+            } else {
+                if (currentPathCard.isEast()) {
+                    if (((PathCard) eastCard).isWest() && ((PathCard) eastCard).isValid()) {
+                        eastConnectCheck = true;
+                        atLeastOneValidPath = true;
+                    }
+                } else {
+                    if (!((PathCard) eastCard).isWest()) {
+                        eastConnectCheck = true;
+                    }
+                }
+            }
+        } else {
+            eastConnectCheck = true;
+        }
+
+        // SOUTH
+        Grid southGrid = board.getGridAtLocation(x, y + 1);
+        if (southGrid != null) {
+            Card southCard = southGrid.getCard();
+            if (southCard != null && (southCard instanceof GoalCard || southCard.getId().equals("empty"))) {
+                southConnectCheck = true;
+            } else {
+                if (currentPathCard.isSouth()) {
+                    if (((PathCard) southCard).isNorth() && ((PathCard) southCard).isValid()) {
+                        southConnectCheck = true;
+                        atLeastOneValidPath = true;
+                    }
+                } else {
+                    if (!((PathCard) southCard).isNorth()) {
+                        southConnectCheck = true;
+                    }
+                }
+            }
+        } else {
+            southConnectCheck = true;
+        }
+
+        return westConnectCheck && northConnectCheck && eastConnectCheck && southConnectCheck && atLeastOneValidPath;
+
     }
 
     /**
