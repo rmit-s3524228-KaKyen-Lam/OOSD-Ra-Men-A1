@@ -21,30 +21,6 @@ public class Player {
         this.hand = hand;
     }
 
-    public int getScore() {
-        return score;
-    }
-
-    public void setScore(int score) {
-        this.score = score;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-    public ArrayList<String> getBrokenTool() {
-        return brokenTool;
-    }
-
-    public void setBrokenTool(ArrayList<String> brokenTool) {
-        this.brokenTool = brokenTool;
-    }
-
     public ArrayList<Card> getHand() {
         return hand;
     }
@@ -90,6 +66,30 @@ public class Player {
      */
     public void removeCard(Card card) {
         hand.remove(card);
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public ArrayList<String> getBrokenTool() {
+        return brokenTool;
+    }
+
+    public void setBrokenTool(ArrayList<String> brokenTool) {
+        this.brokenTool = brokenTool;
     }
 
 }
