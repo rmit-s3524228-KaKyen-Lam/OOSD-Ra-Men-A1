@@ -5,10 +5,6 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Random;
 
-// Memo from David:
-// TODO draw method returns ArrayIndexOutOfBoundsException when deck ran out, make it return null instead.
-// TODO add a method in deck that returns true if the deck is exhausted.
-
 /**
  * Class for the deck which holds a static number of cards, also includes logic for making the initial deck of cards
  *
