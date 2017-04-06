@@ -5,6 +5,10 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Random;
 
+// Memo from David:
+// TODO draw method returns ArrayIndexOutOfBoundsException when deck ran out, make it return null instead.
+// TODO add a method in deck that returns true if the deck is exhausted.
+
 /**
  * Class for the deck which holds a static number of cards, also includes logic for making the initial deck of cards
  *
@@ -12,23 +16,22 @@ import java.util.Random;
  */
 public class Deck {
     private final int DECK_SIZE = 60;
-    private Card cards [];
+    private Card cards[];
     private int pointer = 0;
     private ArrayList<Integer> goldDeck = new ArrayList<>();
 
-    public Deck(){
+    public Deck() {
         cards = new Card[DECK_SIZE];
         initialiseDeck();
     }
 
     /**
-     *
      * @param numCards used to keep track of next card to be drawn from the deck, the number increases deopending on the
      *                 number of cards drawn each time
      * @return array of cards requested
      */
-    public Card [] draw(int numCards){
-        Card cardsOut [] = new Card[numCards];
+    public Card[] draw(int numCards) {
+        Card cardsOut[] = new Card[numCards];
 
         System.arraycopy(cards, pointer, cardsOut, 0, numCards);
         pointer = pointer + numCards;
@@ -39,14 +42,14 @@ public class Deck {
     /**
      * Randomise order of cards in cards array
      */
-    private void randomise(){
+    private void randomise() {
         // TODO randomise function
     }
 
     /**
      * Create gold deck with gold cards of different values
      */
-    private void initialiseGold(){
+    private void initialiseGold() {
 
         // Create gold deck
         int i;
@@ -63,9 +66,8 @@ public class Deck {
 
     /**
      * Create initial collection of Cards for deck
-     *
      */
-    public void initialiseDeck(){
+    public void initialiseDeck() {
         initialiseGold();
 
         /*
@@ -171,7 +173,7 @@ public class Deck {
                 }
 
             }
-        }catch(IOException e){
+        } catch (IOException e) {
             System.out.println("File not found");
         }
     }
@@ -210,6 +212,14 @@ public class Deck {
             }
         }
         return max;
+    }
+
+    public int getPointer() {
+        return pointer;
+    }
+
+    public int getDECK_SIZE() {
+        return DECK_SIZE;
     }
 
 }
