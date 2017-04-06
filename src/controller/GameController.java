@@ -77,8 +77,8 @@ public class GameController implements Initializable {
      *
      * @param playerNum The player number (before added by one) to be placed on the label
      */
-    public void changePlayerLabel(int playerNum) {
-        deckHandDraw.changePlayerLabel(playerNum);
+    public void changePlayerLabel(int playerNum, String role) {
+        deckHandDraw.changePlayerLabel(playerNum, role);
     }
 
     /**

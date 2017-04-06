@@ -61,7 +61,7 @@ public class Game {
 
         gameCon.redrawGrid();
         gameCon.redrawDeck(players[playerTurnNumber].getHand());
-        gameCon.changePlayerLabel(playerTurnNumber);
+        gameCon.changePlayerLabel(playerTurnNumber, players[playerTurnNumber].getRole());
     }
 
     /**
@@ -107,12 +107,21 @@ public class Game {
     /**
      * This method is called after a card is selected from a player's hand and then aimed at other player or placed on the board
      */
-    public void nextTurn() {
+    private void nextTurn() {
         gameTurnNumber++;
         players[playerTurnNumber].removeCard(selectedCard);
-        players[playerTurnNumber].addCard(deck.draw(1)[0]);
+        if (board.goldIsFound()) {
+            //TODO what to do when game is over
+            System.out.println("I found the gold. Game is over");
+        }
 
-        //TODO handle the case when the deck runs out of card
+        System.out.println(deck.getDECK_SIZE() + " " + deck.getPointer());
+        if (deck.getPointer() == deck.getDECK_SIZE() - 1) {
+            //TODO handle the case when the deck runs out of card
+            System.out.println("I ran out of cards in deck");
+        }
+
+        players[playerTurnNumber].addCard(deck.draw(1)[0]);
 
         playerTurnNumber++;
         if (playerTurnNumber >= NUM_OF_PLAYER) {
@@ -120,7 +129,7 @@ public class Game {
         }
 
         gameCon.redrawDeck(players[playerTurnNumber].getHand());
-        gameCon.changePlayerLabel(playerTurnNumber);
+        gameCon.changePlayerLabel(playerTurnNumber, players[playerTurnNumber].getRole());
         selectedCard = null;
     }
 

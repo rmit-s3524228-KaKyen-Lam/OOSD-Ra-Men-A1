@@ -39,8 +39,8 @@ public class DeckHandDraw {
      *
      * @param playerNum The player number (before added by one) to be placed on the label
      */
-    public void changePlayerLabel(int playerNum) {
-        playerLabel.setText("Player " + (playerNum + 1) + "'s Hand");
+    public void changePlayerLabel(int playerNum, String role) {
+        playerLabel.setText("Player " + (playerNum + 1) + "'s Hand (" + role + ")");
     }
 
     /**
@@ -50,9 +50,11 @@ public class DeckHandDraw {
      */
     public void redrawDeck(ArrayList<Card> currentPlayerHand) {
         for (int i = 0; i < currentPlayerHand.size(); i++) {
-            ImageView iv = new ImageView(currentPlayerHand.get(i).getImageResource());
-            gridPlayerDeck.add(iv, i, 0);
-            iv.setOnMouseClicked(new PlayerHandListener(i, game));
+            if (currentPlayerHand.get(i) != null) {
+                ImageView iv = new ImageView(currentPlayerHand.get(i).getImageResource());
+                gridPlayerDeck.add(iv, i, 0);
+                iv.setOnMouseClicked(new PlayerHandListener(i, game));
+            }
         }
     }
 }
