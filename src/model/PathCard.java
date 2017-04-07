@@ -7,6 +7,14 @@ package model;
  */
 public abstract class PathCard extends Card {
 
+    // enable this 4 lines of code and change Pathcard to non-abstract class to test if
+    // there is any code that needs to be tested before Deck and Board are fixed
+    //
+    // @Override
+    // public void cardAction() {
+    //
+    // }
+
     // Keep track of rotations invoked
     private int rotateVal = 0;
     private boolean isValid = false;

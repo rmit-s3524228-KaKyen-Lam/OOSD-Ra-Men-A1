@@ -2,6 +2,7 @@ package model;
 
 import controller.GameController;
 import controller.GameLogic;
+import javafx.scene.control.Alert;
 
 import java.util.ArrayList;
 
@@ -95,12 +96,16 @@ public class Game {
         if (selectedCard instanceof PathCard) {
             if (gameLogic.placeCardOnBoard(x, y, selectedCard)) {
                 nextTurn(true);
+            } else {
+                showAlertBoxErrorMessage("This path card placement is invalid");
             }
         } else if (selectedCard instanceof ActionCard) {
             // check that action card are placed on top of path card, as per requirement.
             if (board.getGridAtLocation(x, y).getCard() instanceof PathCard) {
                 handleActionCard((ActionCard) selectedCard);
                 nextTurn(true);
+            } else {
+                showAlertBoxErrorMessage("Cannot play action card on non-path card");
             }
         }
     }
@@ -150,6 +155,11 @@ public class Game {
         gameCon.redrawDeck(players[playerTurnNumber].getHand());
         gameCon.changePlayerLabel(playerTurnNumber, players[playerTurnNumber].getRole());
         selectedCard = null;
+    }
+
+    public void showAlertBoxErrorMessage(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR, message);
+        alert.show();
     }
 
     // Getters and Setters

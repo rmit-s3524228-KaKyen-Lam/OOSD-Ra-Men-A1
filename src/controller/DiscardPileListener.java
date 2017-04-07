@@ -34,6 +34,8 @@ public class DiscardPileListener implements EventHandler<MouseEvent> {
     public void handle(MouseEvent event) {
         if (game.getSelectedCard() != null) {
             game.nextTurn(true);
+        } else {
+            game.showAlertBoxErrorMessage("Cannot discard card: No card is currently selected");
         }
     }
 }
