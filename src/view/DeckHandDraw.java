@@ -1,5 +1,6 @@
 package view;
 
+import controller.DiscardPileListener;
 import controller.PlayerHandListener;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -20,6 +21,7 @@ public class DeckHandDraw {
     private GridPane gridPlayerDeck;
     private Label playerLabel;
     private Game game;
+    private ImageView trashcanImageView;
 
     /**
      * Creates a draw class for player hand section
@@ -28,10 +30,13 @@ public class DeckHandDraw {
      * @param playerLabel    JavaFX Label object of player's label
      * @param game           The game object
      */
-    public DeckHandDraw(GridPane gridPlayerDeck, Label playerLabel, Game game) {
+    public DeckHandDraw(GridPane gridPlayerDeck, Label playerLabel, ImageView trashcanImageView, Game game) {
         this.gridPlayerDeck = gridPlayerDeck;
         this.playerLabel = playerLabel;
+        this.trashcanImageView = trashcanImageView;
         this.game = game;
+
+        this.trashcanImageView.setOnMouseClicked(new DiscardPileListener(this.game));
     }
 
     /**

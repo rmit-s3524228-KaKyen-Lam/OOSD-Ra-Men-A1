@@ -90,32 +90,19 @@ public class Game {
      *
      * @param x column number of the board
      * @param y row number of the board
-     * @return true if card is placed on the board successfully, otherwise false
      */
-    public boolean placeCard(int x, int y) {
+    public void placeCard(int x, int y) {
         if (selectedCard instanceof PathCard) {
             if (gameLogic.placeCardOnBoard(x, y, selectedCard)) {
-                nextTurn();
-                return true;
-            } else {
-                return false;
+                nextTurn(true);
             }
         } else if (selectedCard instanceof ActionCard) {
-            // TODO handle action card
-            handleActionCard((ActionCard) selectedCard);
-            nextTurn();
-            return true;
+            // check that action card are placed on top of path card, as per requirement.
+            if (board.getGridAtLocation(x, y).getCard() instanceof PathCard) {
+                handleActionCard((ActionCard) selectedCard);
+                nextTurn(true);
+            }
         }
-        return false;
-    }
-
-    /**
-     * Discards the currently selected card.
-     * <p>
-     * precondition, selectedCard must not be null
-     */
-    public void discardCard() {
-        players[playerTurnNumber].removeCard(selectedCard);
     }
 
     /**
@@ -132,21 +119,28 @@ public class Game {
      * <p>
      * It checks if the game is over or not. If not, it increments the player turn number,
      * removes the currently selected card from player's hand and draws a card from a deck.
+     * <p>
+     * precondition, selectedCard must not be null
      */
-    private void nextTurn() {
+    public void nextTurn(boolean discardSelectedCard) {
         gameTurnNumber++;
-        discardCard();
         if (board.goldIsFound()) {
             shareGold(playerTurnNumber);
             // TODO implement game restart
         }
 
+        if (discardSelectedCard) {
+            players[playerTurnNumber].removeCard(selectedCard);
+        }
+
+        // Checks if the deck runs out of card. If it doesn't, draw a card from the deck to current player.
         if (deck.getPointer() == deck.getDECK_SIZE() - 30) {
             //TODO when the deck runs out of card
             System.out.println("I ran out of cards in deck");
+        } else {
+            players[playerTurnNumber].addCard(deck.draw(1)[0]);
         }
 
-        players[playerTurnNumber].addCard(deck.draw(1)[0]);
 
         playerTurnNumber++;
         if (playerTurnNumber >= NUM_OF_PLAYER) {
@@ -186,5 +180,15 @@ public class Game {
 
     public void setSelectedCard(Card selectedCard) {
         this.selectedCard = selectedCard;
+    }
+
+    /**
+     * Sets current selected card to current player's turn hand, based on the index location of the card.
+     *
+     * @param cardNumberInCurrentDeck the location of the card in the hand, starting from 0
+     */
+    public void setSelectedCard(int cardNumberInCurrentDeck) {
+        this.selectedCard = players[playerTurnNumber].getHand().get(cardNumberInCurrentDeck);
+        ;
     }
 }
