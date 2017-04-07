@@ -5,8 +5,8 @@ import model.ActionCard;
 /**
  * @author HP on 7/04/2017.
  */
-public class ActionCard_2 extends ActionCard {
-    public ActionCard_2(String imageResource, String id) {
+public class ActionCard_BreakPickaxe extends ActionCard {
+    public ActionCard_BreakPickaxe(String imageResource, String id) {
         super(imageResource, id);
     }
 

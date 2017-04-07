@@ -5,8 +5,8 @@ import model.ActionCard;
 /**
  * @author HP on 7/04/2017.
  */
-public class ActionCard_5 extends ActionCard {
-    public ActionCard_5(String imageResource, String id) {
+public class ActionCard_BreakCart extends ActionCard {
+    public ActionCard_BreakCart(String imageResource, String id) {
         super(imageResource, id);
     }
 
