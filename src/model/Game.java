@@ -6,7 +6,10 @@ import controller.GameLogic;
 import java.util.ArrayList;
 
 /**
- * This is the class that contains all the information regarding the game itself.
+ * This is the class that contains all the information regarding the game itself,
+ * as well as the bare game logic essentials.
+ * <p>
+ * The higher level logic such as card placement checking is handled by GameLogic class instead.
  *
  * @author David Limantoro s3503728
  */
@@ -40,7 +43,7 @@ public class Game {
      * Reinitialize the board, deck, each player's hand, and reassign player to different role.
      * Lastly, redraw the game window.
      *
-     * @param gc gameController object that
+     * @param gc gameController object that will talk to the viewer classes
      */
     public void gameStart(GameController gc) {
 
@@ -66,10 +69,9 @@ public class Game {
 
     /**
      * Method to increase player's score.
+     * This method is when a game round is over.
      * <p>
-     * This method is for when miner wins.
-     * <p>
-     * (precondition, the player number must not be associated with saboteur)
+     * precondition, the player number must not be more than the maximum number of player
      *
      * @param winnerPlayerNumber the player number that wins the game.
      */
@@ -82,42 +84,65 @@ public class Game {
      * Method to place a path card on the board.
      * If a card is placed successfully, the specified location will be redrawn and the nextTurn() method is initiated.
      * <p>
-     * precondition, selectedCard must be a path card
+     * precondition:
+     * 1. selectedCard must not be null
+     * 2. selectedCard must be either subclass of PathCard or ActionCard
      *
      * @param x column number of the board
      * @param y row number of the board
      * @return true if card is placed on the board successfully, otherwise false
      */
     public boolean placeCard(int x, int y) {
-        if (gameLogic.placeCard(x, y, selectedCard)) {
+        if (selectedCard instanceof PathCard) {
+            if (gameLogic.placeCardOnBoard(x, y, selectedCard)) {
+                nextTurn();
+                return true;
+            } else {
+                return false;
+            }
+        } else if (selectedCard instanceof ActionCard) {
+            // TODO handle action card
+            handleActionCard((ActionCard) selectedCard);
             nextTurn();
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     /**
-     * Handle action cards (work in progress)
+     * Discards the currently selected card.
+     * <p>
+     * precondition, selectedCard must not be null
      */
-    public void handleActionCard(Object targetObject) {
+    public void discardCard() {
+        players[playerTurnNumber].removeCard(selectedCard);
+    }
+
+    /**
+     * Handle action cards
+     * <p>
+     * precondition, selectedCard must not be null
+     */
+    public void handleActionCard(ActionCard actionCard) {
         //TODO handle action card
     }
 
     /**
-     * This method is called after a card is selected from a player's hand and then aimed at other player or placed on the board
+     * This method is called after a card is used correctly and moves the game to next turn.
+     * <p>
+     * It checks if the game is over or not. If not, it increments the player turn number,
+     * removes the currently selected card from player's hand and draws a card from a deck.
      */
     private void nextTurn() {
         gameTurnNumber++;
-        players[playerTurnNumber].removeCard(selectedCard);
+        discardCard();
         if (board.goldIsFound()) {
-            //TODO what to do when game is over
-            System.out.println("I found the gold. Game is over");
+            shareGold(playerTurnNumber);
+            // TODO implement game restart
         }
 
-        System.out.println(deck.getDECK_SIZE() + " " + deck.getPointer());
-        if (deck.getPointer() == deck.getDECK_SIZE() - 1) {
-            //TODO handle the case when the deck runs out of card
+        if (deck.getPointer() == deck.getDECK_SIZE() - 30) {
+            //TODO when the deck runs out of card
             System.out.println("I ran out of cards in deck");
         }
 

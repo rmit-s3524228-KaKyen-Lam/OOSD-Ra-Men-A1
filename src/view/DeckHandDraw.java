@@ -54,6 +54,8 @@ public class DeckHandDraw {
                 ImageView iv = new ImageView(currentPlayerHand.get(i).getImageResource());
                 gridPlayerDeck.add(iv, i, 0);
                 iv.setOnMouseClicked(new PlayerHandListener(i, game));
+            } else {
+                gridPlayerDeck.add(null, i, 0);
             }
         }
     }
