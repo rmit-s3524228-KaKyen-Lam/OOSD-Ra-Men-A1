@@ -26,6 +26,7 @@ public class Game {
     private int gameTurnNumber = 0;
     private int playerTurnNumber = 0;
     private int numOfSaboteours = 0;
+    private boolean noMoreCardNotifiedOnce = false;
 
     private Card selectedCard = null;
 
@@ -50,6 +51,7 @@ public class Game {
 
         board.initBoard();
         deck.initialiseDeck();
+        noMoreCardNotifiedOnce = false;
 
         // Assigns the GameController so that Game can communicate with the viewer
         gameCon = gc;
@@ -131,7 +133,8 @@ public class Game {
         gameTurnNumber++;
         if (board.goldIsFound()) {
             shareGold(playerTurnNumber);
-            // TODO implement game restart
+            showAlertBoxNotificationMessage("The gold is found. This round is over");
+            gameStart(gameCon);
         }
 
         if (discardSelectedCard) {
@@ -139,9 +142,12 @@ public class Game {
         }
 
         // Checks if the deck runs out of card. If it doesn't, draw a card from the deck to current player.
-        if (deck.getPointer() == deck.getDECK_SIZE() - 30) {
-            //TODO when the deck runs out of card
-            System.out.println("I ran out of cards in deck");
+        if (deck.getPointer() == deck.getDECK_SIZE() - 1) {
+            // Notify the users (once per round) that there is no more card in the deck
+            if (!noMoreCardNotifiedOnce) {
+                showAlertBoxNotificationMessage("There is no more card in the deck");
+                noMoreCardNotifiedOnce = true;
+            }
         } else {
             players[playerTurnNumber].addCard(deck.draw(1)[0]);
         }
@@ -159,6 +165,11 @@ public class Game {
 
     public void showAlertBoxErrorMessage(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR, message);
+        alert.show();
+    }
+
+    public void showAlertBoxNotificationMessage(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, message);
         alert.show();
     }
 
