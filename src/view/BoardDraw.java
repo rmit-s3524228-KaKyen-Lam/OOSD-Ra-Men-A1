@@ -55,6 +55,8 @@ public class BoardDraw {
 
     /**
      * Redraws only part of the game board and render it on game window
+     * <p>
+     * precondition, x must not exceed the board width, and y must not exceed the board height
      *
      * @param x x coordinate of the board to be redrawn
      * @param y y coordinate of the board to be redrawn

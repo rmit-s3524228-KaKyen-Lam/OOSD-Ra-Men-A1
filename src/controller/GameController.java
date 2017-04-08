@@ -29,6 +29,8 @@ public class GameController implements Initializable {
     private GridPane gridPlayerDeck;
     @FXML
     private Label playerLabel;
+    @FXML
+    private ImageView trashcanImageView;
 
     private BoardDraw boardDraw;
     private DeckHandDraw deckHandDraw;
@@ -40,7 +42,8 @@ public class GameController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         game = new Game();
         boardDraw = new BoardDraw(gridGameBoard, boardLabel, game);
-        deckHandDraw = new DeckHandDraw(gridPlayerDeck, playerLabel, game);
+        deckHandDraw = new DeckHandDraw(gridPlayerDeck, playerLabel, trashcanImageView, game);
+
         gameBoard = game.getBoard().getGrid();
         game.gameStart(this);
 

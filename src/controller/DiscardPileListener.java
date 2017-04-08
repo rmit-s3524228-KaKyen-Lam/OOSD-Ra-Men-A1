@@ -11,32 +11,31 @@ import model.Game;
  *
  * @author David Limantoro s3503728
  */
-public class PlayerHandListener implements EventHandler<MouseEvent> {
-    private int cardNum;
+public class DiscardPileListener implements EventHandler<MouseEvent> {
     private Game game;
 
     /**
-     * Creates a listener for the player hand GridPane
+     * Creates a listener for the discard pile ImageView
      *
-     * @param cardNum The card position in the array
-     * @param game    The game entity
+     * @param game The game entity
      */
-    public PlayerHandListener(int cardNum, Game game) {
-        this.cardNum = cardNum;
+    public DiscardPileListener(Game game) {
         this.game = game;
     }
 
     /**
      * Handle a click button.
      * <p>
-     * Clicking a card will make it "selected". Additionally, if the card is an action card then
-     * ask the player what to do.
+     * Clicking on a discard pile will remove the card and moves the game to next turn.
      *
      * @param event MouseEvent related to the click
      */
     @Override
     public void handle(MouseEvent event) {
-        game.setSelectedCard(cardNum);
-        // TODO highlight the card
+        if (game.getSelectedCard() != null) {
+            game.nextTurn(true);
+        } else {
+            game.showAlertBoxErrorMessage("Cannot discard card: No card is currently selected");
+        }
     }
 }
