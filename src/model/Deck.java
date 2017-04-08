@@ -37,10 +37,13 @@ public class Deck {
      */
     public Card[] draw(int numCards) {
         Card cardsOut[] = new Card[numCards];
+        //System.arraycopy(cards.toArray(), pointer, cardsOut, 0, numCards);
+        //pointer = pointer + numCards;
 
-        System.arraycopy(cards, pointer, cardsOut, 0, numCards);
-        pointer = pointer + numCards;
-
+        for(int i = 0; i < numCards; i++){
+            cardsOut[i] = cards.get(pointer);
+            pointer ++;
+        }
         return cardsOut;
     }
 
