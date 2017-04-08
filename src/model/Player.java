@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 /**
  * Player containing player details.
- * <p>
+ *
  * Created by Ka Kyen Lam on 30-Mar-17.
  */
 public class Player {

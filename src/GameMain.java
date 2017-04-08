@@ -16,12 +16,13 @@ public class GameMain extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+
+        // "gameLayout.fxml" as an example of the protected variations principle
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("resources/gameLayout.fxml"));
         primaryStage.setTitle("RA-MEN Game");
         primaryStage.setScene(new Scene(root, WIDTH, HEIGHT));
         primaryStage.show();
     }
-
 
     public static void main(String[] args) {
         launch(args);

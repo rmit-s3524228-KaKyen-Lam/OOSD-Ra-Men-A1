@@ -212,6 +212,5 @@ public class Game {
      */
     public void setSelectedCard(int cardNumberInCurrentDeck) {
         this.selectedCard = players[playerTurnNumber].getHand().get(cardNumberInCurrentDeck);
-        ;
     }
 }
