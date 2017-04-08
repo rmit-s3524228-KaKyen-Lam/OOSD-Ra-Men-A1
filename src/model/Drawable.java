@@ -8,15 +8,16 @@ package model;
  *
  * @author Fabio Monsalve s3585826
  */
-public abstract class Drawable{
+public abstract class Drawable {
 
     protected String imageResource = "";
 
     /**
+     * Creates a drawable object with associated imageResource
      *
      * @param imageResource all objects that will appear on the board in the GUI will have a corresponding image
      */
-    public Drawable(String imageResource){
+    Drawable(String imageResource) {
         this.imageResource = imageResource;
     }
 

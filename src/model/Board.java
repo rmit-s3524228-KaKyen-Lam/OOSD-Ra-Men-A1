@@ -12,8 +12,8 @@ import java.util.*;
 
 /**
  * Game board containing Grids.
- * <p>
- * Created by Ka Kyen Lam on 30-Mar-17.
+ *
+ * @author Ka Kyen Lam s3524228.
  */
 public class Board {
 
@@ -33,7 +33,7 @@ public class Board {
     /**
      * Randomise starting positions of GoalCards
      */
-    public ArrayList<Integer> randomPosition() {
+    private ArrayList<Integer> randomPosition() {
         ArrayList<Integer> startGoalYList = new ArrayList<>();
 
         startGoalYList.add(startGoalY1);
@@ -48,7 +48,7 @@ public class Board {
     /**
      * Initialise board
      */
-    public void initBoard() {
+    void initBoard() {
         ArrayList<Integer> startGoalYList = randomPosition();
         for (int i = 0; i < GRID_MAX_HEIGHT; i++) {
             for (int j = 0; j < GRID_MAX_WIDTH; j++) {
@@ -74,7 +74,7 @@ public class Board {
      *
      * @return boolean
      */
-    public boolean goldIsFound() {
+    boolean goldIsFound() {
         return !((GoalCard) (goldLocation.getCard())).isHidden();
     }
 

@@ -10,19 +10,17 @@ package model;
  * This class is also an example of the Dependency Inversion Principle as the dependence of the Card types is abstract
  * and not concrete
  *
- *
+ * @author Fabio Monsalve Duque s3585826
  */
-public abstract class Card extends Drawable{
+public abstract class Card extends Drawable {
     private String id;
-    private Board board;
-    private boolean discarded;
+    // private Board board; // This will be used for implementation of cardAction method.
 
     /**
-     *
      * @param imageResource location of image file for card
-     * @param id every can will have and if when created to access and to ensure individuality
+     * @param id            every can will have and if when created to access and to ensure individuality
      */
-    public Card(String imageResource, String id){
+    public Card(String imageResource, String id) {
         super(imageResource);
         this.id = id;
     }

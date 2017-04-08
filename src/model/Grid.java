@@ -4,8 +4,8 @@ import model.pathcard.PathCard_Empty;
 
 /**
  * Grid class containing x-coordinate, y-coordinate, and card
- * <p>
- * Created by Ka Kyen Lam on 30-Mar-17.
+ *
+ * @author Ka Kyen Lam s3524228
  */
 public class Grid {
 
@@ -20,14 +20,14 @@ public class Grid {
      * @param y    y location on the board
      * @param card place to store Card object
      */
-    public Grid(int x, int y, Card card) {
+    Grid(int x, int y, Card card) {
         this.x = x;
         this.y = y;
         this.card = card;
     }
 
     /**
-     * Remove card on selected grid
+     * Remove card from this grid
      */
     public void removeCardonGrid() {
         this.card = new PathCard_Empty("empty");

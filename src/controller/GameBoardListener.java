@@ -28,7 +28,7 @@ public class GameBoardListener implements EventHandler<MouseEvent> {
 
     /**
      * Handle a click button.
-     * <p>
+     *
      * If a card is already selected and it is a path card, then try to place the card.
      * Otherwise give the player a warning since it is an illegal move
      *

@@ -11,14 +11,14 @@ import javafx.stage.Stage;
  */
 public class GameMain extends Application {
 
-    public final static int WIDTH = 900;
-    public final static int HEIGHT = 900;
+    private final static int WIDTH = 900;
+    private final static int HEIGHT = 900;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
 
         // "gameLayout.fxml" as an example of the protected variations principle
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("resources/gameLayout.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("resources/gameLayout.fxml"));
         primaryStage.setTitle("RA-MEN Game");
         primaryStage.setScene(new Scene(root, WIDTH, HEIGHT));
         primaryStage.show();

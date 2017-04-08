@@ -1,11 +1,12 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Player containing player details.
  *
- * Created by Ka Kyen Lam on 30-Mar-17.
+ * @author Ka Kyen Lam s3524228
  */
 public class Player {
 
@@ -34,7 +35,7 @@ public class Player {
      *
      * @param card Card to be added
      */
-    public void addCard(Card card) {
+    void addCard(Card card) {
         hand.add(card);
     }
 
@@ -43,7 +44,7 @@ public class Player {
      *
      * @param card Card to be removed
      */
-    public void removeCard(Card card) {
+    void removeCard(Card card) {
         hand.remove(card);
     }
 
@@ -52,11 +53,9 @@ public class Player {
      *
      * @param hand Initial starting hand
      */
-    public void setHand(Card[] hand) {
-        this.hand = new ArrayList<Card>();
-        for (Card newCard : hand) {
-            this.hand.add(newCard);
-        }
+    void setHand(Card[] hand) {
+        this.hand = new ArrayList<>();
+        Collections.addAll(this.hand, hand);
     }
 
     /**

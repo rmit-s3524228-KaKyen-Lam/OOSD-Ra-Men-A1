@@ -7,7 +7,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import model.*;
 import view.BoardDraw;
-import view.DeckHandDraw;
+import view.PlayerHandDraw;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -33,20 +33,14 @@ public class GameController implements Initializable {
     private ImageView trashcanImageView;
 
     private BoardDraw boardDraw;
-    private DeckHandDraw deckHandDraw;
-
-    private Grid[][] gameBoard;
-    private Game game;
+    private PlayerHandDraw playerHandDraw;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        game = new Game();
+        Game game = new Game();
         boardDraw = new BoardDraw(gridGameBoard, boardLabel, game);
-        deckHandDraw = new DeckHandDraw(gridPlayerDeck, playerLabel, trashcanImageView, game);
-
-        gameBoard = game.getBoard().getGrid();
+        playerHandDraw = new PlayerHandDraw(gridPlayerDeck, playerLabel, trashcanImageView, game);
         game.gameStart(this);
-
     }
 
     /**
@@ -62,7 +56,7 @@ public class GameController implements Initializable {
      * Redraws the whole game board
      */
     public void redrawGrid() {
-        boardDraw.redrawGrid();
+        boardDraw.redrawBoard();
     }
 
     /**
@@ -72,7 +66,7 @@ public class GameController implements Initializable {
      * @param y y coordinate of the board to be redrawn
      */
     public void redrawGridXY(int x, int y) {
-        boardDraw.redrawGridXY(x, y);
+        boardDraw.redrawGrid(x, y);
     }
 
     /**
@@ -81,7 +75,7 @@ public class GameController implements Initializable {
      * @param playerNum The player number (before added by one) to be placed on the label
      */
     public void changePlayerLabel(int playerNum, String role) {
-        deckHandDraw.changePlayerLabel(playerNum, role);
+        playerHandDraw.changePlayerLabel(playerNum, role);
     }
 
     /**
@@ -90,6 +84,6 @@ public class GameController implements Initializable {
      * @param currentPlayerHand the hand of current player, in ArrayList of Card format
      */
     public void redrawDeck(ArrayList<Card> currentPlayerHand) {
-        deckHandDraw.redrawDeck(currentPlayerHand);
+        playerHandDraw.redrawPlayerHand(currentPlayerHand);
     }
 }

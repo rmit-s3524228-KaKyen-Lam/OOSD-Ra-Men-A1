@@ -172,7 +172,7 @@ public class GameLogic {
     /**
      * Method to place a path card on the board.
      * If a card is placed successfully, the specified location will be redrawn and the nextTurn() method is initiated.
-     * <p>
+     *
      * precondition, selectedCard must be a path card
      *
      * @param x column number of the board

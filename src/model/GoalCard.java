@@ -1,7 +1,8 @@
 package model;
 
 /**
- * "Goal" card class for the three goal cards used in the game
+ * "Goal" card class for the three goal cards used in the game. When the card is hidden,
+ * concealedImageResource is used.
  *
  * @author Fabio Monsalve s3585826
  */
@@ -13,9 +14,10 @@ public abstract class GoalCard extends Card {
     private String concealedImageResource;
 
     /**
+     * Creates goal card containing concealed image and image resource.
      *
      * @param concealedImageResource location of image to indicate a concealed goal card
-     * @param imageSource location of image to indicate a revealed goal card
+     * @param imageSource            location of image to indicate a revealed goal card
      */
     public GoalCard(String concealedImageResource, String imageSource, String id) {
         super(imageSource, id);
@@ -23,11 +25,6 @@ public abstract class GoalCard extends Card {
         if (imageSource.contains("Gold")) {
             gold = true;
         }
-    }
-
-    @Override
-    public void cardAction() {
-
     }
 
     public boolean isHidden() {

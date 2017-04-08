@@ -1,7 +1,6 @@
 package view;
 
 import controller.GameBoardListener;
-import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -45,23 +44,23 @@ public class BoardDraw {
     /**
      * Redraws the whole game board
      */
-    public void redrawGrid() {
+    public void redrawBoard() {
         for (int i = 0; i < model.Board.GRID_MAX_WIDTH; i++) {
             for (int j = 0; j < model.Board.GRID_MAX_HEIGHT; j++) {
-                redrawGridXY(i, j);
+                redrawGrid(i, j);
             }
         }
     }
 
     /**
      * Redraws only part of the game board and render it on game window
-     * <p>
+     *
      * precondition, x must not exceed the board width, and y must not exceed the board height
      *
      * @param x x coordinate of the board to be redrawn
      * @param y y coordinate of the board to be redrawn
      */
-    public void redrawGridXY(int x, int y) {
+    public void redrawGrid(int x, int y) {
 
         ImageView imageToDrawOnGrid;
         Grid[][] gameBoard = game.getBoard().getGrid();

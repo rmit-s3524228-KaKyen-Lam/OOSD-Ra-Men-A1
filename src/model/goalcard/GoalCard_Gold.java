@@ -10,10 +10,12 @@ import model.GoalCard;
  */
 public class GoalCard_Gold extends GoalCard {
 
-    /**
-     * @param id
-     */
     public GoalCard_Gold(String id) {
         super("resources/Goal.png", "resources/Gold.png", id);
+    }
+
+    @Override
+    public void cardAction() {
+
     }
 }

@@ -2,6 +2,9 @@ package model;
 
 /**
  * Class for path cards which contains logic for rotation and initial path card configuration
+ * Every path card has 5 booleans attached to it, all representing path availability/existence. E.g. If a path card
+ * has all booleans set to true it must be a cross shaped path card in which all four possible paths available
+ * including the centre.
  *
  * @author Fabio Monsalve s3585826
  */
@@ -16,96 +19,24 @@ public abstract class PathCard extends Card {
     private boolean east = false;
     private boolean centre = false;
 
-    // Configuration numbers relating to type of path card
-    public final static int T_SHAPE = 1;
-    public final static int T_SHAPE_DEAD = 2;
-    public final static int LINE_SHAPE = 3;
-    public final static int LINE_SHAPE_DEAD = 4;
-    public final static int CROSS_SHAPE = 5;
-    public final static int CROSS_SHAPE_DEAD = 6;
-    public final static int L_SHAPE = 7;
-    public final static int L_SHAPE_DEAD = 8;
-    public final static int DEAD = 9;
-    public final static int EMPTY = 10;
-
     /**
-     * Every path card has 5 booleans attached to it, all representing path availability/existence. E.g. If a path card
-     * has all booleans set to true it must be a cross shaped path card in which all four possible paths available
-     * including the centre.
+     * Creates a PathCard with the associated path values
      *
-     * @param configNo    represent the type of card, e.g. L shape or cross shape
-     * @param imgResource location of image file
-     * @param id          of path card
+     * @param west        true if west path is valid
+     * @param north       true if north path is valid
+     * @param east        true if east path is valid
+     * @param south       true if south path is valid
+     * @param centre      true if center of the path is valid
+     * @param imgResource imageResource for this path card
+     * @param id          id of this card
      */
-    public PathCard(int configNo, String imgResource, String id) {
-        super(imgResource, id);
-        switch (configNo) {
-            case T_SHAPE:
-                south = true;
-                west = true;
-                east = true;
-                centre = true;
-            case T_SHAPE_DEAD:
-                south = true;
-                west = true;
-                east = true;
-                break;
-            case LINE_SHAPE:
-                west = true;
-                east = true;
-                centre = true;
-                break;
-            case LINE_SHAPE_DEAD:
-                west = true;
-                east = true;
-                break;
-            case CROSS_SHAPE:
-                north = true;
-                west = true;
-                east = true;
-                south = true;
-                centre = true;
-                break;
-            case CROSS_SHAPE_DEAD:
-                north = true;
-                west = true;
-                east = true;
-                south = true;
-                break;
-            case L_SHAPE:
-                east = true;
-                north = true;
-                centre = true;
-                break;
-            case L_SHAPE_DEAD:
-                east = true;
-                north = true;
-                break;
-            case DEAD:
-                north = true;
-                centre = false;
-                break;
-            case EMPTY:
-                break;
-        }
-    }
-
-    /**
-     * Alternative constructor for a PathCard
-     *
-     * @param west
-     * @param north
-     * @param east
-     * @param south
-     * @param imgResource
-     * @param id
-     */
-    public PathCard(boolean west, boolean north, boolean east, boolean south, String imgResource, String id) {
+    public PathCard(boolean west, boolean north, boolean east, boolean south, boolean centre, String imgResource, String id) {
         super(imgResource, id);
         this.west = west;
         this.north = north;
         this.east = east;
         this.south = south;
+        this.centre = centre;
     }
 
     /**

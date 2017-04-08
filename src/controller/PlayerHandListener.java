@@ -28,7 +28,7 @@ public class PlayerHandListener implements EventHandler<MouseEvent> {
 
     /**
      * Handle a click button.
-     * <p>
+     *
      * Clicking a card will make it "selected". Additionally, if the card is an action card then
      * ask the player what to do.
      *

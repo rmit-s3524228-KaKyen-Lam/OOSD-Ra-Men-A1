@@ -2,13 +2,11 @@ package view;
 
 import controller.DiscardPileListener;
 import controller.PlayerHandListener;
-import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import model.Card;
 import model.Game;
-
 import java.util.ArrayList;
 
 /**
@@ -16,12 +14,11 @@ import java.util.ArrayList;
  *
  * @author David Limantoro s3503728
  */
-public class DeckHandDraw {
+public class PlayerHandDraw {
 
     private GridPane gridPlayerDeck;
     private Label playerLabel;
     private Game game;
-    private ImageView trashcanImageView;
 
     /**
      * Creates a draw class for player hand section
@@ -30,13 +27,11 @@ public class DeckHandDraw {
      * @param playerLabel    JavaFX Label object of player's label
      * @param game           The game object
      */
-    public DeckHandDraw(GridPane gridPlayerDeck, Label playerLabel, ImageView trashcanImageView, Game game) {
+    public PlayerHandDraw(GridPane gridPlayerDeck, Label playerLabel, ImageView trashcanImageView, Game game) {
         this.gridPlayerDeck = gridPlayerDeck;
         this.playerLabel = playerLabel;
-        this.trashcanImageView = trashcanImageView;
         this.game = game;
-
-        this.trashcanImageView.setOnMouseClicked(new DiscardPileListener(this.game));
+        trashcanImageView.setOnMouseClicked(new DiscardPileListener(this.game));
     }
 
     /**
@@ -53,7 +48,7 @@ public class DeckHandDraw {
      *
      * @param currentPlayerHand the hand of current player, in ArrayList of Card format
      */
-    public void redrawDeck(ArrayList<Card> currentPlayerHand) {
+    public void redrawPlayerHand(ArrayList<Card> currentPlayerHand) {
         for (int i = 0; i < currentPlayerHand.size(); i++) {
             if (currentPlayerHand.get(i) != null) {
                 ImageView iv = new ImageView(currentPlayerHand.get(i).getImageResource());

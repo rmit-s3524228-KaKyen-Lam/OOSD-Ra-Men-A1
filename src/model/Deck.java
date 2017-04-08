@@ -3,7 +3,6 @@ package model;
 import model.pathcard.*;
 
 import java.io.*;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
@@ -15,14 +14,13 @@ import java.util.Random;
  *
  * @author Fabio Monsalve s3585826
  */
-public class Deck {
-    private final int DECK_SIZE = 60;
+class Deck {
     private ArrayList<Card> cards;
     private int pointer = 0;
     private ArrayList<Integer> goldDeck = new ArrayList<>();
 
-    public Deck() {
-        cards = new ArrayList<>(DECK_SIZE);
+    Deck() {
+        cards = new ArrayList<>();
         initialiseDeck();
     }
 
@@ -31,15 +29,14 @@ public class Deck {
      *                 number of cards drawn each time
      * @return array of cards requested
      */
-    public Card[] draw(int numCards) {
+    Card[] draw(int numCards) {
         Card cardsOut[] = new Card[numCards];
-        //System.arraycopy(cards.toArray(), pointer, cardsOut, 0, numCards);
-        //pointer = pointer + numCards;
 
         for(int i = 0; i < numCards; i++){
             cardsOut[i] = cards.get(pointer);
             pointer ++;
         }
+
         return cardsOut;
     }
 
@@ -71,7 +68,7 @@ public class Deck {
     /**
      * Create initial collection of Cards for deck
      */
-    public void initialiseDeck() {
+    void initialiseDeck() {
         initialiseGold();
 
         /*
@@ -89,7 +86,7 @@ public class Deck {
              * Protected variations principle
              */
             InputStream fis = new FileInputStream("cardConfig.txt");
-            InputStreamReader isr = new InputStreamReader(fis, Charset.forName("UTF-8"));
+            InputStreamReader isr = new InputStreamReader(fis);
             BufferedReader br = new BufferedReader(isr);
 
             Integer id = 0;
@@ -182,7 +179,7 @@ public class Deck {
      *
      * @return an arraylist containing gold cards
      */
-    public ArrayList<Integer> getGoldPool(int numCards) {
+    ArrayList<Integer> getGoldPool(int numCards) {
 
         // Take X amount of gold card from gold deck where X is numOfCards
         ArrayList<Integer> goldPool = new ArrayList<>();
@@ -196,29 +193,12 @@ public class Deck {
         return goldPool;
     }
 
-    /**
-     * Get the highest integer in the arraylist (precondition, array must has at least one element) to give to the
-     * winner of the round.
-     *
-     * @param intArray ArrayList of integer
-     * @return the highest value in this array
-     */
-    private int getMax(ArrayList<Integer> intArray) {
-        int max = 0;
-        for (int i = 0; i < intArray.size(); i++) {
-            if (max < intArray.get(i)) {
-                max = intArray.get(i);
-            }
-        }
-        return max;
-    }
-
     public int getPointer() {
         return pointer;
     }
 
-    public int getDECK_SIZE() {
-        return DECK_SIZE;
+    public int getDeckSize() {
+        return cards.size();
     }
 
 }

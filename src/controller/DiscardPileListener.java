@@ -2,8 +2,6 @@ package controller;
 
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
-import model.ActionCard;
-import model.Card;
 import model.Game;
 import view.Notification;
 
@@ -26,7 +24,7 @@ public class DiscardPileListener implements EventHandler<MouseEvent> {
 
     /**
      * Handle a click button.
-     * <p>
+     *
      * Clicking on a discard pile will remove the card and moves the game to next turn.
      *
      * @param event MouseEvent related to the click
