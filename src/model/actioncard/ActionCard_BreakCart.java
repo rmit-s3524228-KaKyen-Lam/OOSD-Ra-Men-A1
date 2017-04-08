@@ -3,7 +3,10 @@ package model.actioncard;
 import model.ActionCard;
 
 /**
- * @author HP on 7/04/2017.
+ * Action card representing the breaking of another players cart
+ *
+ * @author Fabio Monsalve Duque s3585826
+ *
  */
 public class ActionCard_BreakCart extends ActionCard {
     public ActionCard_BreakCart(String imageResource, String id) {

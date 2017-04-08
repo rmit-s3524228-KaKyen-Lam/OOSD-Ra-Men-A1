@@ -3,7 +3,10 @@ package model.actioncard;
 import model.ActionCard;
 
 /**
- * @author HP on 7/04/2017.
+ * Action card representing the breaking of another player's pick axe
+ *
+ * @author Fabio Monsalve Duque s3585826
+ *
  */
 public class ActionCard_BreakPickaxe extends ActionCard {
     public ActionCard_BreakPickaxe(String imageResource, String id) {

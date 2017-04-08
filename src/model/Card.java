@@ -3,7 +3,14 @@ package model;
 /**
  * Abstract class for all other game cards
  *
- * @author Fabio Monsalve s3585826
+ * This class in an example of the Single-Responsibility principle as it only has a single responsibility
+ *
+ * This class is also an example of the Open-Closed principle which allows for future additions of new types of Cards
+ *
+ * This class is also an example of the Dependency Inversion Principle as the dependence of the Card types is abstract
+ * and not concrete
+ *
+ *
  */
 public abstract class Card extends Drawable{
     private String id;

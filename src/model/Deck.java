@@ -1,8 +1,11 @@
 package model;
 
+import model.pathcard.*;
+
 import java.io.*;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 // Memo from David:
@@ -10,18 +13,20 @@ import java.util.Random;
 // TODO add a method in deck that returns true if the deck is exhausted.
 
 /**
- * Class for the deck which holds a static number of cards, also includes logic for making the initial deck of cards
+ * Class for the deck which holds a static number of cards, also includes logic for making the initial deck of cards.
+ * This class is also an example of the Creator principle because the deck contains and closely uses the Card class it
+ * can create objects of Card.
  *
  * @author Fabio Monsalve s3585826
  */
 public class Deck {
     private final int DECK_SIZE = 60;
-    private Card cards[];
+    private ArrayList<Card> cards;
     private int pointer = 0;
     private ArrayList<Integer> goldDeck = new ArrayList<>();
 
     public Deck() {
-        cards = new Card[DECK_SIZE];
+        cards = new ArrayList<>(DECK_SIZE);
         initialiseDeck();
     }
 
@@ -43,7 +48,7 @@ public class Deck {
      * Randomise order of cards in cards array
      */
     private void randomise() {
-        // TODO randomise function
+        Collections.shuffle(cards);
     }
 
     /**
@@ -79,7 +84,11 @@ public class Deck {
         String line;
 
         try {
-            // Create input for to read from file
+
+            /*
+             * Create input for to read from file, "cardConfig.txt" an external representation as an example of the
+             * Protected variations principle
+             */
             InputStream fis = new FileInputStream("cardConfig.txt");
             InputStreamReader isr = new InputStreamReader(fis, Charset.forName("UTF-8"));
             BufferedReader br = new BufferedReader(isr);
@@ -91,88 +100,79 @@ public class Deck {
                 switch (tokens[0]) {
                     case "T_SHAPE":
                         for (int i = 0; i < Integer.parseInt(tokens[2]); i++) {
-                            PathCard p = new PathCard(Integer.parseInt(tokens[1]), "resources/Shape_T.png",
-                                    id.toString());
-                            cards[id] = p;
+                            PathCard p = new PathCard_T(id.toString());
+                            cards.add(p);
                             id++;
                         }
                         break;
                     case "T_SHAPE_DEAD":
                         for (int i = 0; i < Integer.parseInt(tokens[2]); i++) {
-                            PathCard p = new PathCard(Integer.parseInt(tokens[1]), "resources/Shape_T_Hole.png",
-                                    id.toString());
-                            cards[id] = p;
+                            PathCard p = new PathCard_T_Hole(id.toString());
+                            cards.add(p);
                             id++;
 
                         }
                         break;
                     case "LINE_SHAPE":
                         for (int i = 0; i < Integer.parseInt(tokens[2]); i++) {
-                            PathCard p = new PathCard(Integer.parseInt(tokens[1]), "resources/Shape_Line.png",
-                                    id.toString());
-                            cards[id] = p;
+                            PathCard p = new PathCard_Line(id.toString());
+                            cards.add(p);
                             id++;
                         }
                         break;
                     case "LINE_SHAPE_DEAD":
                         for (int i = 0; i < Integer.parseInt(tokens[2]); i++) {
-                            PathCard p = new PathCard(Integer.parseInt(tokens[1]), "resources/Shape_Line_Hole.png",
-                                    id.toString());
-                            cards[id] = p;
+                            PathCard p = new PathCard_Line_Hole(id.toString());
+                            cards.add(p);
                             id++;
                         }
                         break;
                     case "CROSS_SHAPE":
                         for (int i = 0; i < Integer.parseInt(tokens[2]); i++) {
-                            PathCard p = new PathCard(Integer.parseInt(tokens[1]), "resources/Shape_Plus.png",
-                                    id.toString());
-                            cards[id] = p;
+                            PathCard p = new PathCard_Cross(id.toString());
+                            cards.add(p);
                             id++;
                         }
                         break;
                     case "CROSS_SHAPE_DEAD":
                         for (int i = 0; i < Integer.parseInt(tokens[2]); i++) {
-                            PathCard p = new PathCard(Integer.parseInt(tokens[1]), "resources/Shape_Plus_Hole.png",
-                                    id.toString());
-                            cards[id] = p;
+                            PathCard p = new PathCard_Cross_Hole(id.toString());
+                            cards.add(p);
                             id++;
                         }
                         break;
                     case "L_SHAPE":
                         for (int i = 0; i < Integer.parseInt(tokens[2]); i++) {
-                            PathCard p = new PathCard(Integer.parseInt(tokens[1]), "resources/Shape_L.png",
-                                    id.toString());
-                            cards[id] = p;
+                            PathCard p = new PathCard_L(id.toString());
+                            cards.add(p);
                             id++;
                         }
                         break;
                     case "L_SHAPE_DEAD":
                         for (int i = 0; i < Integer.parseInt(tokens[2]); i++) {
-                            PathCard p = new PathCard(Integer.parseInt(tokens[1]), "resources/Shape_L_Hole.png",
-                                    id.toString());
-                            cards[id] = p;
+                            PathCard p = new PathCard_L_Hole(id.toString());
+                            cards.add(p);
                             id++;
                         }
                         break;
                     case "DEAD":
                         for (int i = 0; i < Integer.parseInt(tokens[2]); i++) {
-                            PathCard p = new PathCard(Integer.parseInt(tokens[1]), "resources/Shape_Dead.png",
-                                    id.toString());
-                            cards[id] = p;
+                            PathCard p = new PathCard_DeadEnd(id.toString());
+                            cards.add(p);
                             id++;
                         }
                         break;
                     case "EMPTY":
                         for (int i = 0; i < Integer.parseInt(tokens[2]); i++) {
-                            PathCard p = new PathCard(Integer.parseInt(tokens[1]), "resources/Unexplored.png",
-                                    id.toString());
-                            cards[id] = p;
+                            PathCard p = new PathCard_Empty(id.toString());
+                            cards.add(p);
                             id++;
                         }
                         break;
                 }
 
             }
+            randomise();
         } catch (IOException e) {
             System.out.println("File not found");
         }

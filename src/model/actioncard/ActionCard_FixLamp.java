@@ -3,7 +3,10 @@ package model.actioncard;
 import model.ActionCard;
 
 /**
- * @author HP on 7/04/2017.
+ * Action card representing the fixing of another player's lamp or your own
+ *
+ * @author Fabio Monsalve Duque s3585826
+ *
  */
 public class ActionCard_FixLamp extends ActionCard {
     public ActionCard_FixLamp(String imageResource, String id) {

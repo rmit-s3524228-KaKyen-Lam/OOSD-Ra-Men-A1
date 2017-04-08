@@ -1,5 +1,8 @@
 package model;
 
+import model.pathcard.PathCard_Cross;
+import model.pathcard.PathCard_Empty;
+
 import java.util.*;
 
 /*http://stackoverflow.com/questions/9369368/2d-arraylist-in-java
@@ -44,15 +47,17 @@ public class Board {
         for (int i = 0; i < GRID_MAX_HEIGHT; i++) {
             for (int j = 0; j < GRID_MAX_WIDTH; j++) {
                 if ((i == START_GOAL_Y.get(0) || i == START_GOAL_Y.get(1)) && j == START_GOAL_X) {
-                    grid[j][i] = new Grid(j, i, new GoalCard("resources/Goal.png", "resources/Coal.png", "coal"));
+                    grid[j][i] = new Grid(j, i, new GoalCard("resources/Goal.png",
+                            "resources/Coal.png", "coal"));
                 } else if (i == START_GOAL_Y.get(2) && j == START_GOAL_X) {
-                    grid[j][i] = new Grid(j, i, new GoalCard("resources/Goal.png", "resources/Gold.png", "gold"));
+                    grid[j][i] = new Grid(j, i, new GoalCard("resources/Goal.png",
+                            "resources/Gold.png", "gold"));
                     goldLocation = grid[j][i];
                 } else if (i == START_Y && j == START_X) {
-                    grid[j][i] = new Grid(j, i, new PathCard(PathCard.CROSS_SHAPE, "resources/Shape_Plus.png", "cross"));
+                    grid[j][i] = new Grid(j, i, new PathCard_Cross("initial cross shaped path card"));
                     ((PathCard) (grid[j][i].getCard())).setValid(true);
                 } else {
-                    grid[j][i] = new Grid(j, i, new PathCard(PathCard.EMPTY, "resources/Unexplored.png", "empty"));
+                    grid[j][i] = new Grid(j, i, new PathCard_Empty("empty"));
                 }
             }
             System.out.println();
