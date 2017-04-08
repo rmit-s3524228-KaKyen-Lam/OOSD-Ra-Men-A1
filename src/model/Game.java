@@ -97,7 +97,7 @@ public class Game {
     public void placeCard(int x, int y) {
         if (selectedCard instanceof PathCard) {
             if (gameLogic.placeCardOnBoard(x, y, selectedCard)) {
-                nextTurn(true);
+                nextTurn();
             } else {
                 showAlertBoxErrorMessage("This path card placement is invalid");
             }
@@ -105,7 +105,7 @@ public class Game {
             // check that action card are placed on top of path card, as per requirement.
             if (board.getGridAtLocation(x, y).getCard() instanceof PathCard) {
                 handleActionCard((ActionCard) selectedCard);
-                nextTurn(true);
+                nextTurn();
             } else {
                 showAlertBoxErrorMessage("Cannot play action card on non-path card");
             }
@@ -129,7 +129,7 @@ public class Game {
      * <p>
      * precondition, selectedCard must not be null
      */
-    public void nextTurn(boolean discardSelectedCard) {
+    public void nextTurn() {
         gameTurnNumber++;
         if (board.goldIsFound()) {
             shareGold(playerTurnNumber);
@@ -137,9 +137,9 @@ public class Game {
             gameStart(gameCon);
         }
 
-        if (discardSelectedCard) {
-            players[playerTurnNumber].removeCard(selectedCard);
-        }
+        // discard selected card from player hand
+        players[playerTurnNumber].removeCard(selectedCard);
+        selectedCard = null;
 
         // Checks if the deck runs out of card. If it doesn't, draw a card from the deck to current player.
         if (deck.getPointer() == deck.getDECK_SIZE() - 1) {
@@ -160,7 +160,6 @@ public class Game {
 
         gameCon.redrawDeck(players[playerTurnNumber].getHand());
         gameCon.changePlayerLabel(playerTurnNumber, players[playerTurnNumber].getRole());
-        selectedCard = null;
     }
 
     public void showAlertBoxErrorMessage(String message) {
