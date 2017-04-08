@@ -1,5 +1,7 @@
 package model;
 
+import model.pathcard.PathCard_Empty;
+
 /**
  * Grid class containing x-coordinate, y-coordinate, and card
  * <p>
@@ -28,7 +30,7 @@ public class Grid {
      * Remove card on selected grid
      */
     public void removeCardonGrid() {
-        this.card = new PathCard(PathCard.EMPTY, "resources/Unexplored.png", "empty");
+        this.card = new PathCard_Empty("empty");
     }
 
     public Card getCard() {

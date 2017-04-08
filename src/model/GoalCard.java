@@ -5,7 +5,7 @@ package model;
  *
  * @author Fabio Monsalve s3585826
  */
-public class GoalCard extends Card {
+public abstract class GoalCard extends Card {
 
     // All goal cards will initially be hidden
     private boolean hidden = true;

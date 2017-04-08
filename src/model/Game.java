@@ -9,8 +9,11 @@ import java.util.ArrayList;
 /**
  * This is the class that contains all the information regarding the game itself,
  * as well as the bare game logic essentials.
- * <p>
+ *
  * The higher level logic such as card placement checking is handled by GameLogic class instead.
+ *
+ * The Game class is an example of the Information Expert principle as it has the information required to assign
+ * responsibilities to objects such as Player and Deck.
  *
  * @author David Limantoro s3503728
  */
