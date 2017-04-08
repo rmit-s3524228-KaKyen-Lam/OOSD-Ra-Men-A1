@@ -8,8 +8,8 @@ import model.ActionCard;
  * @author Fabio Monsalve Duque s3585826
  *
  */
-public class Corrupt_Path_Card extends ActionCard {
-    public Corrupt_Path_Card(String imageResource, String id) {
+public class ActionCard_Corrupt_Path_Card extends ActionCard {
+    public ActionCard_Corrupt_Path_Card(String imageResource, String id) {
         super(imageResource, id);
     }
 

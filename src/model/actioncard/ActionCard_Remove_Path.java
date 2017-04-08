@@ -8,8 +8,8 @@ import model.ActionCard;
  * @author Fabio Monsalve Duque s3585826
  *
  */
-public class Remove_Path extends ActionCard {
-    public Remove_Path(String imageResource, String id) {
+public class ActionCard_Remove_Path extends ActionCard {
+    public ActionCard_Remove_Path(String imageResource, String id) {
         super(imageResource, id);
     }
 

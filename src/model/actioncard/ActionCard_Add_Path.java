@@ -3,13 +3,13 @@ package model.actioncard;
 import model.ActionCard;
 
 /**
- * Action card for the ability to rotate an existing path card
+ * Action card for the ability to add a new path to an existing eligible path card
  *
  * @author Fabio Monsalve Duque s3585826
  *
  */
-public class Rotate_Path_Card extends ActionCard {
-    public Rotate_Path_Card(String imageResource, String id) {
+public class ActionCard_Add_Path extends ActionCard {
+    public ActionCard_Add_Path(String imageResource, String id) {
         super(imageResource, id);
     }
 
