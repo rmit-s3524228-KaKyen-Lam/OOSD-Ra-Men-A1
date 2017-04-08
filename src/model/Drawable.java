@@ -1,7 +1,10 @@
 package model;
 
 /**
- * Abstract class to be used by all other classes that will be drawn or manifested on the board in the GUI itself
+ * Abstract class to be used by all other classes that will be drawn or manifested on the board in the GUI itself.
+ *
+ * This class in an example of the Single-Responsibility principle as it only has a single responsibility of serving as
+ * a constructor.
  *
  * @author Fabio Monsalve s3585826
  */

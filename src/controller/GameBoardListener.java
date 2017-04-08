@@ -35,8 +35,10 @@ public class GameBoardListener implements EventHandler<MouseEvent> {
      */
     @Override
     public void handle(MouseEvent event) {
-        if (!game.placeCard(x, y)) {
-            System.out.println("Sorry, I'm afraid that is an invalid move");
+        if (game.getSelectedCard() != null) {
+            game.placeCard(x, y);
+        } else {
+            game.showAlertBoxErrorMessage("Cannot play card: No card is currently selected");
         }
     }
 }

@@ -61,7 +61,7 @@
                                     </rowConstraints>
                                 </GridPane>
                         <Label fx:id="playerLabel" layoutX="14.0" layoutY="14.0" text="Player X's Hand" />
-                        <ImageView fx:id="trashImageView" fitHeight="100.0" fitWidth="100.0" layoutX="755.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="trashcanImageView" fitHeight="100.0" fitWidth="100.0" layoutX="755.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@Trash.png" />
                            </image></ImageView>

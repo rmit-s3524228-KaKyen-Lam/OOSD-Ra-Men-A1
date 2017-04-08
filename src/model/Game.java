@@ -2,11 +2,18 @@ package model;
 
 import controller.GameController;
 import controller.GameLogic;
+import javafx.scene.control.Alert;
 
 import java.util.ArrayList;
 
 /**
- * This is the class that contains all the information regarding the game itself.
+ * This is the class that contains all the information regarding the game itself,
+ * as well as the bare game logic essentials.
+ *
+ * The higher level logic such as card placement checking is handled by GameLogic class instead.
+ *
+ * The Game class is an example of the Information Expert principle as it has the information required to assign
+ * responsibilities to objects such as Player and Deck.
  *
  * @author David Limantoro s3503728
  */
@@ -22,6 +29,7 @@ public class Game {
     private int gameTurnNumber = 0;
     private int playerTurnNumber = 0;
     private int numOfSaboteours = 0;
+    private boolean noMoreCardNotifiedOnce = false;
 
     private Card selectedCard = null;
 
@@ -40,12 +48,13 @@ public class Game {
      * Reinitialize the board, deck, each player's hand, and reassign player to different role.
      * Lastly, redraw the game window.
      *
-     * @param gc gameController object that
+     * @param gc gameController object that will talk to the viewer classes
      */
     public void gameStart(GameController gc) {
 
         board.initBoard();
         deck.initialiseDeck();
+        noMoreCardNotifiedOnce = false;
 
         // Assigns the GameController so that Game can communicate with the viewer
         gameCon = gc;
@@ -66,10 +75,9 @@ public class Game {
 
     /**
      * Method to increase player's score.
+     * This method is when a game round is over.
      * <p>
-     * This method is for when miner wins.
-     * <p>
-     * (precondition, the player number must not be associated with saboteur)
+     * precondition, the player number must not be more than the maximum number of player
      *
      * @param winnerPlayerNumber the player number that wins the game.
      */
@@ -82,46 +90,71 @@ public class Game {
      * Method to place a path card on the board.
      * If a card is placed successfully, the specified location will be redrawn and the nextTurn() method is initiated.
      * <p>
-     * precondition, selectedCard must be a path card
+     * precondition:
+     * 1. selectedCard must not be null
+     * 2. selectedCard must be either subclass of PathCard or ActionCard
      *
      * @param x column number of the board
      * @param y row number of the board
-     * @return true if card is placed on the board successfully, otherwise false
      */
-    public boolean placeCard(int x, int y) {
-        if (gameLogic.placeCard(x, y, selectedCard)) {
-            nextTurn();
-            return true;
-        } else {
-            return false;
+    public void placeCard(int x, int y) {
+        if (selectedCard instanceof PathCard) {
+            if (gameLogic.placeCardOnBoard(x, y, selectedCard)) {
+                nextTurn();
+            } else {
+                showAlertBoxErrorMessage("This path card placement is invalid");
+            }
+        } else if (selectedCard instanceof ActionCard) {
+            // check that action card are placed on top of path card, as per requirement.
+            if (board.getGridAtLocation(x, y).getCard() instanceof PathCard) {
+                handleActionCard((ActionCard) selectedCard);
+                nextTurn();
+            } else {
+                showAlertBoxErrorMessage("Cannot play action card on non-path card");
+            }
         }
     }
 
     /**
-     * Handle action cards (work in progress)
+     * Handle action cards
+     * <p>
+     * precondition, selectedCard must not be null
      */
-    public void handleActionCard(Object targetObject) {
+    public void handleActionCard(ActionCard actionCard) {
         //TODO handle action card
     }
 
     /**
-     * This method is called after a card is selected from a player's hand and then aimed at other player or placed on the board
+     * This method is called after a card is used correctly and moves the game to next turn.
+     * <p>
+     * It checks if the game is over or not. If not, it increments the player turn number,
+     * removes the currently selected card from player's hand and draws a card from a deck.
+     * <p>
+     * precondition, selectedCard must not be null
      */
-    private void nextTurn() {
+    public void nextTurn() {
         gameTurnNumber++;
-        players[playerTurnNumber].removeCard(selectedCard);
         if (board.goldIsFound()) {
-            //TODO what to do when game is over
-            System.out.println("I found the gold. Game is over");
+            shareGold(playerTurnNumber);
+            showAlertBoxNotificationMessage("The gold is found. This round is over");
+            gameStart(gameCon);
         }
 
-        System.out.println(deck.getDECK_SIZE() + " " + deck.getPointer());
+        // discard selected card from player hand
+        players[playerTurnNumber].removeCard(selectedCard);
+        selectedCard = null;
+
+        // Checks if the deck runs out of card. If it doesn't, draw a card from the deck to current player.
         if (deck.getPointer() == deck.getDECK_SIZE() - 1) {
-            //TODO handle the case when the deck runs out of card
-            System.out.println("I ran out of cards in deck");
+            // Notify the users (once per round) that there is no more card in the deck
+            if (!noMoreCardNotifiedOnce) {
+                showAlertBoxNotificationMessage("There is no more card in the deck");
+                noMoreCardNotifiedOnce = true;
+            }
+        } else {
+            players[playerTurnNumber].addCard(deck.draw(1)[0]);
         }
 
-        players[playerTurnNumber].addCard(deck.draw(1)[0]);
 
         playerTurnNumber++;
         if (playerTurnNumber >= NUM_OF_PLAYER) {
@@ -130,7 +163,16 @@ public class Game {
 
         gameCon.redrawDeck(players[playerTurnNumber].getHand());
         gameCon.changePlayerLabel(playerTurnNumber, players[playerTurnNumber].getRole());
-        selectedCard = null;
+    }
+
+    public void showAlertBoxErrorMessage(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR, message);
+        alert.show();
+    }
+
+    public void showAlertBoxNotificationMessage(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, message);
+        alert.show();
     }
 
     // Getters and Setters
@@ -161,5 +203,15 @@ public class Game {
 
     public void setSelectedCard(Card selectedCard) {
         this.selectedCard = selectedCard;
+    }
+
+    /**
+     * Sets current selected card to current player's turn hand, based on the index location of the card.
+     *
+     * @param cardNumberInCurrentDeck the location of the card in the hand, starting from 0
+     */
+    public void setSelectedCard(int cardNumberInCurrentDeck) {
+        this.selectedCard = players[playerTurnNumber].getHand().get(cardNumberInCurrentDeck);
+        ;
     }
 }

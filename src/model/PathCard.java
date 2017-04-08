@@ -5,7 +5,15 @@ package model;
  *
  * @author Fabio Monsalve s3585826
  */
-public class PathCard extends Card {
+public abstract class PathCard extends Card {
+
+    // enable this 4 lines of code and change Pathcard to non-abstract class to test if
+    // there is any code that needs to be tested before Deck and Board are fixed
+    //
+    // @Override
+    // public void cardAction() {
+    //
+    // }
 
     // Keep track of rotations invoked
     private int rotateVal = 0;
@@ -33,13 +41,13 @@ public class PathCard extends Card {
      * has all booleans set to true it must be a cross shaped path card in which all four possible paths available
      * including the centre.
      *
-     * @param configNo represent the type of card, e.g. L shape or cross shape
+     * @param configNo    represent the type of card, e.g. L shape or cross shape
      * @param imgResource location of image file
-     * @param id of path card
+     * @param id          of path card
      */
-    public PathCard (int configNo, String imgResource, String id){
+    public PathCard(int configNo, String imgResource, String id) {
         super(imgResource, id);
-        switch (configNo){
+        switch (configNo) {
             case T_SHAPE:
                 south = true;
                 west = true;
@@ -91,6 +99,25 @@ public class PathCard extends Card {
     }
 
     /**
+     * Alternative constructor for a PathCard
+     *
+     * @param west
+     * @param north
+     * @param east
+     * @param south
+     * @param imgResource
+     * @param id
+     */
+    public PathCard(boolean west, boolean north, boolean east, boolean south, String imgResource, String id) {
+        super(imgResource, id);
+        this.west = west;
+        this.north = north;
+        this.east = east;
+        this.south = south;
+    }
+
+
+    /**
      * Logic for rotation of path cards. Path cards can rotate 90 degrees clockwise ("cw") and anticlockwise ("acw").
      * Every time this method is called all the boolean values change logically to suit the direction it's being rotates
      * to. E.g. L shaped path card is being rotated clockwise and has its boolean values of north set as true, east as
@@ -106,10 +133,10 @@ public class PathCard extends Card {
         boolean tempEast = east;
 
         // Stores original boolean values so as to not modify them twice
-        boolean temp [] = {tempNorth, tempWest, tempSouth, tempEast};
+        boolean temp[] = {tempNorth, tempWest, tempSouth, tempEast};
 
-        if(direction.equals("cw")) {
-            rotateVal ++;
+        if (direction.equals("cw")) {
+            rotateVal++;
 
             if (temp[0]) {
                 east = true;
@@ -127,7 +154,7 @@ public class PathCard extends Card {
                 south = true;
                 east = false;
             }
-        }else if(direction.equals("acw")) {
+        } else if (direction.equals("acw")) {
             rotateVal--;
             if (temp[0]) {
                 west = true;
@@ -143,15 +170,11 @@ public class PathCard extends Card {
             }
         }
 
-        if(rotateVal < 0){
+        if (rotateVal < 0) {
             rotateVal = 3;
-        }else if (rotateVal > 3){
+        } else if (rotateVal > 3) {
             rotateVal = 0;
         }
-    }
-
-    @Override
-    public void cardAction() {
     }
 
     public void setValid(boolean valid) {
