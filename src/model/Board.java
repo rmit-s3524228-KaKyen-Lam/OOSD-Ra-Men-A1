@@ -1,5 +1,7 @@
 package model;
 
+import model.goalcard.GoalCard_Coal;
+import model.goalcard.GoalCard_Gold;
 import model.pathcard.PathCard_Cross;
 import model.pathcard.PathCard_Empty;
 
@@ -47,11 +49,9 @@ public class Board {
         for (int i = 0; i < GRID_MAX_HEIGHT; i++) {
             for (int j = 0; j < GRID_MAX_WIDTH; j++) {
                 if ((i == START_GOAL_Y.get(0) || i == START_GOAL_Y.get(1)) && j == START_GOAL_X) {
-                    grid[j][i] = new Grid(j, i, new GoalCard("resources/Goal.png",
-                            "resources/Coal.png", "coal"));
+                    grid[j][i] = new Grid(j, i, new GoalCard_Coal(("coal")));
                 } else if (i == START_GOAL_Y.get(2) && j == START_GOAL_X) {
-                    grid[j][i] = new Grid(j, i, new GoalCard("resources/Goal.png",
-                            "resources/Gold.png", "gold"));
+                    grid[j][i] = new Grid(j, i, new GoalCard_Gold(("gold")));
                     goldLocation = grid[j][i];
                 } else if (i == START_Y && j == START_X) {
                     grid[j][i] = new Grid(j, i, new PathCard_Cross("initial cross shaped path card"));
