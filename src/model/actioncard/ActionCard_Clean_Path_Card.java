@@ -3,13 +3,13 @@ package model.actioncard;
 import model.ActionCard;
 
 /**
- * Action card for the ability to add a new path to an existing eligible path card
+ * Action card for the ability to fix a corrupted path card
  *
  * @author Fabio Monsalve Duque s3585826
  *
  */
-public class Add_Path extends ActionCard {
-    public Add_Path(String imageResource, String id) {
+public class ActionCard_Clean_Path_Card extends ActionCard {
+    public ActionCard_Clean_Path_Card(String imageResource, String id) {
         super(imageResource, id);
     }
 

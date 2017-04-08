@@ -8,8 +8,8 @@ import model.ActionCard;
  * @author Fabio Monsalve Duque s3585826
  *
  */
-public class Destroy_Multiple_Paths extends ActionCard {
-    public Destroy_Multiple_Paths(String imageResource, String id) {
+public class ActionCard_Destroy_Multiple_Paths extends ActionCard {
+    public ActionCard_Destroy_Multiple_Paths(String imageResource, String id) {
         super(imageResource, id);
     }
 

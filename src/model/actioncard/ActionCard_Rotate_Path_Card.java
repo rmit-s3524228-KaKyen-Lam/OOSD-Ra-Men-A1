@@ -3,13 +3,13 @@ package model.actioncard;
 import model.ActionCard;
 
 /**
- * Action card for the ability to swap a path card for another already on the board
+ * Action card for the ability to rotate an existing path card
  *
  * @author Fabio Monsalve Duque s3585826
  *
  */
-public class Swap_Path_Cards extends ActionCard {
-    public Swap_Path_Cards(String imageResource, String id) {
+public class ActionCard_Rotate_Path_Card extends ActionCard {
+    public ActionCard_Rotate_Path_Card(String imageResource, String id) {
         super(imageResource, id);
     }
 
