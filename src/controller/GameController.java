@@ -55,7 +55,7 @@ public class GameController implements Initializable {
     /**
      * Redraws the whole game board
      */
-    public void redrawGrid() {
+    public void redrawBoard() {
         boardDraw.redrawBoard();
     }
 
@@ -65,7 +65,7 @@ public class GameController implements Initializable {
      * @param x x coordinate of the board to be redrawn
      * @param y y coordinate of the board to be redrawn
      */
-    public void redrawGridXY(int x, int y) {
+    public void redrawGrid(int x, int y) {
         boardDraw.redrawGrid(x, y);
     }
 
@@ -83,7 +83,7 @@ public class GameController implements Initializable {
      *
      * @param currentPlayerHand the hand of current player, in ArrayList of Card format
      */
-    public void redrawDeck(ArrayList<Card> currentPlayerHand) {
+    public void redrawPlayerHand(ArrayList<Card> currentPlayerHand) {
         playerHandDraw.redrawPlayerHand(currentPlayerHand);
     }
 }

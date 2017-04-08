@@ -66,8 +66,8 @@ public class Game {
             //TODO if someone is saboteurs, do numOfSaboteurs++;
         }
 
-        gameCon.redrawGrid();
-        gameCon.redrawDeck(players[playerTurnNumber].getHand());
+        gameCon.redrawBoard();
+        gameCon.redrawPlayerHand(players[playerTurnNumber].getHand());
         gameCon.changePlayerLabel(playerTurnNumber, players[playerTurnNumber].getRole());
     }
 
@@ -161,7 +161,7 @@ public class Game {
             playerTurnNumber %= NUM_OF_PLAYER;
         }
 
-        gameCon.redrawDeck(players[playerTurnNumber].getHand());
+        gameCon.redrawPlayerHand(players[playerTurnNumber].getHand());
         gameCon.changePlayerLabel(playerTurnNumber, players[playerTurnNumber].getRole());
     }
 

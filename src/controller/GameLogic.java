@@ -59,7 +59,7 @@ public class GameLogic {
     private void checkGoalCard(Grid gridToCheck) {
         if (gridToCheck != null && gridToCheck.getCard() instanceof GoalCard) {
             ((GoalCard) gridToCheck.getCard()).setHidden(false);
-            gameCon.redrawGridXY(gridToCheck.getX(), gridToCheck.getY());
+            gameCon.redrawGrid(gridToCheck.getX(), gridToCheck.getY());
         }
     }
 
@@ -189,7 +189,7 @@ public class GameLogic {
                     ((PathCard) selectedCard).setValid(false);
                 }
                 checkGoalCardNeighbor(x, y, (PathCard) selectedCard);
-                gameCon.redrawGridXY(x, y);
+                gameCon.redrawGrid(x, y);
                 return true;
             } else {
                 return false;
