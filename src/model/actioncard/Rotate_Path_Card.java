@@ -3,13 +3,13 @@ package model.actioncard;
 import model.ActionCard;
 
 /**
- * Action card representing the breaking of another player's pick axe
+ * Action card for the ability to rotate an existing path card
  *
  * @author Fabio Monsalve Duque s3585826
  *
  */
-public class ActionCard_BreakPickaxe extends ActionCard {
-    public ActionCard_BreakPickaxe(String imageResource, String id) {
+public class Rotate_Path_Card extends ActionCard {
+    public Rotate_Path_Card(String imageResource, String id) {
         super(imageResource, id);
     }
 

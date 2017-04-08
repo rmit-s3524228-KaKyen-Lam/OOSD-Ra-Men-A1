@@ -3,13 +3,13 @@ package model.actioncard;
 import model.ActionCard;
 
 /**
- * Action card representing the fixing of another players Cart or your own
+ * Action card for the ability to swap a path card for another already on the board
  *
  * @author Fabio Monsalve Duque s3585826
  *
  */
-public class ActionCard_FixCart extends ActionCard {
-    public ActionCard_FixCart(String imageResource, String id) {
+public class Swap_Path_Cards extends ActionCard {
+    public Swap_Path_Cards(String imageResource, String id) {
         super(imageResource, id);
     }
 
