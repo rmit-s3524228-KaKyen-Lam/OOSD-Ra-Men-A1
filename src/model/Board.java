@@ -19,13 +19,13 @@ public class Board {
 
     public static final int GRID_MAX_WIDTH = 9;
     public static final int GRID_MAX_HEIGHT = 7;
-    private static final int START_GOAL_X = 8;
-    private static ArrayList<Integer> START_GOAL_Y = new ArrayList<>();
-    private static int GOAL_ONE = 1;
-    private static int GOAL_TWO = 3;
-    private static int GOAL_THREE = 5;
-    private static final int START_X = 0;
-    private static final int START_Y = 3;
+
+    private int startGoalX = 8;
+    private int startGoalY1 = 1;
+    private int startGoalY2 = 3;
+    private int startGoalY3 = 5;
+    private int startPathX = 0;
+    private int startPathY = 3;
 
     private Grid[][] grid = new Grid[GRID_MAX_WIDTH][GRID_MAX_HEIGHT];
     private Grid goldLocation;
@@ -33,27 +33,31 @@ public class Board {
     /**
      * Randomise starting positions of GoalCards
      */
-    public void randomPosition() {
-        START_GOAL_Y.add(GOAL_ONE);
-        START_GOAL_Y.add(GOAL_TWO);
-        START_GOAL_Y.add(GOAL_THREE);
+    public ArrayList<Integer> randomPosition() {
+        ArrayList<Integer> startGoalYList = new ArrayList<>();
 
-        Collections.shuffle(START_GOAL_Y);
+        startGoalYList.add(startGoalY1);
+        startGoalYList.add(startGoalY2);
+        startGoalYList.add(startGoalY3);
+
+        Collections.shuffle(startGoalYList);
+
+        return startGoalYList;
     }
 
     /**
      * Initialise board
      */
     public void initBoard() {
-        randomPosition();
+        ArrayList<Integer> startGoalYList = randomPosition();
         for (int i = 0; i < GRID_MAX_HEIGHT; i++) {
             for (int j = 0; j < GRID_MAX_WIDTH; j++) {
-                if ((i == START_GOAL_Y.get(0) || i == START_GOAL_Y.get(1)) && j == START_GOAL_X) {
+                if ((i == startGoalYList.get(0) || i == startGoalYList.get(1)) && j == startGoalX) {
                     grid[j][i] = new Grid(j, i, new GoalCard_Coal(("coal")));
-                } else if (i == START_GOAL_Y.get(2) && j == START_GOAL_X) {
+                } else if (i == startGoalYList.get(2) && j == startGoalX) {
                     grid[j][i] = new Grid(j, i, new GoalCard_Gold(("gold")));
                     goldLocation = grid[j][i];
-                } else if (i == START_Y && j == START_X) {
+                } else if (i == startPathY && j == startPathX) {
                     grid[j][i] = new Grid(j, i, new PathCard_Cross("initial cross shaped path card"));
                     ((PathCard) (grid[j][i].getCard())).setValid(true);
                 } else {

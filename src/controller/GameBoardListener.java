@@ -3,6 +3,7 @@ package controller;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import model.Game;
+import view.Notification;
 
 /**
  * This is a class specifically dedicated for listening to click events on the game board GridPane
@@ -38,7 +39,7 @@ public class GameBoardListener implements EventHandler<MouseEvent> {
         if (game.getSelectedCard() != null) {
             game.placeCard(x, y);
         } else {
-            game.showAlertBoxErrorMessage("Cannot play card: No card is currently selected");
+            Notification.showAlertBoxErrorMessage("Cannot play card: No card is currently selected");
         }
     }
 }

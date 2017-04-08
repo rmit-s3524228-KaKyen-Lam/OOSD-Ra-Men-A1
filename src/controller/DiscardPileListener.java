@@ -5,6 +5,7 @@ import javafx.scene.input.MouseEvent;
 import model.ActionCard;
 import model.Card;
 import model.Game;
+import view.Notification;
 
 /**
  * This is a class specifically dedicated for listening to click events on player's hand GridPane
@@ -35,7 +36,7 @@ public class DiscardPileListener implements EventHandler<MouseEvent> {
         if (game.getSelectedCard() != null) {
             game.nextTurn();
         } else {
-            game.showAlertBoxErrorMessage("Cannot discard card: No card is currently selected");
+            Notification.showAlertBoxErrorMessage("Cannot discard card: No card is currently selected");
         }
     }
 }
