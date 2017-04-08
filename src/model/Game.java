@@ -3,6 +3,7 @@ package model;
 import controller.GameController;
 import controller.GameLogic;
 import javafx.scene.control.Alert;
+import view.Notification;
 
 import java.util.ArrayList;
 
@@ -102,7 +103,7 @@ public class Game {
             if (gameLogic.placeCardOnBoard(x, y, selectedCard)) {
                 nextTurn();
             } else {
-                showAlertBoxErrorMessage("This path card placement is invalid");
+                Notification.showAlertBoxErrorMessage("This path card placement is invalid");
             }
         } else if (selectedCard instanceof ActionCard) {
             // check that action card are placed on top of path card, as per requirement.
@@ -110,7 +111,7 @@ public class Game {
                 handleActionCard((ActionCard) selectedCard);
                 nextTurn();
             } else {
-                showAlertBoxErrorMessage("Cannot play action card on non-path card");
+                Notification.showAlertBoxErrorMessage("Cannot play action card on non-path card");
             }
         }
     }
@@ -136,7 +137,7 @@ public class Game {
         gameTurnNumber++;
         if (board.goldIsFound()) {
             shareGold(playerTurnNumber);
-            showAlertBoxNotificationMessage("The gold is found. This round is over");
+            Notification.showAlertBoxNotificationMessage("The gold is found. This round is over");
             gameStart(gameCon);
         }
 
@@ -148,7 +149,7 @@ public class Game {
         if (deck.getPointer() == deck.getDECK_SIZE() - 1) {
             // Notify the users (once per round) that there is no more card in the deck
             if (!noMoreCardNotifiedOnce) {
-                showAlertBoxNotificationMessage("There is no more card in the deck");
+                Notification.showAlertBoxNotificationMessage("There is no more card in the deck");
                 noMoreCardNotifiedOnce = true;
             }
         } else {
@@ -163,16 +164,6 @@ public class Game {
 
         gameCon.redrawDeck(players[playerTurnNumber].getHand());
         gameCon.changePlayerLabel(playerTurnNumber, players[playerTurnNumber].getRole());
-    }
-
-    public void showAlertBoxErrorMessage(String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR, message);
-        alert.show();
-    }
-
-    public void showAlertBoxNotificationMessage(String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION, message);
-        alert.show();
     }
 
     // Getters and Setters
@@ -212,6 +203,5 @@ public class Game {
      */
     public void setSelectedCard(int cardNumberInCurrentDeck) {
         this.selectedCard = players[playerTurnNumber].getHand().get(cardNumberInCurrentDeck);
-        ;
     }
 }
