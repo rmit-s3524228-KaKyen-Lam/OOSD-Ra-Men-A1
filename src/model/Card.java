@@ -23,7 +23,7 @@ public abstract class Card extends Drawable {
     public Card(String imageResource, String id) {
         super(imageResource);
         this.id = id;
-    }
+m    }
 
     /**
      * Method for actions different types of cards might have. E.g. Breaking tools

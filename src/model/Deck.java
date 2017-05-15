@@ -103,10 +103,9 @@ class Deck {
                         break;
                     case "T_SHAPE_DEAD":
                         for (int i = 0; i < Integer.parseInt(tokens[2]); i++) {
-                            PathCard p = new PathCard_T_Hole(id.toString());
+                            PathCard p = new PathCard_T_Dead(id.toString());
                             cards.add(p);
                             id++;
-
                         }
                         break;
                     case "LINE_SHAPE":
@@ -118,7 +117,7 @@ class Deck {
                         break;
                     case "LINE_SHAPE_DEAD":
                         for (int i = 0; i < Integer.parseInt(tokens[2]); i++) {
-                            PathCard p = new PathCard_Line_Hole(id.toString());
+                            PathCard p = new PathCard_Line_Dead(id.toString());
                             cards.add(p);
                             id++;
                         }
@@ -132,7 +131,7 @@ class Deck {
                         break;
                     case "CROSS_SHAPE_DEAD":
                         for (int i = 0; i < Integer.parseInt(tokens[2]); i++) {
-                            PathCard p = new PathCard_Cross_Hole(id.toString());
+                            PathCard p = new PathCard_Cross_Dead(id.toString());
                             cards.add(p);
                             id++;
                         }
@@ -146,7 +145,7 @@ class Deck {
                         break;
                     case "L_SHAPE_DEAD":
                         for (int i = 0; i < Integer.parseInt(tokens[2]); i++) {
-                            PathCard p = new PathCard_L_Hole(id.toString());
+                            PathCard p = new PathCard_L_Dead(id.toString());
                             cards.add(p);
                             id++;
                         }
@@ -166,7 +165,6 @@ class Deck {
                         }
                         break;
                 }
-
             }
             randomise();
         } catch (IOException e) {
@@ -200,5 +198,4 @@ class Deck {
     public int getDeckSize() {
         return cards.size();
     }
-
 }
