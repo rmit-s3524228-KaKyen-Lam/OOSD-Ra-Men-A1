@@ -9,8 +9,8 @@ import model.ActionCard;
  *
  */
 public class ActionCard_Destroy_Multiple_Paths extends ActionCard {
-    public ActionCard_Destroy_Multiple_Paths(String imageResource, String id) {
-        super(imageResource, id);
+    public ActionCard_Destroy_Multiple_Paths(String id) {
+        super("resources/Action_Destroy_Path_And_Neighbour.png", id);
     }
 
     @Override

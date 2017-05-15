@@ -73,24 +73,23 @@ class Deck {
   void initialiseDeck() {
     initialiseGold();
 
-        /*
-         * Each token is a part of a line from the path card configuration file "cardConfig.txt". Token 0 refers to the
-         * card name, token 1 refers to the type of path card, token 2 refers to the number of cards of this
-         * specific configuration are needed
-         */
+    /*
+     * Each token is a part of a line from the path card configuration file "cardConfig.txt". Token 0 refers to the
+     * card name, token 1 refers to the type of path card, token 2 refers to the number of cards of this
+     * specific configuration are needed
+     */
     String[] tokens;
     String line;
 
+     /*
+      * Create input for to read from file, "cardConfig.txt" an external representation as an example of the
+      * Protected variations principle
+      */
     try {
-
-            /*
-             * Create input for to read from file, "cardConfig.txt" an external representation as an example of the
-             * Protected variations principle
-             */
       InputStream fis = new FileInputStream("cardConfig.txt");
       InputStreamReader isr = new InputStreamReader(fis);
       BufferedReader br = new BufferedReader(isr);
-
+      CardFactory cardFactory = new CardFactory();
       Integer id = 0;
 
       while ((line = br.readLine()) != null) {
@@ -98,71 +97,109 @@ class Deck {
         switch (tokens[0]) {
           case "T_SHAPE":
             for (int i = 0; i < Integer.parseInt(tokens[2]); i++) {
-              PathCard p = new PathCard_T(id.toString());
-              cards.add(p);
+              cards.add(cardFactory.makeCard(tokens[0], id.toString()));
               id++;
             }
             break;
           case "T_SHAPE_DEAD":
             for (int i = 0; i < Integer.parseInt(tokens[2]); i++) {
-              PathCard p = new PathCard_T_Dead(id.toString());
-              cards.add(p);
+              cards.add(cardFactory.makeCard(tokens[0], id.toString()));
               id++;
             }
             break;
           case "LINE_SHAPE":
             for (int i = 0; i < Integer.parseInt(tokens[2]); i++) {
-              PathCard p = new PathCard_Line(id.toString());
-              cards.add(p);
+              cards.add(cardFactory.makeCard(tokens[0], id.toString()));
               id++;
             }
             break;
           case "LINE_SHAPE_DEAD":
             for (int i = 0; i < Integer.parseInt(tokens[2]); i++) {
-              PathCard p = new PathCard_Line_Dead(id.toString());
-              cards.add(p);
+              cards.add(cardFactory.makeCard(tokens[0], id.toString()));
               id++;
             }
             break;
           case "CROSS_SHAPE":
             for (int i = 0; i < Integer.parseInt(tokens[2]); i++) {
-              PathCard p = new PathCard_Cross(id.toString());
-              cards.add(p);
+              cards.add(cardFactory.makeCard(tokens[0], id.toString()));;
               id++;
             }
             break;
           case "CROSS_SHAPE_DEAD":
             for (int i = 0; i < Integer.parseInt(tokens[2]); i++) {
-              PathCard p = new PathCard_Cross_Dead(id.toString());
-              cards.add(p);
+              cards.add(cardFactory.makeCard(tokens[0], id.toString()));;
               id++;
             }
             break;
           case "L_SHAPE":
             for (int i = 0; i < Integer.parseInt(tokens[2]); i++) {
-              PathCard p = new PathCard_L(id.toString());
-              cards.add(p);
+              cards.add(cardFactory.makeCard(tokens[0], id.toString()));;
               id++;
             }
             break;
           case "L_SHAPE_DEAD":
             for (int i = 0; i < Integer.parseInt(tokens[2]); i++) {
-              PathCard p = new PathCard_L_Dead(id.toString());
-              cards.add(p);
+              cards.add(cardFactory.makeCard(tokens[0], id.toString()));
               id++;
             }
             break;
           case "DEAD":
             for (int i = 0; i < Integer.parseInt(tokens[2]); i++) {
-              PathCard p = new PathCard_DeadEnd(id.toString());
-              cards.add(p);
+              cards.add(cardFactory.makeCard(tokens[0], id.toString()));
               id++;
             }
             break;
           case "EMPTY":
             for (int i = 0; i < Integer.parseInt(tokens[2]); i++) {
-              PathCard p = new PathCard_Empty(id.toString());
-              cards.add(p);
+              cards.add(cardFactory.makeCard(tokens[0], id.toString()));
+              id++;
+            }
+            break;
+          case "ADD_PATH":
+            for (int i = 0; i < Integer.parseInt(tokens[2]); i++) {
+              cards.add(cardFactory.makeCard(tokens[0], id.toString()));
+              id++;
+            }
+            break;
+          case "CLEAN_PATH":
+            for (int i = 0; i < Integer.parseInt(tokens[2]); i++) {
+              cards.add(cardFactory.makeCard(tokens[0], id.toString()));
+              id++;
+            }
+            break;
+          case "CORRUPT_PATH":
+            for (int i = 0; i < Integer.parseInt(tokens[2]); i++) {
+              cards.add(cardFactory.makeCard(tokens[0], id.toString()));
+              id++;
+            }
+            break;
+          case "DESTROY_M_PATHS":
+            for (int i = 0; i < Integer.parseInt(tokens[2]); i++) {
+              cards.add(cardFactory.makeCard(tokens[0], id.toString()));
+              id++;
+            }
+            break;
+          case "DESTROY_PATH":
+            for (int i = 0; i < Integer.parseInt(tokens[2]); i++) {
+              cards.add(cardFactory.makeCard(tokens[0], id.toString()));
+              id++;
+            }
+            break;
+          case "REMOVE_PATH":
+            for (int i = 0; i < Integer.parseInt(tokens[2]); i++) {
+              cards.add(cardFactory.makeCard(tokens[0], id.toString()));
+              id++;
+            }
+            break;
+          case "ROTATE_PATH":
+            for (int i = 0; i < Integer.parseInt(tokens[2]); i++) {
+              cards.add(cardFactory.makeCard(tokens[0], id.toString()));
+              id++;
+            }
+            break;
+          case "SWAP_PATH":
+            for (int i = 0; i < Integer.parseInt(tokens[2]); i++) {
+              cards.add(cardFactory.makeCard(tokens[0], id.toString()));
               id++;
             }
             break;

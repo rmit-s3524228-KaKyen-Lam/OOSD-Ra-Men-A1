@@ -9,8 +9,8 @@ import model.ActionCard;
  *
  */
 public class ActionCard_Swap_Path_Cards extends ActionCard {
-    public ActionCard_Swap_Path_Cards(String imageResource, String id) {
-        super(imageResource, id);
+    public ActionCard_Swap_Path_Cards(String id) {
+        super("resources/Action_Swap.png", id);
     }
 
     @Override

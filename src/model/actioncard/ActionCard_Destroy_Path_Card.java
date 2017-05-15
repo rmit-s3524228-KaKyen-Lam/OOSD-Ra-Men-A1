@@ -9,12 +9,13 @@ import model.ActionCard;
  *
  */
 public class ActionCard_Destroy_Path_Card extends ActionCard {
-    public ActionCard_Destroy_Path_Card(String imageResource, String id) {
-        super(imageResource, id);
-    }
 
-    @Override
-    public void cardAction() {
+  public ActionCard_Destroy_Path_Card(String id) {
+    super("resources/Action_Destroy_one_Path.png", id);
+  }
 
-    }
+  @Override
+  public void cardAction() {
+
+  }
 }

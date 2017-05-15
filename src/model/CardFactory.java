@@ -1,57 +1,57 @@
 package model;
 
+import model.actioncard.*;
+import model.goalcard.GoalCard_Coal;
+import model.goalcard.GoalCard_Goal;
+import model.goalcard.GoalCard_Gold;
+import model.pathcard.*;
+
 public class CardFactory {
 
-  public Card getCard(String cardType){
-    if(cardType == null){
-      return null;
-    }
+  public Card makeCard (String cardType, String id){
+    Card card = null;
 
     if(cardType.equals("T_SHAPE"))
-      if(cardType.equals("T_SHAPE_DEAD"))
-        if(cardType.equals("LINE_SHAPE"))
-          if(cardType.equals("LINE_SHAPE_DEAD"))
-            if(cardType.equals("CROSS_SHAPE"))
-              if(cardType.equals("CROSS_SHAPE_DEAD"))
-                if(cardType.equals("L_SHAPE"))
-                  if(cardType.equals("L_SHAPE DEAD"))
-                    if(cardType.equals("DEAD"))
-                      if(cardType.equals("CLAIRVOYANCE"))
-                        if(cardType.equals("DESTROY_PATH"))
-                          if(cardType.equals("HEAL_CART_LAMP"))
-                            if(cardType.equals("HEAL_LAMP_PICKAXE"))
-                              if(cardType.equals("BREAK_CART"))
-                                if(cardType.equals("BREAK_PICKAXE"))
-                                  if(cardType.equals("HEAL_CART"))
-                                    if(cardType.equals("HEAL_LAMP"))
-                                      if(cardType.equals("HEAL_PICKAXE"))
-                                        if(cardType.equals("COAL"))
-                                          if(cardType.equals("GOAL"))
-                                            if(cardType.equals("GOLD"))
-
+      return card = new PathCard_T(id);
+    else if(cardType.equals("T_SHAPE_DEAD"))
+      return card = new PathCard_T_Dead(id);
+    else if(cardType.equals("LINE_SHAPE"))
+      return card = new PathCard_Line(id);
+    else if(cardType.equals("LINE_SHAPE_DEAD"))
+      return card = new PathCard_Line_Dead(id);
+    else if(cardType.equals("CROSS_SHAPE"))
+      return card = new PathCard_Cross(id);
+    else if(cardType.equals("CROSS_SHAPE_DEAD"))
+      return card = new PathCard_Cross_Dead(id);
+    else if(cardType.equals("L_SHAPE"))
+      return card = new PathCard_Line(id);
+    else if(cardType.equals("L_SHAPE DEAD"))
+      return card = new PathCard_Line_Dead(id);
+    else if(cardType.equals("DEAD"))
+      return card = new PathCard_DeadEnd(id);
+    else if(cardType.equals("ADD_PATH"))
+      return card = new ActionCard_Add_Path(id);
+    else if(cardType.equals("CLEAN_PATH"))
+      return card = new ActionCard_Clean_Path_Card(id);
+    else if(cardType.equals("CORRUPT_PATH"))
+      return card = new ActionCard_Corrupt_Path_Card(id);
+    else if(cardType.equals("DESTROY_M_PATHS"))
+      return card = new ActionCard_Destroy_Multiple_Paths(id);
+    else if(cardType.equals("DESTROY_PATH"))
+      return card = new ActionCard_Destroy_Path_Card(id);
+    else if(cardType.equals("REMOVE_PATH"))
+      return card = new ActionCard_Remove_Path(id);
+    else if(cardType.equals("ROTATE_PATH"))
+      return card = new ActionCard_Rotate_Path_Card(id);
+    else if(cardType.equals("SWAP_PATH"))
+      return card = new ActionCard_Swap_Path_Cards(id);
+    else if(cardType.equals("COAL"))
+      return card = new GoalCard_Coal(id);
+    else if(cardType.equals("GOAL"))
+      return card = new GoalCard_Goal(id);
+    else if(cardType.equals("GOLD"))
+      return card = new GoalCard_Gold(id);
+    else
+      return null;
   }
 }
-
-/*
-T_SHAPE,1,10
-T_SHAPE_DEAD,2,2
-LINE_SHAPE,3,7
-LINE_SHAPE_DEAD,4,2
-CROSS_SHAPE,5,6
-CROSS_SHAPE_DEAD,6,1
-L_SHAPE,7,9
-L_SHAPE_DEAD,8,2
-DEAD,9,2
-
-CLAIRVOYANCE,6
-DESTORY_PATH,3
-HEAL_CART_LAMP,1
-HEAL_CART_PICKAXE,1
-HEAL_LAMP_PICKAXE,1
-BREAK_CART,3
-BREAK_LAMP,3
-BREAK_PICKAXE,3
-HEAL_CART,2
-HEAL_LAMP,2
-HEAL_PICKAXE,2
- */

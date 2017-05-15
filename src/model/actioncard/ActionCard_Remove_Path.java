@@ -9,8 +9,8 @@ import model.ActionCard;
  *
  */
 public class ActionCard_Remove_Path extends ActionCard {
-    public ActionCard_Remove_Path(String imageResource, String id) {
-        super(imageResource, id);
+    public ActionCard_Remove_Path(String id) {
+        super("resources/Action_Remove_Path.png", id);
     }
 
     @Override

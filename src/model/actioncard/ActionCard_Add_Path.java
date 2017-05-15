@@ -9,8 +9,8 @@ import model.ActionCard;
  *
  */
 public class ActionCard_Add_Path extends ActionCard {
-    public ActionCard_Add_Path(String imageResource, String id) {
-        super(imageResource, id);
+    public ActionCard_Add_Path(String id) {
+        super("resources/Action_Add_Path.png", id);
     }
 
     @Override
