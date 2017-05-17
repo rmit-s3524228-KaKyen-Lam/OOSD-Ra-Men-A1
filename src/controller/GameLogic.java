@@ -3,7 +3,7 @@ package controller;
 import model.*;
 
 /**
- * This class handles the higher level logic of the game.
+ * This class handles the higher level logic of the gameLogic.
  * For example, checking if a card is allowed to be placed at a specific location.
  *
  * @author David Limantoro s3503728
@@ -14,10 +14,10 @@ public class GameLogic {
     private GameController gameCon;
 
     /**
-     * Creates a game logic object
+     * Creates a gameLogic logic object
      *
-     * @param board   the game board
-     * @param gameCon the game controller object that communicates with the view class
+     * @param board   the gameLogic board
+     * @param gameCon the gameLogic controller object that communicates with the view class
      */
     public GameLogic(Board board, GameController gameCon) {
         this.board = board;
@@ -71,7 +71,7 @@ public class GameLogic {
      * @param cardToPlace card to be placed in the board at location x,y
      * @return true if card placement is valid and selectedCard is not null, otherwise false
      */
-    private boolean cardPlacementCheck(int x, int y, PathCard cardToPlace) {
+    public boolean cardPlacementCheck(int x, int y, PathCard cardToPlace) {
         boolean westConnectCheck = false;
         boolean northConnectCheck = false;
         boolean eastConnectCheck = false;

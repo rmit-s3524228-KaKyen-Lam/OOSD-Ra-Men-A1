@@ -2,7 +2,9 @@ package model;
 
 import controller.GameController;
 import controller.GameLogic;
+import controller.LogicChecker;
 import view.Notification;
+
 import java.util.ArrayList;
 
 /**
@@ -57,6 +59,7 @@ public class Game {
         // Assigns the GameController so that Game can communicate with the viewer
         gameCon = gc;
         gameLogic = new GameLogic(board, gameCon);
+        LogicChecker.initialize(gameLogic, this);
 
         // Initialize players
         numOfSaboteurs = 0;

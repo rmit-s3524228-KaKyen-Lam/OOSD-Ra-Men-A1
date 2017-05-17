@@ -6,7 +6,7 @@ import model.Game;
 import view.Notification;
 
 /**
- * This is a class specifically dedicated for listening to click events on the game board GridPane
+ * This is a class specifically dedicated for listening to click events on the gameLogic board GridPane
  *
  * @author David Limantoro s3503728
  */
@@ -18,7 +18,7 @@ public class GameBoardListener implements EventHandler<MouseEvent> {
     /**
      * @param x    x location of the grid
      * @param y    y location of the grid
-     * @param game The game entity
+     * @param game The gameLogic entity
      */
     public GameBoardListener(int x, int y, Game game) {
         this.x = x;

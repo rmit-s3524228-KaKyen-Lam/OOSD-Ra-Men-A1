@@ -1,13 +1,14 @@
 package view;
 
 import controller.GameBoardListener;
+import controller.LogicChecker;
+import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import model.Card;
-import model.Game;
-import model.GoalCard;
-import model.Grid;
+import model.*;
+import model.pathcard.PathCard_Empty;
 
 /**
  * This class is responsible for drawing the board and the label associated with it
@@ -18,6 +19,7 @@ public class BoardDraw {
     private GridPane gridGameBoard;
     private Label boardLabel;
     private Game game;
+    private ImageView[][] images;
 
     /**
      * Creates a draw class for board section
@@ -45,6 +47,7 @@ public class BoardDraw {
      * Redraws the whole game board
      */
     public void redrawBoard() {
+        images = new ImageView[model.Board.GRID_MAX_WIDTH][Board.GRID_MAX_HEIGHT];
         for (int i = 0; i < model.Board.GRID_MAX_WIDTH; i++) {
             for (int j = 0; j < model.Board.GRID_MAX_HEIGHT; j++) {
                 redrawGrid(i, j);
@@ -75,6 +78,32 @@ public class BoardDraw {
         } else {
             imageToDrawOnGrid = new ImageView(currentGridCard.getImageResource());
         }
+
+        images[x][y] = imageToDrawOnGrid;
+
+        // TODO Create dedicated class for these handlers and put it in the controller package.
+        imageToDrawOnGrid.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                Card selectedCard = game.getSelectedCard();
+                if (selectedCard != null && selectedCard instanceof PathCard) {
+                    if (game.getBoard().getGridAtLocation(x, y).getCard() instanceof PathCard_Empty) {
+                        if (LogicChecker.checkIfValid((PathCard) selectedCard, x, y)) {
+                            images[x][y].setEffect(ImageViewTinter.greenTint);
+                            return;
+                        }
+                    }
+                    images[x][y].setEffect(ImageViewTinter.redTint);
+                }
+            }
+        });
+
+        imageToDrawOnGrid.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                images[x][y].setEffect(ImageViewTinter.removeTint);
+            }
+        });
 
         gridGameBoard.add(imageToDrawOnGrid, x, y);
         imageToDrawOnGrid.setOnMouseClicked(new GameBoardListener(x, y, game));
