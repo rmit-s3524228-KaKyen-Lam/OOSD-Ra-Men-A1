@@ -3,30 +3,18 @@ package view;
 import javafx.scene.effect.ColorAdjust;
 
 /**
- * @author HP on 4/05/2017.
+ * This class is a library for tinting ImageView
+ *
+ * @author David Limantoro s3503728
  */
 public class ImageViewTinter {
 
-    static ColorAdjust redTint = new ColorAdjust();
-    static ColorAdjust yellowTint = new ColorAdjust();
-    static ColorAdjust greenTint = new ColorAdjust();
+    static ColorAdjust grayToRedTint = new ColorAdjust(0, 1, 0.6, 1);
+    static ColorAdjust grayToYellowTint = new ColorAdjust(0.3, 1, 0.6, 1);
+    static ColorAdjust grayToGreenTint = new ColorAdjust(0.6, 1, 0.6, 1);
+    static ColorAdjust blueToRedTint = new ColorAdjust(0.75, 1, 0.6, 1);
+    static ColorAdjust blueToYellowTint = new ColorAdjust(0, 1, 0.6, 1);
+    static ColorAdjust blueToGreenTint = new ColorAdjust(-0.4, 1, 0.6, 1);
     static ColorAdjust removeTint = new ColorAdjust();
-
-    public static void initialize() {
-        redTint.setHue(0);
-        redTint.setBrightness(0.6);
-        redTint.setSaturation(1);
-        //redTint.setContrast(1);
-
-        yellowTint.setHue(0.3);
-        yellowTint.setBrightness(0.6);
-        yellowTint.setSaturation(1);
-        //yellowTint.setContrast(1);
-
-        greenTint.setHue(0.6);
-        greenTint.setBrightness(0.6);
-        greenTint.setSaturation(1);
-        //greenTint.setContrast(1);
-    }
 
 }

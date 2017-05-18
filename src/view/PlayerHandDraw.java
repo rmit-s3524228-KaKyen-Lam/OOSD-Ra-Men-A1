@@ -2,10 +2,7 @@ package view;
 
 import controller.DiscardPileListener;
 import controller.PlayerHandListener;
-import javafx.collections.ObservableList;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import model.Card;
@@ -68,7 +65,7 @@ public class PlayerHandDraw {
                         ImageView imageViewToReset = images[selectedCardIndex];
                         imageViewToReset.setEffect(ImageViewTinter.removeTint);
                     }
-                    iv.setEffect(ImageViewTinter.yellowTint);
+                    iv.setEffect(ImageViewTinter.grayToYellowTint);
                     selectedCardIndex = cardNum;
                 }));
             } else {

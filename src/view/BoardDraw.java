@@ -1,7 +1,7 @@
 package view;
 
 import controller.GameBoardListener;
-import controller.LogicChecker;
+import controller.LogicCheckerBridge;
 import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -88,12 +88,15 @@ public class BoardDraw {
                 Card selectedCard = game.getSelectedCard();
                 if (selectedCard != null && selectedCard instanceof PathCard) {
                     if (game.getBoard().getGridAtLocation(x, y).getCard() instanceof PathCard_Empty) {
-                        if (LogicChecker.checkIfValid((PathCard) selectedCard, x, y)) {
-                            images[x][y].setEffect(ImageViewTinter.greenTint);
+                        if (LogicCheckerBridge.checkIfValid((PathCard) selectedCard, x, y)) {
+                            images[x][y].setEffect(ImageViewTinter.blueToGreenTint);
+                            return;
+                        } else {
+                            images[x][y].setEffect(ImageViewTinter.blueToRedTint);
                             return;
                         }
                     }
-                    images[x][y].setEffect(ImageViewTinter.redTint);
+                    images[x][y].setEffect(ImageViewTinter.grayToRedTint);
                 }
             }
         });

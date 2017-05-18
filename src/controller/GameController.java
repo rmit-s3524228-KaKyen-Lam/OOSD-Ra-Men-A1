@@ -7,7 +7,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import model.*;
 import view.BoardDraw;
-import view.ImageViewTinter;
 import view.PlayerHandDraw;
 
 import java.net.URL;
@@ -42,7 +41,6 @@ public class GameController implements Initializable {
         boardDraw = new BoardDraw(gridGameBoard, boardLabel, game);
         playerHandDraw = new PlayerHandDraw(gridPlayerDeck, playerLabel, trashcanImageView, game);
         game.gameStart(this);
-        ImageViewTinter.initialize();
     }
 
     /**
