@@ -47,9 +47,9 @@ public class BoardDraw {
      * Redraws the whole game board
      */
     public void redrawBoard() {
-        images = new ImageView[model.Board.GRID_MAX_WIDTH][Board.GRID_MAX_HEIGHT];
-        for (int i = 0; i < model.Board.GRID_MAX_WIDTH; i++) {
-            for (int j = 0; j < model.Board.GRID_MAX_HEIGHT; j++) {
+        images = new ImageView[model.Board.gridMaxWidth][Board.gridMaxHeight];
+        for (int i = 0; i < model.Board.gridMaxWidth; i++) {
+            for (int j = 0; j < model.Board.gridMaxHeight; j++) {
                 redrawGrid(i, j);
             }
         }
