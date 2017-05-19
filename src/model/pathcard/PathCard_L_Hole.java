@@ -12,9 +12,4 @@ public class PathCard_L_Hole extends PathCard {
     public PathCard_L_Hole(String id) {
         super(false, true, true, false, false, "resources/Shape_L_Hole.png", id);
     }
-
-    @Override
-    public void cardAction() {
-
-    }
 }

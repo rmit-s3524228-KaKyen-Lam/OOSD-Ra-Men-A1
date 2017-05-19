@@ -14,7 +14,7 @@ public class Notification {
      */
     public static void showAlertBoxErrorMessage(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR, message);
-        alert.show();
+        alert.showAndWait();
     }
 
     /**
@@ -22,6 +22,6 @@ public class Notification {
      */
     public static void showAlertBoxNotificationMessage(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION, message);
-        alert.show();
+        alert.showAndWait();
     }
 }

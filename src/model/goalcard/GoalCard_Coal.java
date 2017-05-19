@@ -13,8 +13,4 @@ public class GoalCard_Coal extends GoalCard {
         super("resources/Goal.png", "resources/Coal.png", id);
     }
 
-    @Override
-    public void cardAction() {
-
-    }
 }

@@ -17,4 +17,9 @@ public class ActionCard_Clean_Path_Card extends ActionCard {
     public void cardAction() {
 
     }
+
+    @Override
+    public void undoCardAction() {
+
+    }
 }

@@ -46,4 +46,15 @@ public abstract class GoalCard extends Card {
     public void setGold(boolean gold) {
         this.gold = gold;
     }
+
+    @Override
+    public void cardAction() {
+
+    }
+
+    @Override
+    public void undoCardAction() {
+
+    }
+
 }

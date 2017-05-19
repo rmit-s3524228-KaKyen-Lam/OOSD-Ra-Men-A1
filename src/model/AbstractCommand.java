@@ -13,9 +13,13 @@ public abstract class AbstractCommand implements Command {
         this.card = card;
     }
 
-    public abstract void doAction();
+    public void doAction() {
+        card.cardAction();
+    }
 
-    public abstract void undoAction();
+    public void undoAction(){
+        card.undoCardAction();
+    }
 
     public int getPlayerNumber() {
         return playerNumber;

@@ -13,8 +13,4 @@ public class PathCard_Empty extends PathCard {
         super(false, false, false, false, false, "resources/Unexplored.png", id);
     }
 
-    @Override
-    public void cardAction() {
-
-    }
 }

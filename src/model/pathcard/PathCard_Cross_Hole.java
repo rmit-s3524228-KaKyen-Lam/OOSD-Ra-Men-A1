@@ -13,8 +13,4 @@ public class PathCard_Cross_Hole extends PathCard {
         super(true, true, true, true, false, "resources/Shape_Plus_Hole.png", id);
     }
 
-    @Override
-    public void cardAction() {
-
-    }
 }

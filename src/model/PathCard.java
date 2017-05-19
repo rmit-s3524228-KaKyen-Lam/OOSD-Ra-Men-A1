@@ -126,4 +126,14 @@ public abstract class PathCard extends Card {
     public boolean isCentre() {
         return centre;
     }
+
+    @Override
+    public void cardAction() {
+        // TODO place on board
+    }
+
+    @Override
+    public void undoCardAction(){
+        // TODO undo placement
+    }
 }

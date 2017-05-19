@@ -10,15 +10,17 @@ import java.util.ArrayList;
 /**
  * This is the class that contains all the information regarding the game itself,
  * as well as the bare game logic essentials.
- *
+ * <p>
  * The higher level logic such as card placement checking is handled by GameLogic class instead.
- *
+ * <p>
  * The Game class is an example of the Information Expert principle as it has the information required to assign
  * responsibilities to objects such as Player and Deck.
  *
  * @author David Limantoro s3503728
  */
 public class Game {
+
+    private CommandHistory commandHistory = new CommandHistory();
     private final int NUM_OF_PLAYER = 4;
 
     private GameLogic gameLogic;
@@ -77,7 +79,7 @@ public class Game {
     /**
      * Method to increase player's score.
      * This method is when a game round is over.
-     *
+     * <p>
      * precondition, the player number must not be more than the maximum number of player
      *
      * @param winnerPlayerNumber the player number that wins the game.
@@ -90,7 +92,7 @@ public class Game {
     /**
      * Method to place a path card on the board.
      * If a card is placed successfully, the specified location will be redrawn and the nextTurn() method is initiated.
-     *
+     * <p>
      * precondition:
      * 1. selectedCard must not be null
      * 2. selectedCard must be either subclass of PathCard or ActionCard
@@ -119,19 +121,28 @@ public class Game {
 
     /**
      * Handle action cards
-     *
+     * <p>
      * precondition, selectedCard must not be null
      */
     private void handleActionCard(ActionCard actionCard) {
         //TODO handle action card
     }
 
+    public boolean undoTurn() {
+        if (players[playerTurnNumber].getUndoCount() < 2 && commandHistory.undoTurn()) {
+            players[playerTurnNumber].incrementUndoCount();
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     /**
      * This method is called after a card is used correctly and moves the game to next turn.
-     *
+     * <p>
      * It checks if the game is over or not. If not, it increments the player turn number,
      * removes the currently selected card from player's hand and draws a card from a deck.
-     *
+     * <p>
      * precondition, selectedCard must not be null
      */
     public void nextTurn() {
