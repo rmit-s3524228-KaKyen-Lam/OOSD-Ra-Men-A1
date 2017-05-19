@@ -2,6 +2,7 @@ package view;
 
 import javafx.scene.image.ImageView;
 import model.Card;
+import model.PathCard;
 
 import java.util.HashMap;
 
@@ -12,45 +13,36 @@ import java.util.HashMap;
  */
 public class ImageViewFlyweight {
 
-    private static HashMap<Card, ImageView[][]> hashMap = new HashMap<>();
+    private HashMap<Card, ImageView[]> hashMap = new HashMap<>();
 
-    static final int TINT_NONE = 0;
-    static final int TINT_GREY_TO_RED = 1;
-    static final int TINT_GREY_TO_YELLOW = 2;
-    static final int TINT_GREY_TO_GREEN = 3;
-    static final int TINT_BLUE_TO_RED = 4;
-    static final int TINT_BLUE_TO_YELLOW = 5;
-    static final int TINT_BLUE_TO_GREEN = 6;
-
-    static final int ROTATE_0 = 0;
-    static final int ROTATE_90 = 1;
-    static final int ROTATE_180 = 2;
-    static final int ROTATE_270 = 3;
+    final int TINT_NONE = 0;
+    final int TINT_GREY_TO_RED = 1;
+    final int TINT_GREY_TO_YELLOW = 2;
+    final int TINT_GREY_TO_GREEN = 3;
+    final int TINT_BLUE_TO_RED = 4;
+    final int TINT_BLUE_TO_YELLOW = 5;
+    final int TINT_BLUE_TO_GREEN = 6;
 
     /**
      * This method returns ImageView requested and with the specified rotation value
      *
-     * @param card          The card object being looked for
-     * @param rotationValue 0 for no rotation, 1 for 90 degree CW rotation, 2 for 180 degree rotation,
-     *                      3 for 270 degree (90 CCW) rotation.
+     * @param card The card object being looked for
      * @return A flyweighted ImageView
      */
-    public static ImageView requestImageview(Card card, int tintValue, int rotationValue) {
+    public ImageView requestImageview(Card card, int tintValue) {
         if (hashMap.containsKey(card)) {
-            if (hashMap.get(card)[tintValue][rotationValue] == null) {
-                ImageView[][] array = hashMap.get(card);
-                ImageView newIV = createImageView(card.getImageResource(), tintValue, rotationValue);
-                array[tintValue][rotationValue] = newIV;
-                // TODO check if the hashmap's data is changed or not
+            if (hashMap.get(card)[tintValue] == null) {
+                ImageView[] array = hashMap.get(card);
+                ImageView newIV = createImageView(card, tintValue);
+                array[tintValue] = newIV;
                 return newIV;
             } else {
-                return hashMap.get(card)[tintValue][rotationValue];
+                return hashMap.get(card)[tintValue];
             }
         } else {
-            ImageView[][] ivArray = new ImageView[7][4];
-
-            ImageView newIV = createImageView(card.getImageResource(), tintValue, rotationValue);
-            ivArray[tintValue][rotationValue] = newIV;
+            ImageView[] ivArray = new ImageView[7];
+            ImageView newIV = createImageView(card, tintValue);
+            ivArray[tintValue] = newIV;
 
             // Put it in HashMap
             hashMap.put(card, ivArray);
@@ -58,8 +50,20 @@ public class ImageViewFlyweight {
         }
     }
 
-    private static ImageView createImageView(String imgPath, int tintValue, int rotationValue) {
-        ImageView newIV = new ImageView(imgPath);
+    final int ROTATE_0 = 0;
+    final int ROTATE_90 = 1;
+    final int ROTATE_180 = 2;
+    final int ROTATE_270 = 3;
+
+    private ImageView createImageView(Card card, int tintValue) {
+
+        ImageView newIV = new ImageView(card.getImageResource());
+        int rotationValue;
+        if (card instanceof PathCard) {
+            rotationValue = (PathCard) card.getRotate();
+        } else {
+            rotationValue = ROTATE_0;
+        }
 
         // Rotate the ImageView
         switch (rotationValue) {
