@@ -17,9 +17,12 @@ import java.util.*;
  */
 public class Board {
 
-    public static final int GRID_MAX_WIDTH = 9;
-    public static final int GRID_MAX_HEIGHT = 7;
+    public static final int MAX_ALLOWED_WIDTH = 20;
+    public static final int MAX_ALLOWED_HEIGHT = 20;
+    public static int gridMaxWidth = 9;
+    public static int gridMaxHeight = 7;
 
+    private int goalNo;
     private int startGoalX = 8;
     private int startGoalY1 = 1;
     private int startGoalY2 = 3;
@@ -27,8 +30,60 @@ public class Board {
     private int startPathX = 0;
     private int startPathY = 3;
 
-    private Grid[][] grid = new Grid[GRID_MAX_WIDTH][GRID_MAX_HEIGHT];
+    private ArrayList<Grid> goalPos;
+
+    private Grid[][] grid;
+    private boolean[][] isFilled;
     private Grid goldLocation;
+
+    public void configureBoard(int widthMax, int heightMax) {
+        gridMaxWidth = widthMax;
+        gridMaxHeight = heightMax;
+        grid = new Grid[gridMaxWidth][gridMaxHeight];
+
+        for (int i = 0; i < gridMaxHeight; i++) {
+            for (int j = 0; j < gridMaxWidth; j++) {
+                isFilled [j][i] = false;
+            }
+        }
+    }
+
+    public void configureGoalNo(int goalAmount) {
+        goalNo = goalAmount;
+    }
+
+    public String configureGoalPos(String name, int width, int height) {
+        boolean isValid = true;
+        if (width < 0 || width > gridMaxWidth) {
+            isValid = false;
+            return ("Invalid width. Please input width between 0 - " + gridMaxWidth);
+        }
+
+        if (height < 0 || height > gridMaxHeight) {
+            isValid = false;
+            return ("Invalid height. Please input width between 0 - " + gridMaxHeight);
+        }
+
+        if (isFilled[width][height] == true) {
+            isValid = false;
+            return ("Invalid position. That grid has been occupied.");
+        }
+
+        if (isValid) {
+            isFilled[width][height] = true;
+            if (name.equals("coal")) {
+                grid[width][height] = new Grid(width, height, new GoalCard_Coal(("coal")));
+                return ("Coal created at (" + width + ", " + height + ")");
+            } else if (name.equals("gold")) {
+                grid[width][height] = new Grid(width, height, new GoalCard_Gold(("gold")));
+                goldLocation = grid[width][height];
+                return ("Gold created at (" + width + ", " + height + ")");
+            }
+        }
+        return ("Internal error. No loop triggered.");
+    }
+
+
 
     /**
      * Randomise starting positions of GoalCards
@@ -48,10 +103,29 @@ public class Board {
     /**
      * Initialise board
      */
+    public void initBoardNew() {
+        for (int i = 0; i < gridMaxHeight; i++) {
+            for (int j = 0; j < gridMaxWidth; j++) {
+                if (!isFilled[j][i]) {
+                    if (i == startPathY && j == startPathX) {
+                        grid[j][i] = new Grid(j, i, new PathCard_Cross("initial cross shaped path card"));
+                        ((PathCard) (grid[j][i].getCard())).setValid(true);
+                        grid[j][i].setConnectedToMain(false);
+                        isFilled[j][i] = true;
+                    } else {
+                        grid[j][i] = new Grid(j, i, new PathCard_Empty("empty"));
+                        isFilled[j][i] = true;
+                    }
+                }
+            }
+        }
+    }
+
+
     void initBoard() {
         ArrayList<Integer> startGoalYList = randomPosition();
-        for (int i = 0; i < GRID_MAX_HEIGHT; i++) {
-            for (int j = 0; j < GRID_MAX_WIDTH; j++) {
+        for (int i = 0; i < gridMaxHeight; i++) {
+            for (int j = 0; j < gridMaxWidth; j++) {
                 if ((i == startGoalYList.get(0) || i == startGoalYList.get(1)) && j == startGoalX) {
                     grid[j][i] = new Grid(j, i, new GoalCard_Coal(("coal")));
                 } else if (i == startGoalYList.get(2) && j == startGoalX) {
@@ -97,7 +171,7 @@ public class Board {
      * @return Grid object if x and y value is valid, otherwise return null
      */
     public Grid getGridAtLocation(int x, int y) {
-        if (x < 0 || x >= GRID_MAX_WIDTH || y < 0 || y >= GRID_MAX_HEIGHT) {
+        if (x < 0 || x >= gridMaxWidth || y < 0 || y >= gridMaxHeight) {
             return null;
         } else {
             return grid[x][y];
