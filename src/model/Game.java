@@ -25,7 +25,7 @@ public class Game {
 
     private GameLogic gameLogic;
     private GameController gameCon;
-    private Board board = new Board();
+    public static Board board = new Board();
     private Deck deck = new Deck();
     private Player[] players;
 

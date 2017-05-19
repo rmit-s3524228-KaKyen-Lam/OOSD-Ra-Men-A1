@@ -1,6 +1,8 @@
 package model.actioncard;
 
 import model.ActionCard;
+import model.Game;
+import model.Grid;
 
 /**
  * Action card representing the ability to remove a new path to an existing eligible path card
@@ -12,13 +14,13 @@ public class ActionCard_Remove_Path extends ActionCard {
         super(imageResource, id);
     }
 
+    //TODO wait for flyweighted card
     @Override
-    public void cardAction() {
+    public void cardAction(Object[] target) {
 
     }
 
     @Override
-    public void undoCardAction() {
-
+    public void undoCardAction(Object[] target, Object[] undoExtraInformation) {
     }
 }

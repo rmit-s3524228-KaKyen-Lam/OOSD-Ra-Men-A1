@@ -50,10 +50,10 @@ public class ImageViewFlyweight {
         }
     }
 
-    final int ROTATE_0 = 0;
-    final int ROTATE_90 = 1;
-    final int ROTATE_180 = 2;
-    final int ROTATE_270 = 3;
+    private final int ROTATE_0 = 0;
+    private final int ROTATE_90 = 1;
+    private final int ROTATE_180 = 2;
+    private final int ROTATE_270 = 3;
 
     private ImageView createImageView(Card card, int tintValue) {
 

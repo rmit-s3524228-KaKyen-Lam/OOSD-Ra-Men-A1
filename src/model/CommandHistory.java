@@ -1,5 +1,6 @@
 package model;
 
+import java.io.*;
 import java.util.ArrayList;
 
 /**
@@ -8,9 +9,10 @@ import java.util.ArrayList;
  *
  * @author David Limantoro (s3503728) on 5/18/2017.
  */
-public class CommandHistory {
+public class CommandHistory implements Serializable {
 
     private ArrayList<Command> commandHistory = new ArrayList<>();
+    private ArrayList<Object[]> undoExtraInformation = new ArrayList<>();
 
     /**
      * Method to clear the command history, used at the start of the game
@@ -18,6 +20,34 @@ public class CommandHistory {
     public void clearHistory(Object caller) {
         if (caller instanceof Game) {
             commandHistory.clear();
+        }
+    }
+
+    /**
+     * @param filename
+     */
+    public void saveHistory(String filename) {
+        try {
+            FileOutputStream fout = new FileOutputStream("save\\cmdHistory.dat");
+            ObjectOutputStream oos = new ObjectOutputStream(fout);
+            oos.writeObject(commandHistory);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * @param filename
+     */
+    public void loadHistory(String filename) {
+        try {
+            FileInputStream fis = new FileInputStream("save\\cmdHistory.dat");
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            commandHistory = (ArrayList<Command>) ois.readObject();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
     }
 
@@ -34,7 +64,7 @@ public class CommandHistory {
                 return false;
             } else {
                 for (int i = 0; i < 4; i++) {
-                    commandHistory.get(commandHistory.size() - 1).undoAction();
+                    commandHistory.get(commandHistory.size() - 1).undoAction(undoExtraInformation.get(commandHistory.size() - 1));
                     commandHistory.remove(commandHistory.size() - 1);
                 }
                 return true;

@@ -128,12 +128,12 @@ public abstract class PathCard extends Card {
     }
 
     @Override
-    public void cardAction() {
+    public void cardAction(Object[] target) {
         // TODO place on board
     }
 
     @Override
-    public void undoCardAction(){
+    public void undoCardAction(Object[] target, Object[] undoExtraInformation){
         // TODO undo placement
     }
 }

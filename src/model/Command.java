@@ -6,7 +6,7 @@ package model;
 public interface Command {
     void doAction();
 
-    void undoAction();
+    void undoAction(Object[] undoExtraInformation);
 
     int getPlayerNumber();
 

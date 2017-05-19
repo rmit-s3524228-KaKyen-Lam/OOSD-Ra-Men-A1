@@ -28,8 +28,9 @@ public abstract class Card extends Drawable {
     /**
      * Method for actions different types of cards might have. E.g. Breaking tools
      */
-    public abstract void cardAction();
-    public abstract void undoCardAction();
+    public abstract void cardAction(Object[] target);
+
+    public abstract void undoCardAction(Object[] target, Object[] undoExtraInformation);
 
     public String getId() {
         return id;

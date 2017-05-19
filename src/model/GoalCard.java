@@ -48,12 +48,12 @@ public abstract class GoalCard extends Card {
     }
 
     @Override
-    public void cardAction() {
+    public void cardAction(Object[] target) {
 
     }
 
     @Override
-    public void undoCardAction() {
+    public void undoCardAction(Object[] target, Object[] undoExtraInformation) {
 
     }
 
