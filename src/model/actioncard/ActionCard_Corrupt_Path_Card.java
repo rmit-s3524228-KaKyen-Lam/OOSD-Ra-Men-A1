@@ -1,7 +1,10 @@
 package model.actioncard;
 
 import model.ActionCard;
+import model.Board;
 import model.Grid;
+import model.PathCard;
+import model.pathcard.PathCard_Empty;
 
 /**
  * Action card for the ability to corrupt a path card on the board and make it unusable
@@ -14,16 +17,22 @@ public class ActionCard_Corrupt_Path_Card extends ActionCard {
     }
 
     @Override
-    public void cardAction(Object[] target) {
-        Grid targetGrid = (Grid) target[0];
-        targetGrid.setDisabled(true);
-        //TODO calculate board
+    public boolean cardAction(Object[] target) {
+        if (!(targetGrid.getCard() instanceof PathCard_Empty)) {
+            Grid targetGrid = (Grid) target[0];
+            targetGrid.setDisabled(true);
+            Board targetBoard = (Board) target[5];
+            targetBoard.calculateBoard();
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
     public void undoCardAction(Object[] target, Object[] undoExtraInformation) {
         Grid targetGrid = (Grid) target[0];
         targetGrid.setDisabled(false);
-        //TODO calculate board
+
     }
 }

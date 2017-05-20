@@ -3,6 +3,7 @@ package model;
 import controller.GameController;
 import controller.GameLogic;
 import controller.LogicCheckerBridge;
+import model.pathcard.PathCard_Empty;
 import view.Notification;
 
 import java.util.ArrayList;
@@ -20,14 +21,14 @@ import java.util.ArrayList;
  */
 public class Game {
 
-    private CommandHistory commandHistory = new CommandHistory();
     private final int NUM_OF_PLAYER = 4;
 
     private GameLogic gameLogic;
     private GameController gameCon;
-    public static Board board = new Board();
+    private Board board = new Board();
     private Deck deck = new Deck();
     private Player[] players;
+    private CommandHistory commandHistory = new CommandHistory(board, deck, players);
 
     private int gameTurnNumber = 0;
     private int playerTurnNumber = 0;
@@ -101,21 +102,17 @@ public class Game {
      * @param y row number of the board
      */
     public void placeCard(int x, int y) {
-        if (selectedCard instanceof PathCard) {
-            if (gameLogic.placeCardOnBoard(x, y, selectedCard)) {
+        if (board.getGridAtLocation(x, y).getCard() instanceof PathCard_Empty) {
+            Object[] target = new Object[1];
+            target[0] = board.getGridAtLocation(x, y);
+            Command command = new CommandImpl(playerTurnNumber, selectedCard, target);
+            if (commandHistory.executeAndAddHistory(command)) {
                 nextTurn();
             } else {
                 Notification.showAlertBoxErrorMessage("This path card placement is invalid");
             }
-        } else if (selectedCard instanceof ActionCard) {
-
-            // check that action card are placed on top of path card, as per requirement.
-            if (board.getGridAtLocation(x, y).getCard() instanceof PathCard) {
-                handleActionCard((ActionCard) selectedCard);
-                nextTurn();
-            } else {
-                Notification.showAlertBoxErrorMessage("Cannot play action card on non-path card");
-            }
+        } else {
+            Notification.showAlertBoxErrorMessage("This path card placement is invalid");
         }
     }
 
@@ -124,8 +121,23 @@ public class Game {
      * <p>
      * precondition, selectedCard must not be null
      */
-    private void handleActionCard(ActionCard actionCard) {
-        //TODO handle action card
+    public void playActionCard(int x, int y) {
+        if (board.getGridAtLocation(x, y).getCard() instanceof PathCard) {
+            Object[] target = new Object[5];
+            target[0] = board.getGridAtLocation(x, y);
+            target[1] = board.getGridAtLocation(x - 1, y);
+            target[2] = board.getGridAtLocation(x, y - 1);
+            target[3] = board.getGridAtLocation(x + 1, y);
+            target[4] = board.getGridAtLocation(x, y + 1);
+            Command command = new CommandImpl(playerTurnNumber, selectedCard, target);
+            if (commandHistory.executeAndAddHistory(command)) {
+                nextTurn();
+            } else {
+                Notification.showAlertBoxErrorMessage("Cannot play this action card");
+            }
+        } else {
+            Notification.showAlertBoxErrorMessage("Cannot play action card on non-path card");
+        }
     }
 
     public boolean undoTurn() {

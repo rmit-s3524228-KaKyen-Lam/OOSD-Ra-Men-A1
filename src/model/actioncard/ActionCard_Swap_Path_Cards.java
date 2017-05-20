@@ -1,6 +1,7 @@
 package model.actioncard;
 
 import model.ActionCard;
+import model.Board;
 import model.Card;
 import model.Grid;
 
@@ -15,7 +16,7 @@ public class ActionCard_Swap_Path_Cards extends ActionCard {
     }
 
     @Override
-    public void cardAction(Object[] target) {
+    public boolean cardAction(Object[] target) {
         Grid targetGrid1 = (Grid) target[0];
         Grid targetGrid2 = (Grid) target[1];
         Card temp = targetGrid1.getCard();
@@ -27,10 +28,8 @@ public class ActionCard_Swap_Path_Cards extends ActionCard {
 
     @Override
     public void undoCardAction(Object[] target, Object[] undoExtraInformation) {
-        Grid targetGrid1 = (Grid) target[0];
-        Grid targetGrid2 = (Grid) target[1];
-        Card temp = targetGrid1.getCard();
-        targetGrid1.setCard(targetGrid2.getCard());
-        targetGrid2.setCard(temp);
+        Grid targetGrid = (Grid) target[0];
+        Grid prevGrid = (Grid) undoExtraInformation[0];
+        targetGrid.setCard(prevGrid.getCard());
     }
 }

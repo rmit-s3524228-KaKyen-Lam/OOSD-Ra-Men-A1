@@ -1,5 +1,7 @@
 package model;
 
+import controller.LogicCheckerBridge;
+
 /**
  * Class for path cards which contains logic for rotation and initial path card configuration
  * Every path card has 5 booleans attached to it, all representing path availability/existence. E.g. If a path card
@@ -128,12 +130,16 @@ public abstract class PathCard extends Card {
     }
 
     @Override
-    public void cardAction(Object[] target) {
-        // TODO place on board
+    public boolean cardAction(Object[] target) {
+        Grid targetGrid = (Grid) target[0];
+        if (LogicCheckerBridge.checkIfValid(this, targetGrid.getX(), targetGrid.getY())) {
+            targetGrid.setCard(this);
+        }
     }
 
     @Override
-    public void undoCardAction(Object[] target, Object[] undoExtraInformation){
-        // TODO undo placement
+    public void undoCardAction(Object[] target, Object[] undoExtraInformation) {
+        Grid targetGrid = (Grid) target[0];
+        targetGrid.removeCardonGrid();
     }
 }

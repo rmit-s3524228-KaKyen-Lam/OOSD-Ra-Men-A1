@@ -17,33 +17,33 @@ public class ActionCard_Add_Path extends ActionCard {
 
     //TODO wait for flyweighted card
     @Override
-    public void cardAction(Object[] target) {
-        if (target[0] instanceof Grid) {
-            Grid targetGrid = (Grid) target[0];
-            PathCard currentCard = (PathCard) targetGrid.getCard();
-            if (currentCard instanceof PathCard_Cross || currentCard instanceof PathCard_Cross) {
-                //invalid
-
-                return;
-            } else if (currentCard instanceof PathCard_DeadEnd) {
-                // randomly choose between line and L
-
-            } else if (currentCard instanceof PathCard_L || currentCard instanceof PathCard_Line) {
-
-            } else if (currentCard instanceof PathCard_L_Hole || currentCard instanceof PathCard_Line_Hole) {
-
-            } else if (currentCard instanceof PathCard_T) {
-
-            } else if (currentCard instanceof PathCard_T_Hole) {
-
-            } else {
-                //invalid
-            }
+    public boolean cardAction(Object[] target) {
+        Grid targetGrid = (Grid) target[0];
+        PathCard currentCard = (PathCard) targetGrid.getCard();
+        if (currentCard instanceof PathCard_Cross || currentCard instanceof PathCard_Cross_Hole) {
+            //invalid, do nothing
+            return false;
+        } else if (currentCard instanceof PathCard_DeadEnd) {
+            // show option between line and L
+        } else if (currentCard instanceof PathCard_L || currentCard instanceof PathCard_Line) {
+            // show option between possible orientations of T
+        } else if (currentCard instanceof PathCard_L_Hole || currentCard instanceof PathCard_Line_Hole) {
+            // show option between possible orientations of T hole
+        } else if (currentCard instanceof PathCard_T) {
+            // show option between possible orientations of cross
+        } else if (currentCard instanceof PathCard_T_Hole) {
+            // show option between possible orientations of cross hole
+        } else {
+            //invalid, do nothing
+            return false;
         }
+        return true;
     }
 
     @Override
     public void undoCardAction(Object[] target, Object[] undoExtraInformation) {
-
+        Grid targetGrid = (Grid) target[0];
+        PathCard oldCard = (PathCard) undoExtraInformation[0];
+        targetGrid.setCard(oldCard);
     }
 }

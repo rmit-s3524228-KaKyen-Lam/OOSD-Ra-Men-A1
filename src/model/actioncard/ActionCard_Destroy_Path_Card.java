@@ -1,9 +1,10 @@
 package model.actioncard;
 
 import model.ActionCard;
-import model.Game;
+import model.Board;
 import model.Grid;
-import view.Notification;
+import model.PathCard;
+import model.pathcard.PathCard_Empty;
 
 /**
  * Action card for the ability to destroy a particular path card
@@ -16,16 +17,25 @@ public class ActionCard_Destroy_Path_Card extends ActionCard {
     }
 
     @Override
-    public void cardAction(Object[] target) {
-        if (target[0] instanceof Grid) {
-            Grid targetGrid = (Grid) target[0];
+    public boolean cardAction(Object[] target) {
+        Grid targetGrid = (Grid) target[0];
+        if (!(targetGrid.getCard() instanceof PathCard_Empty)) {
             targetGrid.removeCardonGrid();
+            Board targetBoard = (Board) target[5];
+            targetBoard.calculateBoard();
+            return true;
+        } else {
+            return false;
         }
+
     }
 
     @Override
     public void undoCardAction(Object[] target, Object[] undoExtraInformation) {
         Grid targetGrid = (Grid) target[0];
-        Game.board.placeCardOnLocation(targetGrid.getX(), targetGrid.getY(), targetGrid.getCard());
+        Grid prevGrid = (Grid) undoExtraInformation[0];
+        targetGrid.setCard(prevGrid.getCard());
     }
+
+
 }

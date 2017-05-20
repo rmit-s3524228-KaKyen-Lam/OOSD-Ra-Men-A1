@@ -48,13 +48,13 @@ public abstract class GoalCard extends Card {
     }
 
     @Override
-    public void cardAction(Object[] target) {
-
+    public boolean cardAction(Object[] target) {
+        // Do nothing, player can never play GoalCard
     }
 
     @Override
     public void undoCardAction(Object[] target, Object[] undoExtraInformation) {
-
+        // Do nothing, player can never play GoalCard
     }
 
 }

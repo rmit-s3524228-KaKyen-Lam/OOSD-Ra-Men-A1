@@ -14,6 +14,16 @@ public class CommandHistory implements Serializable {
     private ArrayList<Command> commandHistory = new ArrayList<>();
     private ArrayList<Object[]> undoExtraInformation = new ArrayList<>();
 
+    private Board board = new Board();
+    private Deck deck = new Deck();
+    private Player[] players;
+
+    public CommandHistory(Board board, Deck deck, Player[] players) {
+        this.board = board;
+        this.deck = deck;
+        this.players = players;
+    }
+
     /**
      * Method to clear the command history, used at the start of the game
      */
@@ -67,6 +77,7 @@ public class CommandHistory implements Serializable {
                     commandHistory.get(commandHistory.size() - 1).undoAction(undoExtraInformation.get(commandHistory.size() - 1));
                     commandHistory.remove(commandHistory.size() - 1);
                 }
+
                 return true;
             }
         } catch (Exception e) {

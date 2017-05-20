@@ -1,8 +1,10 @@
 package model.actioncard;
 
 import model.ActionCard;
-import model.Game;
+import model.Board;
 import model.Grid;
+import model.PathCard;
+import model.pathcard.PathCard_Empty;
 import view.Notification;
 
 /**
@@ -16,17 +18,24 @@ public class ActionCard_Destroy_Multiple_Paths extends ActionCard {
     }
 
     @Override
-    public void cardAction(Object[] target) {
-        for (int i = 0; i < 5; i++) {
-            if (target[i] == null) {
-                // do nothing
-            } else if (target[i] instanceof Grid) {
-                Grid targetGrid = (Grid) target[i];
-                targetGrid.removeCardonGrid();
-                //TODO Recalculate each path's board validity
-            } else {
-                Notification.showAlertBoxErrorMessage("That target is invalid");
+    public boolean cardAction(Object[] target) {
+        Grid targetGrid = (Grid) target[0];
+        if (!(targetGrid.getCard() instanceof PathCard_Empty)) {
+            for (int i = 0; i < 5; i++) {
+                if (target[i] == null) {
+                    // do nothing
+                } else if (target[i] instanceof Grid) {
+                    targetGrid = (Grid) target[i];
+                    targetGrid.removeCardonGrid();
+                } else {
+                    Notification.showAlertBoxErrorMessage("That target is invalid");
+                }
             }
+            Board targetBoard = (Board) target[5];
+            targetBoard.calculateBoard();
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -37,8 +46,8 @@ public class ActionCard_Destroy_Multiple_Paths extends ActionCard {
                 // do nothing
             } else if (target[i] instanceof Grid) {
                 Grid targetGrid = (Grid) target[i];
-                Game.board.placeCardOnLocation(targetGrid.getX(), targetGrid.getY(), targetGrid.getCard());
-                //TODO Recalculate each path's board validity
+                Grid prevGrid = (Grid) undoExtraInformation[i];
+                targetGrid.setCard(prevGrid.getCard());
             } else {
                 Notification.showAlertBoxErrorMessage("That target is invalid");
             }
