@@ -16,7 +16,7 @@ public class DiscardPileListener implements EventHandler<MouseEvent> {
     /**
      * Creates a listener for the discard pile ImageView
      *
-     * @param game The game entity
+     * @param game The gameLogic entity
      */
     public DiscardPileListener(Game game) {
         this.game = game;
@@ -25,7 +25,7 @@ public class DiscardPileListener implements EventHandler<MouseEvent> {
     /**
      * Handle a click button.
      *
-     * Clicking on a discard pile will remove the card and moves the game to next turn.
+     * Clicking on a discard pile will remove the card and moves the gameLogic to next turn.
      *
      * @param event MouseEvent related to the click
      */

@@ -7,6 +7,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import model.Card;
 import model.Game;
+
 import java.util.ArrayList;
 
 /**
@@ -19,6 +20,8 @@ public class PlayerHandDraw {
     private GridPane gridPlayerDeck;
     private Label playerLabel;
     private Game game;
+    private int selectedCardIndex;
+    private ImageView[] images;
 
     /**
      * Creates a draw class for player hand section
@@ -31,6 +34,8 @@ public class PlayerHandDraw {
         this.gridPlayerDeck = gridPlayerDeck;
         this.playerLabel = playerLabel;
         this.game = game;
+        selectedCardIndex = -1;
+
         trashcanImageView.setOnMouseClicked(new DiscardPileListener(this.game));
     }
 
@@ -49,13 +54,22 @@ public class PlayerHandDraw {
      * @param currentPlayerHand the hand of current player, in ArrayList of Card format
      */
     public void redrawPlayerHand(ArrayList<Card> currentPlayerHand) {
-        for (int i = 0; i < currentPlayerHand.size(); i++) {
-            if (currentPlayerHand.get(i) != null) {
-                ImageView iv = new ImageView(currentPlayerHand.get(i).getImageResource());
-                gridPlayerDeck.add(iv, i, 0);
-                iv.setOnMouseClicked(new PlayerHandListener(i, game));
+        images = new ImageView[currentPlayerHand.size()];
+        for (int handIndex = 0; handIndex < currentPlayerHand.size(); handIndex++) {
+            if (currentPlayerHand.get(handIndex) != null) {
+                ImageView iv = new ImageView(currentPlayerHand.get(handIndex).getImageResource());
+                images[handIndex] = iv;
+                gridPlayerDeck.add(iv, handIndex, 0);
+                iv.setOnMouseClicked(new PlayerHandListener(handIndex, game, (cardNum) -> {
+                    if (selectedCardIndex != -1) {
+                        ImageView imageViewToReset = images[selectedCardIndex];
+                        imageViewToReset.setEffect(ImageViewTinter.removeTint);
+                    }
+                    iv.setEffect(ImageViewTinter.grayToYellowTint);
+                    selectedCardIndex = cardNum;
+                }));
             } else {
-                gridPlayerDeck.add(null, i, 0);
+                gridPlayerDeck.add(null, handIndex, 0);
             }
         }
     }

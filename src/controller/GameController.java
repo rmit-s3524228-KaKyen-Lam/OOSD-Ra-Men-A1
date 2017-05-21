@@ -15,7 +15,7 @@ import java.util.ResourceBundle;
 
 /**
  * This is the JavaFX controller class that is responsible for talking to
- * the game object (model) as well as talking to viewer
+ * the gameLogic object (model) as well as talking to viewer
  *
  * @author David Limantoro s3503728
  */
@@ -44,7 +44,7 @@ public class GameController implements Initializable {
     }
 
     /**
-     * Change the Label of the board in the game window
+     * Change the Label of the board in the gameLogic window
      *
      * @param text Text to be placed on the label
      */
@@ -53,14 +53,14 @@ public class GameController implements Initializable {
     }
 
     /**
-     * Redraws the whole game board
+     * Redraws the whole gameLogic board
      */
     public void redrawGrid() {
         boardDraw.redrawBoard();
     }
 
     /**
-     * Redraws only part of the game board and render it on game window
+     * Redraws only part of the gameLogic board and render it on gameLogic window
      *
      * @param x x coordinate of the board to be redrawn
      * @param y y coordinate of the board to be redrawn
@@ -70,7 +70,7 @@ public class GameController implements Initializable {
     }
 
     /**
-     * Change the player label in the game window and render it on game window
+     * Change the player label in the gameLogic window and render it on gameLogic window
      *
      * @param playerNum The player number (before added by one) to be placed on the label
      */
@@ -79,7 +79,7 @@ public class GameController implements Initializable {
     }
 
     /**
-     * Redraws the deck of a player and render it on game window
+     * Redraws the deck of a player and render it on gameLogic window
      *
      * @param currentPlayerHand the hand of current player, in ArrayList of Card format
      */
