@@ -8,7 +8,8 @@ import model.pathcard.PathCard_Empty;
 import java.util.*;
 
 /*http://stackoverflow.com/questions/9369368/2d-arraylist-in-java
- https://www.thoughtco.com/generating-unique-random-numbers-2034208*/
+ https://www.thoughtco.com/generating-unique-random-numbers-2034208
+ https://tutorialedge.net/post/general/artificial-intelligence/breadth-first-search-java/
 
 /**
  * Game board containing Grids.
@@ -32,7 +33,7 @@ public class Board {
 
     private ArrayList<Grid> goalPos;
 
-    private Grid[][] grid;
+    private Grid[][] grid = new Grid[gridMaxWidth][gridMaxHeight];
     private boolean[][] isFilled;
     private Grid goldLocation;
 
@@ -83,6 +84,19 @@ public class Board {
         return ("Internal error. No loop triggered.");
     }
 
+    public void calculateBoard() {
+        for (int i = 0; i < gridMaxHeight; i++) {
+            for (int j = 0; j < gridMaxWidth; j++) {
+                grid[j][i].setConnectedToMain(false);
+            }
+        }
+
+        grid[startPathX][startPathY].setConnectedToMain(true);
+
+
+
+
+    }
 
 
     /**
