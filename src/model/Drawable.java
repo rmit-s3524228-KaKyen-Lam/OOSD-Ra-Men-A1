@@ -10,7 +10,7 @@ package model;
  */
 public abstract class Drawable {
 
-    protected String imageResource = "";
+    protected String imageResource;
 
     /**
      * Creates a drawable object with associated imageResource

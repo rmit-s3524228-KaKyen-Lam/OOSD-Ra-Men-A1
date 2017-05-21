@@ -1,5 +1,7 @@
 package model;
 
+import library.Library;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -14,6 +16,7 @@ public class Player {
     private String role;
     private ArrayList<String> brokenTool;
     private ArrayList<Card> hand;
+    private Card recentlyDrawnCard;
     private int undoCount = 0;
 
     /**
@@ -37,6 +40,7 @@ public class Player {
      * @param card Card to be added
      */
     void addCard(Card card) {
+        recentlyDrawnCard = card;
         hand.add(card);
     }
 
@@ -107,5 +111,9 @@ public class Player {
 
     public int getUndoCount() {
         return undoCount;
+    }
+
+    public Card getRecentlyDrawnCard() {
+        return (Card) Library.deepCopy(recentlyDrawnCard);
     }
 }

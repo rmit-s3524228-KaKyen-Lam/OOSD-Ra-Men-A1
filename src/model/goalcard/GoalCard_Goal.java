@@ -12,9 +12,4 @@ public class GoalCard_Goal extends GoalCard {
     public GoalCard_Goal() {
         super("resources/Goal.png", "resources/Goal.png");
     }
-
-    @Override
-    public void cardAction() {
-
-    }
 }

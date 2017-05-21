@@ -1,9 +1,7 @@
 package model.actioncard;
 
-import model.ActionCard;
-import model.Board;
-import model.Card;
-import model.Grid;
+import controller.LogicCheckerBridge;
+import model.*;
 
 /**
  * Action card for the ability to swap a path card for another already on the board
@@ -19,9 +17,18 @@ public class ActionCard_Swap_Path_Cards extends ActionCard {
     public boolean cardAction(Object[] target) {
         Grid targetGrid1 = (Grid) target[0];
         Grid targetGrid2 = (Grid) target[1];
-        Card temp = targetGrid1.getCard();
-        targetGrid1.setCard(targetGrid2.getCard());
-        targetGrid2.setCard(temp);
+
+        boolean checkCard1InGrid2 = LogicCheckerBridge.checkIfValid((PathCard) targetGrid2.getCard(), targetGrid1.getX(), targetGrid1.getY());
+        boolean checkCard2InGrid1 = LogicCheckerBridge.checkIfValid((PathCard) targetGrid1.getCard(), targetGrid2.getX(), targetGrid2.getY());
+
+        if (checkCard1InGrid2 && checkCard2InGrid1) {
+            Card temp = targetGrid1.getCard();
+            targetGrid1.setCard(targetGrid2.getCard());
+            targetGrid2.setCard(temp);
+            return true;
+        } else {
+            return false;
+        }
     }
     // no start, no goal card
     //

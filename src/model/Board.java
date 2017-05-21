@@ -43,7 +43,7 @@ public class Board {
 
         for (int i = 0; i < gridMaxHeight; i++) {
             for (int j = 0; j < gridMaxWidth; j++) {
-                isFilled [j][i] = false;
+                isFilled[j][i] = false;
             }
         }
     }
@@ -72,17 +72,16 @@ public class Board {
         if (isValid) {
             isFilled[width][height] = true;
             if (name.equals("coal")) {
-                grid[width][height] = new Grid(width, height, new GoalCard_Coal(("coal")));
+                grid[width][height] = new Grid(width, height, CardFlyweight.getCard("COAL", 0));
                 return ("Coal created at (" + width + ", " + height + ")");
             } else if (name.equals("gold")) {
-                grid[width][height] = new Grid(width, height, new GoalCard_Gold(("gold")));
+                grid[width][height] = new Grid(width, height, CardFlyweight.getCard("GOLD", 0));
                 goldLocation = grid[width][height];
                 return ("Gold created at (" + width + ", " + height + ")");
             }
         }
         return ("Internal error. No loop triggered.");
     }
-
 
 
     /**
@@ -108,12 +107,12 @@ public class Board {
             for (int j = 0; j < gridMaxWidth; j++) {
                 if (!isFilled[j][i]) {
                     if (i == startPathY && j == startPathX) {
-                        grid[j][i] = new Grid(j, i, new PathCard_Cross("initial cross shaped path card"));
+                        grid[j][i] = new Grid(j, i, CardFlyweight.getCard("T_SHAPE", 0));
                         ((PathCard) (grid[j][i].getCard())).setValid(true);
                         grid[j][i].setConnectedToMain(false);
                         isFilled[j][i] = true;
                     } else {
-                        grid[j][i] = new Grid(j, i, new PathCard_Empty("empty"));
+                        grid[j][i] = new Grid(j, i, CardFlyweight.getCard("DEAD", 0));
                         isFilled[j][i] = true;
                     }
                 }

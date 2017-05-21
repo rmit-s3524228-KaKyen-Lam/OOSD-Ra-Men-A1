@@ -34,7 +34,7 @@ public class Grid {
      * Remove card from this grid
      */
     public void removeCardonGrid() {
-        this.card = new PathCard_Empty("empty"); //TODO change this to accommodate flyweight pattern
+        this.card = CardFlyweight.getCard("EMPTY", 0);
     }
 
     public Card getCard() {

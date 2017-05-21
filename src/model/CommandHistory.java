@@ -34,7 +34,9 @@ public class CommandHistory implements Serializable {
     }
 
     /**
-     * @param filename
+     * Method to save the command history into a textfile
+     *
+     * @param filename The filename where this object will be saved to
      */
     public void saveHistory(String filename) {
         try {
@@ -47,7 +49,9 @@ public class CommandHistory implements Serializable {
     }
 
     /**
-     * @param filename
+     * Method to load the command history from a textfile
+     *
+     * @param filename The filename where this object will be loaded from
      */
     public void loadHistory(String filename) {
         try {
@@ -62,28 +66,23 @@ public class CommandHistory implements Serializable {
     }
 
     /**
-     * Undo the turn of a player, effectively undoing the last 4 commands.
+     * Undo the turn of a player, effectively undoing all commands of all players until this player's previous turn.
      *
+     * @param playerNumber The player number that calls for the undo function
      * @return True if the undo occurred, otherwise false.
      */
-    public boolean undoTurn() {
-        try {
-            // Check if the player is at least on turn 4 and hasn't used undo more than two times
-            // TODO discard should be a command too
-            if (commandHistory.size() < 4) {
-                return false;
-            } else {
-                for (int i = 0; i < 4; i++) {
-                    commandHistory.get(commandHistory.size() - 1).undoAction(undoExtraInformation.get(commandHistory.size() - 1));
-                    commandHistory.remove(commandHistory.size() - 1);
-                }
-
-                return true;
+    public boolean undoTurn(int playerNumber) {
+        int playerLatestTurn = checkLatestTurnOfPlayer(playerNumber);
+        if (playerLatestTurn > -1) {
+            for (int i = commandHistory.size() - 1; i >= playerLatestTurn; i--) {
+                commandHistory.get(i).undoAction(undoExtraInformation.get(i));
+                commandHistory.remove(i);
+                undoExtraInformation.remove(i);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
+            board.calculateBoard();
+            return true;
         }
+        return false;
     }
 
     /**
@@ -94,12 +93,31 @@ public class CommandHistory implements Serializable {
      */
     public boolean executeAndAddHistory(Command commandToAdd) {
         try {
-            commandToAdd.doAction();
-            commandHistory.add(commandToAdd);
+            undoExtraInformation.add(commandToAdd.getTarget());
+            if (commandToAdd.doAction()) {
+                commandHistory.add(commandToAdd);
+            } else {
+                undoExtraInformation.remove(undoExtraInformation.size() - 1);
+            }
         } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
         return true;
+    }
+
+    /**
+     * Return the index of commandHistory array where this player's last played his/her turn
+     *
+     * @param playerNumber the player number to look for
+     * @return the index (i.e. turn number) when he/she last played.
+     */
+    private int checkLatestTurnOfPlayer(int playerNumber) {
+        for (int i = commandHistory.size() - 1; i >= 0; i--) {
+            if (commandHistory.get(i).getPlayerNumber() == playerNumber) {
+                return i;
+            }
+        }
+        return -1;
     }
 }

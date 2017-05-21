@@ -22,16 +22,16 @@ public class ActionCard_Remove_Path extends ActionCard {
         PathCard currentCard = (PathCard) targetGrid.getCard();
         if (currentCard instanceof PathCard_Cross) {
             // show option between possible orientations of T
-        } else if (currentCard instanceof PathCard_Cross_Hole) {
+        } else if (currentCard instanceof PathCard_Cross_Dead) {
             // show option between possible orientations of T hole
         } else if (currentCard instanceof PathCard_DeadEnd) {
             // ask user if he/she wants to remove path completely
         } else if (currentCard instanceof PathCard_T) {
             // show option between possible orientations of line or L
-        } else if (currentCard instanceof PathCard_T_Hole) {
+        } else if (currentCard instanceof PathCard_T_Dead) {
             // show option between possible orientations of line hole or L hole
         } else if (currentCard instanceof PathCard_L || currentCard instanceof PathCard_Line ||
-                currentCard instanceof PathCard_L_Hole || currentCard instanceof PathCard_Line_Hole) {
+                currentCard instanceof PathCard_L_Dead || currentCard instanceof PathCard_Line_Dead) {
             // show option between possible orientations of dead end
         } else {
             //invalid, do nothing

@@ -32,6 +32,7 @@ public class Game {
 
     private int gameTurnNumber = 0;
     private int playerTurnNumber = 0;
+    private int nextPlayerTurnNumber = 1;
     private int numOfSaboteurs = 0;
     private boolean noMoreCardNotifiedOnce = false;
 
@@ -91,6 +92,20 @@ public class Game {
     }
 
     /**
+     * Deletes the card and move to next turn
+     */
+    public void discardCurrentCard(boolean recordAsCommand) {
+        if (recordAsCommand) {
+            Object[] target = new Object[]{selectedCard};
+            Command command = new Command_DiscardCard(playerTurnNumber, selectedCard,
+                    players[playerTurnNumber].getRecentlyDrawnCard(), target);
+        }
+        players[playerTurnNumber].removeCard(selectedCard);
+        selectedCard = null;
+        nextTurn();
+    }
+
+    /**
      * Method to place a path card on the board.
      * If a card is placed successfully, the specified location will be redrawn and the nextTurn() method is initiated.
      * <p>
@@ -105,7 +120,8 @@ public class Game {
         if (board.getGridAtLocation(x, y).getCard() instanceof PathCard_Empty) {
             Object[] target = new Object[1];
             target[0] = board.getGridAtLocation(x, y);
-            Command command = new CommandImpl(playerTurnNumber, selectedCard, target);
+            Command command = new Command_PlayCard(playerTurnNumber, selectedCard,
+                    players[playerTurnNumber].getRecentlyDrawnCard(), target);
             if (commandHistory.executeAndAddHistory(command)) {
                 nextTurn();
             } else {
@@ -129,7 +145,8 @@ public class Game {
             target[2] = board.getGridAtLocation(x, y - 1);
             target[3] = board.getGridAtLocation(x + 1, y);
             target[4] = board.getGridAtLocation(x, y + 1);
-            Command command = new CommandImpl(playerTurnNumber, selectedCard, target);
+            Command command = new Command_PlayCard(playerTurnNumber, selectedCard,
+                    players[playerTurnNumber].getRecentlyDrawnCard(), target);
             if (commandHistory.executeAndAddHistory(command)) {
                 nextTurn();
             } else {
@@ -141,7 +158,7 @@ public class Game {
     }
 
     public boolean undoTurn() {
-        if (players[playerTurnNumber].getUndoCount() < 2 && commandHistory.undoTurn()) {
+        if (players[playerTurnNumber].getUndoCount() < 2 && commandHistory.undoTurn(playerTurnNumber)) {
             players[playerTurnNumber].incrementUndoCount();
             return true;
         } else {
@@ -166,12 +183,10 @@ public class Game {
         }
 
         // discard selected card from player hand
-        players[playerTurnNumber].removeCard(selectedCard);
-        selectedCard = null;
+        discardCurrentCard(false);
 
         // Checks if the deck runs out of card. If it doesn't, draw a card from the deck to current player.
-        if (deck.getPointer() == deck.getDeckSize() - 30) {
-
+        if (deck.getPointer() == deck.getDeckSize()) {
             // Notify the users (once per round) that there is no more card in the deck
             if (!noMoreCardNotifiedOnce) {
                 Notification.showAlertBoxNotificationMessage("There is no more card in the deck");
@@ -182,9 +197,16 @@ public class Game {
         }
 
 
-        playerTurnNumber++;
-        if (playerTurnNumber >= NUM_OF_PLAYER) {
-            playerTurnNumber %= NUM_OF_PLAYER;
+        playerTurnNumber = nextPlayerTurnNumber;
+        while (true) {
+            nextPlayerTurnNumber++;
+            if (nextPlayerTurnNumber >= NUM_OF_PLAYER) {
+                nextPlayerTurnNumber %= NUM_OF_PLAYER;
+            }
+            Player nextPlayer = players[nextPlayerTurnNumber];
+            if (nextPlayer.getBrokenTool().size() == 0) {
+                break;
+            }
         }
 
         gameCon.redrawDeck(players[playerTurnNumber].getHand());
@@ -217,6 +239,10 @@ public class Game {
         return players;
     }
 
+    public int getNextPlayerTurnNumber() {
+        return nextPlayerTurnNumber;
+    }
+
     public void setSelectedCard(Card selectedCard) {
         this.selectedCard = selectedCard;
     }
@@ -228,5 +254,9 @@ public class Game {
      */
     public void setSelectedCard(int cardNumberInCurrentHand) {
         this.selectedCard = players[playerTurnNumber].getHand().get(cardNumberInCurrentHand);
+    }
+
+    public void setNextPlayerTurnNumber(int nextPlayerTurnNumber) {
+        this.nextPlayerTurnNumber = nextPlayerTurnNumber;
     }
 }

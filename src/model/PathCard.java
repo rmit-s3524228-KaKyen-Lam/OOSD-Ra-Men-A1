@@ -30,10 +30,9 @@ public abstract class PathCard extends Card {
      * @param south       true if south path is valid
      * @param centre      true if center of the path is valid
      * @param imgResource imageResource for this path card
-     * @param id          id of this card
      */
-    public PathCard(boolean west, boolean north, boolean east, boolean south, boolean centre, String imgResource, String id) {
-        super(imgResource, id);
+    public PathCard(boolean west, boolean north, boolean east, boolean south, boolean centre, String imgResource) {
+        super(imgResource);
         this.west = west;
         this.north = north;
         this.east = east;
@@ -50,7 +49,7 @@ public abstract class PathCard extends Card {
      *
      * @param direction direction clockwise("cw") or anticlockwise("acw")
      */
-    private void rotate(String direction) {
+    public void rotate(String direction) {
         boolean tempNorth = north;
         boolean tempWest = west;
         boolean tempSouth = south;
@@ -129,17 +128,24 @@ public abstract class PathCard extends Card {
         return centre;
     }
 
+    public int getRotateVal() {
+        return rotateVal;
+    }
+
     @Override
     public boolean cardAction(Object[] target) {
         Grid targetGrid = (Grid) target[0];
         if (LogicCheckerBridge.checkIfValid(this, targetGrid.getX(), targetGrid.getY())) {
             targetGrid.setCard(this);
+            return true;
         }
+        return false;
     }
 
     @Override
     public void undoCardAction(Object[] target, Object[] undoExtraInformation) {
         Grid targetGrid = (Grid) target[0];
-        targetGrid.removeCardonGrid();
+        Grid prevGrid = (Grid) undoExtraInformation[0];
+        targetGrid.setCard(prevGrid.getCard());
     }
 }

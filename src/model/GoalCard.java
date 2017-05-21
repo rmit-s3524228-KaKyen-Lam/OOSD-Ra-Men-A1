@@ -50,6 +50,7 @@ public abstract class GoalCard extends Card {
     @Override
     public boolean cardAction(Object[] target) {
         // Do nothing, player can never play GoalCard
+        return true;
     }
 
     @Override

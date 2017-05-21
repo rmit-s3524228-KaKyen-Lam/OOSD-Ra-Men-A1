@@ -18,8 +18,9 @@ public class ActionCard_Corrupt_Path_Card extends ActionCard {
 
     @Override
     public boolean cardAction(Object[] target) {
+        Grid targetGrid = (Grid) target[0];
         if (!(targetGrid.getCard() instanceof PathCard_Empty)) {
-            Grid targetGrid = (Grid) target[0];
+            targetGrid = (Grid) target[0];
             targetGrid.setDisabled(true);
             Board targetBoard = (Board) target[5];
             targetBoard.calculateBoard();

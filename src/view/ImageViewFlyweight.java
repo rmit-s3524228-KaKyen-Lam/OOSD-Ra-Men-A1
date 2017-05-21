@@ -60,7 +60,7 @@ public class ImageViewFlyweight {
         ImageView newIV = new ImageView(card.getImageResource());
         int rotationValue;
         if (card instanceof PathCard) {
-            rotationValue = (PathCard) card.getRotate();
+            rotationValue = ((PathCard) card).getRotateVal();
         } else {
             rotationValue = ROTATE_0;
         }
