@@ -12,8 +12,8 @@ import model.pathcard.PathCard_Empty;
  * @author Fabio Monsalve Duque s3585826
  */
 public class ActionCard_Clean_Path_Card extends ActionCard {
-    public ActionCard_Clean_Path_Card(String imageResource, String id) {
-        super(imageResource, id);
+    public ActionCard_Clean_Path_Card() {
+        super("resources/Action_Clean.png");
     }
 
     @Override

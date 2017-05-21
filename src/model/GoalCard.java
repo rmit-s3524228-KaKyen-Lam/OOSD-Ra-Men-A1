@@ -19,8 +19,8 @@ public abstract class GoalCard extends Card {
      * @param concealedImageResource location of image to indicate a concealed goal card
      * @param imageSource            location of image to indicate a revealed goal card
      */
-    public GoalCard(String concealedImageResource, String imageSource, String id) {
-        super(imageSource, id);
+    public GoalCard(String concealedImageResource, String imageSource) {
+        super(imageSource);
         this.concealedImageResource = concealedImageResource;
         if (imageSource.contains("Gold")) {
             gold = true;

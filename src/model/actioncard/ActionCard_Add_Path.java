@@ -11,8 +11,8 @@ import model.pathcard.*;
  * @author Fabio Monsalve Duque s3585826
  */
 public class ActionCard_Add_Path extends ActionCard {
-    public ActionCard_Add_Path(String imageResource, String id) {
-        super(imageResource, id);
+    public ActionCard_Add_Path() {
+        super("resources/Action_Add_Path.png");
     }
 
     //TODO wait for flyweighted card

@@ -127,15 +127,15 @@ public class Board {
         for (int i = 0; i < gridMaxHeight; i++) {
             for (int j = 0; j < gridMaxWidth; j++) {
                 if ((i == startGoalYList.get(0) || i == startGoalYList.get(1)) && j == startGoalX) {
-                    grid[j][i] = new Grid(j, i, new GoalCard_Coal(("coal")));
+                    grid[j][i] = new Grid(j, i, new GoalCard_Coal());
                 } else if (i == startGoalYList.get(2) && j == startGoalX) {
-                    grid[j][i] = new Grid(j, i, new GoalCard_Gold(("gold")));
+                    grid[j][i] = new Grid(j, i, new GoalCard_Gold());
                     goldLocation = grid[j][i];
                 } else if (i == startPathY && j == startPathX) {
-                    grid[j][i] = new Grid(j, i, new PathCard_Cross("initial cross shaped path card"));
+                    grid[j][i] = new Grid(j, i, new PathCard_Cross());
                     ((PathCard) (grid[j][i].getCard())).setValid(true);
                 } else {
-                    grid[j][i] = new Grid(j, i, new PathCard_Empty("empty"));
+                    grid[j][i] = new Grid(j, i, new PathCard_Empty());
                 }
             }
             System.out.println();

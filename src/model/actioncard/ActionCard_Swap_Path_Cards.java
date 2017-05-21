@@ -11,8 +11,8 @@ import model.Grid;
  * @author Fabio Monsalve Duque s3585826
  */
 public class ActionCard_Swap_Path_Cards extends ActionCard {
-    public ActionCard_Swap_Path_Cards(String imageResource, String id) {
-        super(imageResource, id);
+    public ActionCard_Swap_Path_Cards() {
+        super("resources/Action_Swap.png");
     }
 
     @Override
