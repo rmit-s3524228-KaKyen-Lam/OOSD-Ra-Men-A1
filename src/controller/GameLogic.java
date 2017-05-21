@@ -118,7 +118,6 @@ public class GameLogic {
                 if (cardToPlace.isNorth()) {
                     if (((PathCard) northCard).isSouth()) {
                         northConnectCheck = true;
-                        atLeastOneValidPath = true;
                     }
                     if (northGrid.isConnectedToMain() && ((PathCard) northCard).isCentre()) {
                         atLeastOneValidPath = true;
