@@ -14,12 +14,12 @@ public class Node {
     }
 
     public Node left() {
-        Grid left = grid[root.getX() + 1][root.getY()];
+        Grid left = grid[root.getX() - 1][root.getY()];
         return new Node(grid, left);
     }
 
     public Node right() {
-        Grid right = grid[root.getX() - 1][root.getY()];
+        Grid right = grid[root.getX() + 1][root.getY()];
         return new Node(grid, right);
     }
 
