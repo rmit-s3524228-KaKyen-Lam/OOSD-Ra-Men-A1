@@ -8,7 +8,8 @@ import model.pathcard.PathCard_Empty;
 import java.util.*;
 
 /*http://stackoverflow.com/questions/9369368/2d-arraylist-in-java
- https://www.thoughtco.com/generating-unique-random-numbers-2034208*/
+ https://www.thoughtco.com/generating-unique-random-numbers-2034208
+ http://stackoverflow.com/questions/5262308/how-do-implement-a-breadth-first-traversal
 
 /**
  * Game board containing Grids.
@@ -29,12 +30,15 @@ public class Board {
     private int startGoalY3 = 5;
     private int startPathX = 0;
     private int startPathY = 3;
+    private int x;
+    private int y;
 
     private ArrayList<Grid> goalPos;
 
-    private Grid[][] grid;
+    private Grid[][] grid = new Grid[gridMaxWidth][gridMaxHeight];
     private boolean[][] isFilled;
     private Grid goldLocation;
+    Queue<Node> queue = new LinkedList<>();
 
     public void configureBoard(int widthMax, int heightMax) {
         gridMaxWidth = widthMax;
@@ -83,6 +87,57 @@ public class Board {
         return ("Internal error. No loop triggered.");
     }
 
+    public void calculateBoard() {
+        for (int i = 0; i < gridMaxHeight; i++) {
+            for (int j = 0; j < gridMaxWidth; j++) {
+                grid[j][i].setConnectedToMain(false);
+            }
+        }
+
+        grid[startPathX][startPathY].setConnectedToMain(true);
+        Node root = new Node(grid, grid[startPathX][startPathY]);
+        breadth(root);
+    }
+
+
+    public void breadth(Node root) {
+        if (root == null)
+            return;
+        queue.clear();
+        queue.add(root);
+
+
+        while (!queue.isEmpty()) {
+            Node node = queue.remove();
+            System.out.print(node.root + " ");
+            if (!node.left().root.isDisabled() && ((PathCard) node.root.getCard()).isWest() && ((PathCard) node.left().root.getCard()).isEast()) {
+                x = node.left().root.getX();
+                y = node.left().root.getY();
+                grid[x][y].setConnectedToMain(true);
+                queue.add(node.left());
+            }
+            if (!node.right().root.isDisabled() && ((PathCard) node.root.getCard()).isEast() && ((PathCard) node.right().root.getCard()).isWest()) {
+                x = node.right().root.getX();
+                y = node.right().root.getY();
+                grid[x][y].setConnectedToMain(true);
+                queue.add(node.right());
+            }
+            if (!node.up().root.isDisabled() && ((PathCard) node.root.getCard()).isNorth() && ((PathCard) node.up().root.getCard()).isSouth()) {
+                x = node.up().root.getX();
+                y = node.up().root.getY();
+                grid[x][y].setConnectedToMain(true);
+                queue.add(node.up());
+            }
+            if (!node.down().root.isDisabled() && ((PathCard) node.root.getCard()).isSouth() && ((PathCard) node.down().root.getCard()).isNorth()) {
+                x = node.down().root.getX();
+                y = node.down().root.getY();
+                grid[x][y].setConnectedToMain(true);
+                queue.add(node.down());
+            }
+        }
+
+    }
+
 
     /**
      * Randomise starting positions of GoalCards
@@ -107,12 +162,12 @@ public class Board {
             for (int j = 0; j < gridMaxWidth; j++) {
                 if (!isFilled[j][i]) {
                     if (i == startPathY && j == startPathX) {
-                        grid[j][i] = new Grid(j, i, CardFlyweight.getCard("T_SHAPE", 0));
+                        grid[j][i] = new Grid(j, i, CardFlyweight.getCard("CROSS_SHAPE", 0));
                         ((PathCard) (grid[j][i].getCard())).setValid(true);
                         grid[j][i].setConnectedToMain(false);
                         isFilled[j][i] = true;
                     } else {
-                        grid[j][i] = new Grid(j, i, CardFlyweight.getCard("DEAD", 0));
+                        grid[j][i] = new Grid(j, i, CardFlyweight.getCard("EMPTY", 0));
                         isFilled[j][i] = true;
                     }
                 }
