@@ -1,35 +1,37 @@
 package model;
 
-
-import java.util.ArrayList;
-
 /**
- * Created by Ka Kyen Lam on 19/05/2017.
+ * Created by Ka Kyen Lam on 21/05/2017.
  */
 public class Node {
-    Node left;
-    Node right;
-    Grid grid;
 
-    public Node (Grid grid, Node left, Node right) {
+    Grid[][] grid;
+    Grid root;
+
+    public Node(Grid[][] grid, Grid root) {
         this.grid = grid;
-        this.left = left;
-        this.right = right;
+        this.root = root;
     }
 
-    public ArrayList<Node> getChildren(){
-        ArrayList<Node> child = new ArrayList<>();
-        if(this.left != null)
-        {
-            child.add(left);
-        }
-        if(this.right != null) {
-            child.add(right);
-        }
-        return child;
+    public Node left() {
+        Grid left = grid[root.getX() + 1][root.getY()];
+        return new Node(grid, left);
     }
 
-    public boolean removeChild(Node n){
-        return false;
+    public Node right() {
+        Grid right = grid[root.getX() - 1][root.getY()];
+        return new Node(grid, right);
     }
+
+    public Node up() {
+        Grid up = grid[root.getX()][root.getY() + 1];
+        return new Node(grid, up);
+    }
+
+    public Node down() {
+        Grid down = grid[root.getX()][root.getY() - 1];
+        return new Node(grid, down);
+    }
+
+
 }
