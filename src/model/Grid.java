@@ -35,7 +35,7 @@ public class Grid {
      * Remove card from this grid
      */
     public void removeCardonGrid() {
-        this.card = new PathCard_Empty("empty");
+        this.card = new PathCard_Empty();
     }
 
     public Card getCard() {

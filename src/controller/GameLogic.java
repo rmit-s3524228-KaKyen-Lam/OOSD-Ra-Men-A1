@@ -1,6 +1,7 @@
 package controller;
 
 import model.*;
+import model.pathcard.PathCard_Empty;
 
 /**
  * This class handles the higher level logic of the gameLogic.
@@ -82,7 +83,7 @@ public class GameLogic {
         Grid westGrid = board.getGridAtLocation(x - 1, y);
         if (westGrid != null) {
             Card westCard = westGrid.getCard();
-            if (westCard != null && (westCard instanceof GoalCard || westCard.getId().equals("empty"))) {
+            if (westCard != null && (westCard instanceof GoalCard || westCard instanceof PathCard_Empty)) {
                 westConnectCheck = true;
             } else {
                 if (cardToPlace.isWest()) {
@@ -104,7 +105,7 @@ public class GameLogic {
         Grid northGrid = board.getGridAtLocation(x, y - 1);
         if (northGrid != null) {
             Card northCard = northGrid.getCard();
-            if (northCard != null && (northCard instanceof GoalCard || northCard.getId().equals("empty"))) {
+            if (northCard != null && (northCard instanceof GoalCard || northCard instanceof PathCard_Empty)) {
                 northConnectCheck = true;
             } else {
                 if (cardToPlace.isNorth()) {
@@ -126,7 +127,7 @@ public class GameLogic {
         Grid eastGrid = board.getGridAtLocation(x + 1, y);
         if (eastGrid != null) {
             Card eastCard = eastGrid.getCard();
-            if (eastCard != null && (eastCard instanceof GoalCard || eastCard.getId().equals("empty"))) {
+            if (eastCard != null && (eastCard instanceof GoalCard || eastCard instanceof PathCard_Empty)) {
                 eastConnectCheck = true;
             } else {
                 if (cardToPlace.isEast()) {
@@ -148,7 +149,7 @@ public class GameLogic {
         Grid southGrid = board.getGridAtLocation(x, y + 1);
         if (southGrid != null) {
             Card southCard = southGrid.getCard();
-            if (southCard != null && (southCard instanceof GoalCard || southCard.getId().equals("empty"))) {
+            if (southCard != null && (southCard instanceof GoalCard || southCard instanceof PathCard_Empty)) {
                 southConnectCheck = true;
             } else {
                 if (cardToPlace.isSouth()) {

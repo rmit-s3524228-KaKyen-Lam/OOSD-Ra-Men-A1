@@ -9,8 +9,8 @@ import model.GoalCard;
  */
 public class GoalCard_Coal extends GoalCard {
 
-    public GoalCard_Coal(String id) {
-        super("resources/Goal.png", "resources/Coal.png", id);
+    public GoalCard_Coal() {
+        super("resources/Goal.png", "resources/Coal.png");
     }
 
     @Override
