@@ -9,8 +9,8 @@ import model.ActionCard;
  *
  */
 public class ActionCard_Rotate_Path_Card extends ActionCard {
-    public ActionCard_Rotate_Path_Card(String id) {
-        super("resources/Action_Rotate_Path.png", id);
+    public ActionCard_Rotate_Path_Card() {
+        super("resources/Action_Rotate_Path.png");
     }
 
     @Override

@@ -9,8 +9,8 @@ import model.PathCard;
  */
 public class PathCard_Cross_Dead extends PathCard {
 
-  public PathCard_Cross_Dead(String id) {
-    super(true, true, true, true, false, "resources/Shape_Plus_Hole.png", id);
+  public PathCard_Cross_Dead() {
+    super(true, true, true, true, false, "resources/Shape_Plus_Hole.png");
   }
 
   @Override

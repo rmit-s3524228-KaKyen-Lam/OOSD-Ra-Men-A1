@@ -10,8 +10,8 @@ import model.ActionCard;
  */
 public class ActionCard_Destroy_Path_Card extends ActionCard {
 
-  public ActionCard_Destroy_Path_Card(String id) {
-    super("resources/Action_Destroy_one_Path.png", id);
+  public ActionCard_Destroy_Path_Card() {
+    super("resources/Action_Destroy_one_Path.png");
   }
 
   @Override

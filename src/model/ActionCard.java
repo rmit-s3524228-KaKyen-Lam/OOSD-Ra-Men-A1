@@ -7,9 +7,8 @@ public abstract class ActionCard extends Card {
   /**
    *
    * @param imageResource location of image
-   * @param id All types of card have a unique id
    */
-  public ActionCard(String imageResource, String id) {
-    super(imageResource, id);
+  public ActionCard(String imageResource) {
+    super(imageResource);
   }
 }

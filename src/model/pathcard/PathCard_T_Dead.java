@@ -9,8 +9,8 @@ import model.PathCard;
  */
 public class PathCard_T_Dead extends PathCard {
 
-  public PathCard_T_Dead(String id) {
-    super(true, false, true, true, false, "resources/Shape_T_Hole.png", id);
+  public PathCard_T_Dead() {
+    super(true, false, true, true, false, "resources/Shape_T_Hole.png");
   }
 
   @Override

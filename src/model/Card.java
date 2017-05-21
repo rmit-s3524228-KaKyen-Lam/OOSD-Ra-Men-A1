@@ -18,11 +18,10 @@ public abstract class Card extends Drawable {
 
     /**
      * @param imageResource location of image file for card
-     * @param id            every can will have and if when created to access and to ensure individuality
      */
-    public Card(String imageResource, String id) {
+    public Card(String imageResource) {
         super(imageResource);
-        this.id = id;
+
     }
 
     /**
