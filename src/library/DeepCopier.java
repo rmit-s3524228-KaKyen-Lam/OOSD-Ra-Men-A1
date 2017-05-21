@@ -8,9 +8,9 @@ import java.io.ObjectOutputStream;
 /**
  * @author David Limantoro s3503728 on 2017/05/21.
  */
-public class Library {
+public class DeepCopier {
 
-    public static Object deepCopy(Object toCopy) {
+    public static Object copy(Object toCopy) {
         try {
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             ObjectOutputStream oos = new ObjectOutputStream(bos);
@@ -27,7 +27,7 @@ public class Library {
         }
     }
 
-    public static Object[] deepCopyArray(Object toCopy[]) {
+    public static Object[] copyArray(Object toCopy[]) {
         try {
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             ObjectOutputStream oos = new ObjectOutputStream(bos);

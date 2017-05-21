@@ -1,8 +1,6 @@
 package model;
 
-import library.Library;
-
-import java.io.*;
+import library.DeepCopier;
 
 /**
  * @author David Limantoro (s3503728) on 5/18/2017.
@@ -42,6 +40,6 @@ public abstract class CommandAbstract implements Command {
     }
 
     public Object[] getTarget() {
-        return Library.deepCopyArray(target);
+        return DeepCopier.copyArray(target);
     }
 }

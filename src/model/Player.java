@@ -1,6 +1,6 @@
 package model;
 
-import library.Library;
+import library.DeepCopier;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -114,6 +114,6 @@ public class Player {
     }
 
     public Card getRecentlyDrawnCard() {
-        return (Card) Library.deepCopy(recentlyDrawnCard);
+        return (Card) DeepCopier.copy(recentlyDrawnCard);
     }
 }
