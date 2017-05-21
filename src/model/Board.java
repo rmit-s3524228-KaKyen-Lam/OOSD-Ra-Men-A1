@@ -39,7 +39,7 @@ public class Board {
     private boolean[][] isFilled;
     private Grid goldLocation;
     Queue<Node> queue = new LinkedList<>();
-    private ArrayList<Grid> goalList= new ArrayList<>();
+    private ArrayList<Grid> goalList = new ArrayList<>();
 
     public void configureBoard(int widthMax, int heightMax) {
         gridMaxWidth = widthMax;
@@ -56,13 +56,13 @@ public class Board {
 
     public boolean inputCheck(int width, int height) {
         if (width < 0 || width > gridMaxWidth) {
-            System.out.println ("Invalid width. Please input width between 0 - " + gridMaxWidth);
+            System.out.println("Invalid width. Please input width between 0 - " + gridMaxWidth);
             return false;
         } else if (height < 0 || height > gridMaxHeight) {
-            System.out.println ("Invalid height. Please input width between 0 - " + gridMaxHeight);
+            System.out.println("Invalid height. Please input width between 0 - " + gridMaxHeight);
             return false;
         } else if (isFilled[width][height] == true) {
-            System.out.println ("Invalid position. That grid has been occupied.");
+            System.out.println("Invalid position. That grid has been occupied.");
             return false;
         } else {
             return true;
@@ -73,9 +73,9 @@ public class Board {
     public String configureGoalPos(int amount, String name, int width, int height) {
         int i = 0;
 
-        while (i<amount) {
+        while (i < amount) {
 
-           boolean validInput = inputCheck(width, height);
+            boolean validInput = inputCheck(width, height);
 
             if (validInput) {
                 isFilled[width][height] = true;
@@ -118,29 +118,41 @@ public class Board {
         while (!queue.isEmpty()) {
             Node node = queue.remove();
             System.out.print(node.root + " ");
-            if (!node.left().root.isDisabled() && ((PathCard) node.root.getCard()).isWest() && ((PathCard) node.left().root.getCard()).isEast()) {
-                x = node.left().root.getX();
-                y = node.left().root.getY();
-                grid[x][y].setConnectedToMain(true);
-                queue.add(node.left());
+
+            if (node.left().root.getX() > 0) {
+                if (!node.left().root.isDisabled() && ((PathCard) node.root.getCard()).isWest() && ((PathCard) node.left().root.getCard()).isEast()) {
+                    x = node.left().root.getX();
+                    y = node.left().root.getY();
+                    grid[x][y].setConnectedToMain(true);
+                    queue.add(node.left());
+                }
             }
-            if (!node.right().root.isDisabled() && ((PathCard) node.root.getCard()).isEast() && ((PathCard) node.right().root.getCard()).isWest()) {
-                x = node.right().root.getX();
-                y = node.right().root.getY();
-                grid[x][y].setConnectedToMain(true);
-                queue.add(node.right());
+
+            if (node.right().root.getX() <= gridMaxWidth) {
+                if (!node.right().root.isDisabled() && ((PathCard) node.root.getCard()).isEast() && ((PathCard) node.right().root.getCard()).isWest()) {
+                    x = node.right().root.getX();
+                    y = node.right().root.getY();
+                    grid[x][y].setConnectedToMain(true);
+                    queue.add(node.right());
+                }
             }
-            if (!node.up().root.isDisabled() && ((PathCard) node.root.getCard()).isNorth() && ((PathCard) node.up().root.getCard()).isSouth()) {
-                x = node.up().root.getX();
-                y = node.up().root.getY();
-                grid[x][y].setConnectedToMain(true);
-                queue.add(node.up());
+
+            if (node.up().root.getY() >= 0) {
+                if (!node.up().root.isDisabled() && ((PathCard) node.root.getCard()).isNorth() && ((PathCard) node.up().root.getCard()).isSouth()) {
+                    x = node.up().root.getX();
+                    y = node.up().root.getY();
+                    grid[x][y].setConnectedToMain(true);
+                    queue.add(node.up());
+                }
             }
-            if (!node.down().root.isDisabled() && ((PathCard) node.root.getCard()).isSouth() && ((PathCard) node.down().root.getCard()).isNorth()) {
-                x = node.down().root.getX();
-                y = node.down().root.getY();
-                grid[x][y].setConnectedToMain(true);
-                queue.add(node.down());
+
+            if (node.down().root.getY() <= gridMaxHeight) {
+                if (!node.down().root.isDisabled() && ((PathCard) node.root.getCard()).isSouth() && ((PathCard) node.down().root.getCard()).isNorth()) {
+                    x = node.down().root.getX();
+                    y = node.down().root.getY();
+                    grid[x][y].setConnectedToMain(true);
+                    queue.add(node.down());
+                }
             }
         }
 
