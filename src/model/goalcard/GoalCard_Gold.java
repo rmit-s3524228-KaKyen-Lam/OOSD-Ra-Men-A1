@@ -9,7 +9,7 @@ import model.GoalCard;
  */
 public class GoalCard_Gold extends GoalCard {
 
-    public GoalCard_Gold() {
-        super("resources/Goal.png", "resources/Gold.png");
+    public GoalCard_Gold(boolean hidden) {
+        super("resources/Goal.png", "resources/Gold.png", hidden);
     }
 }

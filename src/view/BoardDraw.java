@@ -69,19 +69,16 @@ public class BoardDraw {
         Grid[][] gameBoard = game.getBoard().getGrid();
         Card currentGridCard = gameBoard[x][y].getCard();
 
-        if (currentGridCard instanceof GoalCard) {
-            if (((GoalCard) currentGridCard).isHidden()) {
-                imageToDrawOnGrid = new ImageView(((GoalCard) currentGridCard).getConcealedImageResource());
-            } else {
-                imageToDrawOnGrid = new ImageView(currentGridCard.getImageResource());
+        imageToDrawOnGrid = new ImageView(ImageFlyweight.requestImage(currentGridCard));
+        if (currentGridCard instanceof PathCard) {
+            int rotateVal = 0;
+            for (int i = 0; i < ((PathCard) currentGridCard).getRotateVal(); i++) {
+                rotateVal += 90;
             }
-        } else {
-            imageToDrawOnGrid = new ImageView(currentGridCard.getImageResource());
+            imageToDrawOnGrid.setRotate(rotateVal);
         }
-
         images[x][y] = imageToDrawOnGrid;
 
-        // TODO Create dedicated class for these handlers and put it in the controller package.
         imageToDrawOnGrid.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {

@@ -10,7 +10,7 @@ import java.util.HashMap;
  *
  * @author Fabio Monsalve s3585826
  */
-class CardFlyweight {
+public class CardFlyweight {
     private static CardFactory cardFactory = new CardFactory();
     private static HashMap<String, Card[]> cardHashMap = new HashMap<>();
 
@@ -25,7 +25,7 @@ class CardFlyweight {
      *                      size 4 is created for each.
      * @return Requested card
      */
-    static Card getCard(String cardType, int rotationValue) {
+    public static Card getCard(String cardType, int rotationValue) {
 
         if (cardHashMap.containsKey(cardType)) {
             if (cardHashMap.get(cardType)[rotationValue] == null) {

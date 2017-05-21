@@ -50,7 +50,7 @@ class CardFactory {
                     return rotateCard(L_Card, rotation);
                 else
                     return L_Card;
-            case "L_SHAPE DEAD":
+            case "L_SHAPE_DEAD":
                 PathCard_L_Dead L_Dead_Card = new PathCard_L_Dead();
                 if (rotation != 0)
                     return rotateCard(L_Dead_Card, rotation);
@@ -80,12 +80,16 @@ class CardFactory {
                 return new ActionCard_Rotate_Path_Card();
             case "SWAP_PATH":
                 return new ActionCard_Swap_Path_Cards();
-            case "COAL":
-                return new GoalCard_Coal();
             case "GOAL":
-                return new GoalCard_Goal();
-            case "GOLD":
-                return new GoalCard_Gold();
+                return new GoalCard_Goal(true);
+            case "COAL_HIDDEN":
+                return new GoalCard_Coal(true);
+            case "COAL_REVEALED":
+                return new GoalCard_Coal(false);
+            case "GOLD_HIDDEN":
+                return new GoalCard_Gold(true);
+            case "GOLD_REVEALED":
+                return new GoalCard_Gold(false);
         }
         return null;
     }

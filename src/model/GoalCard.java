@@ -9,8 +9,8 @@ package model;
 public abstract class GoalCard extends Card {
 
     // All goal cards will initially be hidden
-    private boolean hidden = true;
-    private boolean gold = false;
+    private boolean hidden;
+    private boolean gold;
     private String concealedImageResource;
 
     /**
@@ -19,12 +19,13 @@ public abstract class GoalCard extends Card {
      * @param concealedImageResource location of image to indicate a concealed goal card
      * @param imageSource            location of image to indicate a revealed goal card
      */
-    public GoalCard(String concealedImageResource, String imageSource) {
+    public GoalCard(String concealedImageResource, String imageSource, boolean hidden) {
         super(imageSource);
         this.concealedImageResource = concealedImageResource;
         if (imageSource.contains("Gold")) {
             gold = true;
         }
+        this.hidden = hidden;
     }
 
     public boolean isHidden() {
@@ -39,8 +40,13 @@ public abstract class GoalCard extends Card {
         return gold;
     }
 
-    public String getConcealedImageResource() {
-        return concealedImageResource;
+    @Override
+    public String getImageResource() {
+        if (hidden) {
+            return concealedImageResource;
+        } else {
+            return super.getImageResource();
+        }
     }
 
     public void setGold(boolean gold) {

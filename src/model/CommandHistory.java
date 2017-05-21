@@ -91,19 +91,21 @@ public class CommandHistory implements Serializable {
      * @param commandToAdd The Command object to execute
      * @return True if the command is executed correctly, otherwise false;
      */
-    public boolean executeAndAddHistory(Command commandToAdd) {
+    public boolean executeAndAddHistory(Command commandToAdd, int playerNumber) {
         try {
             undoExtraInformation.add(commandToAdd.getTarget());
             if (commandToAdd.doAction()) {
                 commandHistory.add(commandToAdd);
+                players[playerNumber].removeCard(commandToAdd.getCardToUse());
+                return true;
             } else {
                 undoExtraInformation.remove(undoExtraInformation.size() - 1);
+                return false;
             }
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
         }
-        return true;
+        return false;
     }
 
     /**

@@ -14,7 +14,6 @@ public abstract class PathCard extends Card {
 
     // Keep track of rotations invoked
     private int rotateVal = 0;
-    private boolean isValid = false;
     private boolean north = false;
     private boolean west = false;
     private boolean south = false;
@@ -100,14 +99,6 @@ public abstract class PathCard extends Card {
         }
     }
 
-    public void setValid(boolean valid) {
-        isValid = valid;
-    }
-
-    public boolean isValid() {
-        return isValid;
-    }
-
     public boolean isNorth() {
         return north;
     }
@@ -137,6 +128,7 @@ public abstract class PathCard extends Card {
         Grid targetGrid = (Grid) target[0];
         if (LogicCheckerBridge.checkIfValid(this, targetGrid.getX(), targetGrid.getY())) {
             targetGrid.setCard(this);
+            targetGrid.setConnectedToMain(true);
             return true;
         }
         return false;

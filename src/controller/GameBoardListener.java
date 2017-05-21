@@ -42,7 +42,7 @@ public class GameBoardListener implements EventHandler<MouseEvent> {
         Card selCard = game.getSelectedCard();
         if (selCard != null) {
             if (selCard instanceof PathCard) {
-                game.placeCard(x, y);
+                game.playPathCard(x, y);
             } else if (selCard instanceof ActionCard) {
                 game.playActionCard(x, y);
             } else {

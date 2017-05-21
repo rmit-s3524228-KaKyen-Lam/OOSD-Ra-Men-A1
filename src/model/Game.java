@@ -28,7 +28,7 @@ public class Game {
     private Board board = new Board();
     private Deck deck = new Deck();
     private Player[] players;
-    private CommandHistory commandHistory = new CommandHistory(board, deck, players);
+    private CommandHistory commandHistory;
 
     private int gameTurnNumber = 0;
     private int playerTurnNumber = 0;
@@ -46,6 +46,7 @@ public class Game {
         for (int i = 0; i < players.length; i++) {
             players[i] = new Player(0, "miner", new ArrayList<>(), null);
         }
+        commandHistory = new CommandHistory(board, deck, players);
     }
 
     /**
@@ -94,15 +95,14 @@ public class Game {
     /**
      * Deletes the card and move to next turn
      */
-    public void discardCurrentCard(boolean recordAsCommand) {
-        if (recordAsCommand) {
-            Object[] target = new Object[]{selectedCard};
-            Command command = new Command_DiscardCard(playerTurnNumber, selectedCard,
-                    players[playerTurnNumber].getRecentlyDrawnCard(), target);
+    public void playDiscardCard() {
+        Command command = new Command_DiscardCard(playerTurnNumber, selectedCard,
+                players[playerTurnNumber].getRecentlyDrawnCard(), null);
+        if (commandHistory.executeAndAddHistory(command, playerTurnNumber)) {
+            nextTurn();
+        } else {
+            Notification.showAlertBoxErrorMessage("Cannot remove card");
         }
-        players[playerTurnNumber].removeCard(selectedCard);
-        selectedCard = null;
-        nextTurn();
     }
 
     /**
@@ -116,19 +116,21 @@ public class Game {
      * @param x column number of the board
      * @param y row number of the board
      */
-    public void placeCard(int x, int y) {
+    public void playPathCard(int x, int y) {
         if (board.getGridAtLocation(x, y).getCard() instanceof PathCard_Empty) {
             Object[] target = new Object[1];
             target[0] = board.getGridAtLocation(x, y);
             Command command = new Command_PlayCard(playerTurnNumber, selectedCard,
                     players[playerTurnNumber].getRecentlyDrawnCard(), target);
-            if (commandHistory.executeAndAddHistory(command)) {
+            if (commandHistory.executeAndAddHistory(command, playerTurnNumber)) {
+                gameLogic.checkGoalCardNeighbor(x, y, (PathCard) command.getCardToUse());
+                gameCon.redrawGridXY(x, y);
                 nextTurn();
             } else {
                 Notification.showAlertBoxErrorMessage("This path card placement is invalid");
             }
         } else {
-            Notification.showAlertBoxErrorMessage("This path card placement is invalid");
+            Notification.showAlertBoxErrorMessage("Cannot place the card on top of this path");
         }
     }
 
@@ -147,7 +149,7 @@ public class Game {
             target[4] = board.getGridAtLocation(x, y + 1);
             Command command = new Command_PlayCard(playerTurnNumber, selectedCard,
                     players[playerTurnNumber].getRecentlyDrawnCard(), target);
-            if (commandHistory.executeAndAddHistory(command)) {
+            if (commandHistory.executeAndAddHistory(command, playerTurnNumber)) {
                 nextTurn();
             } else {
                 Notification.showAlertBoxErrorMessage("Cannot play this action card");
@@ -181,9 +183,7 @@ public class Game {
             Notification.showAlertBoxNotificationMessage("The gold is found. This round is over");
             gameStart(gameCon);
         }
-
-        // discard selected card from player hand
-        discardCurrentCard(false);
+        selectedCard = null;
 
         // Checks if the deck runs out of card. If it doesn't, draw a card from the deck to current player.
         if (deck.getPointer() == deck.getDeckSize()) {

@@ -11,7 +11,10 @@ public class Command_DiscardCard extends CommandAbstract {
 
     @Override
     public boolean doAction() {
-        return super.doAction();
+        if (getCardToUse() != null) {
+            return true;
+        }
+        return false;
     }
 
     @Override

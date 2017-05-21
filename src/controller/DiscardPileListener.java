@@ -32,7 +32,7 @@ public class DiscardPileListener implements EventHandler<MouseEvent> {
     @Override
     public void handle(MouseEvent event) {
         if (game.getSelectedCard() != null) {
-            game.discardCurrentCard(true);
+            game.playDiscardCard();
         } else {
             Notification.showAlertBoxErrorMessage("Cannot discard card: No card is currently selected");
         }
