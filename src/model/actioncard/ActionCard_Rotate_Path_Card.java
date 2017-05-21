@@ -11,7 +11,7 @@ import model.Grid;
  */
 public class ActionCard_Rotate_Path_Card extends ActionCard {
     public ActionCard_Rotate_Path_Card() {
-        super("resources/Action_Rotate_Path.png");
+        super("resources/Action_Rotate.png");
     }
 
     @Override

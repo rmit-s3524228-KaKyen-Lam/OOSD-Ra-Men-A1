@@ -141,12 +141,13 @@ public class Game {
      */
     public void playActionCard(int x, int y) {
         if (board.getGridAtLocation(x, y).getCard() instanceof PathCard) {
-            Object[] target = new Object[5];
+            Object[] target = new Object[6];
             target[0] = board.getGridAtLocation(x, y);
             target[1] = board.getGridAtLocation(x - 1, y);
             target[2] = board.getGridAtLocation(x, y - 1);
             target[3] = board.getGridAtLocation(x + 1, y);
             target[4] = board.getGridAtLocation(x, y + 1);
+            target[5] = board;
             Command command = new Command_PlayCard(playerTurnNumber, selectedCard,
                     players[playerTurnNumber].getRecentlyDrawnCard(), target);
             if (commandHistory.executeAndAddHistory(command, playerTurnNumber)) {
