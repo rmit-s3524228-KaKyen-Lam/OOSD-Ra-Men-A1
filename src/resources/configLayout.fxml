@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="450.0" prefWidth="443.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.configurationController">
+   <children>
+      <Label layoutX="104.0" layoutY="233.0" text="No. of coal:" />
+      <Label layoutX="104.0" layoutY="123.0" prefHeight="17.0" prefWidth="41.0" text="Width:" />
+      <TextField fx:id="boardWidth" layoutX="165.0" layoutY="120.0" prefHeight="0.0" prefWidth="34.0" />
+      <Label layoutX="104.0" layoutY="163.0" text="Position of Coal:" />
+      <TextField fx:id="boardHeight" layoutX="275.0" layoutY="120.0" prefHeight="0.0" prefWidth="34.0" />
+      <Label layoutX="104.0" layoutY="93.0" text="Board Size:" />
+      <TextField fx:id="coalWidth" layoutX="165.0" layoutY="190.0" prefHeight="0.0" prefWidth="34.0" />
+      <TextField fx:id="coalHeight" layoutX="275.0" layoutY="190.0" prefHeight="0.0" prefWidth="34.0" />
+      <Label layoutX="214.0" layoutY="123.0" prefHeight="17.0" prefWidth="47.0" text="Height:" />
+      <Label layoutX="104.0" layoutY="193.0" prefHeight="17.0" prefWidth="41.0" text="Width:" />
+      <Label layoutX="214.0" layoutY="193.0" prefHeight="17.0" prefWidth="47.0" text="Height:" />
+      <Label layoutX="104.0" layoutY="333.0" text="No. of gold:" />
+      <Label layoutX="104.0" layoutY="263.0" text="Position of Gold:" />
+      <TextField fx:id="goldWidth" layoutX="165.0" layoutY="290.0" prefHeight="0.0" prefWidth="34.0" />
+      <Label layoutX="104.0" layoutY="293.0" prefHeight="17.0" prefWidth="41.0" text="Width:" />
+      <Button fx:id="submitButton" layoutX="201.0" layoutY="409.0" mnemonicParsing="false" text="Submit" />
+      <Label layoutX="179.0" layoutY="30.0" text="Configuration">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <TextField fx:id="goldHeight" layoutX="275.0" layoutY="290.0" prefHeight="0.0" prefWidth="34.0" />
+      <Label layoutX="214.0" layoutY="293.0" prefHeight="17.0" prefWidth="47.0" text="Height:" />
+      <Label layoutX="253.0" layoutY="233.0" text="Max 5">
+         <font>
+            <Font name="System Italic" size="13.0" />
+         </font>
+      </Label>
+      <Label layoutX="253.0" layoutY="333.0" text="Max 5">
+         <font>
+            <Font name="System Italic" size="13.0" />
+         </font>
+      </Label>
+      <Button fx:id="coalButton" layoutX="318.0" layoutY="190.0" mnemonicParsing="false" text="Add" />
+      <Label fx:id="numCoalLabel" layoutX="193.0" layoutY="233.0" text="0">
+         <font>
+            <Font name="System Italic" size="13.0" />
+         </font>
+      </Label>
+      <Button fx:id="goldButton" layoutX="318.0" layoutY="290.0" mnemonicParsing="false" text="Add" />
+      <Label fx:id="numGoldLabel" layoutX="193.0" layoutY="333.0" text="0">
+         <font>
+            <Font name="System Italic" size="13.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
