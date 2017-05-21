@@ -119,32 +119,40 @@ public class Board {
             Node node = queue.remove();
             System.out.print(node.root + " ");
 
-            if (!node.left().root.isDisabled() && ((PathCard) node.root.getCard()).isWest() && ((PathCard) node.left().root.getCard()).isEast()) {
-                x = node.left().root.getX();
-                y = node.left().root.getY();
-                grid[x][y].setConnectedToMain(true);
-                queue.add(node.left());
+            if (node.left() != null) {
+                if (!node.left().root.isDisabled() && ((PathCard) node.root.getCard()).isWest() && ((PathCard) node.left().root.getCard()).isEast()) {
+                    x = node.left().root.getX();
+                    y = node.left().root.getY();
+                    grid[x][y].setConnectedToMain(true);
+                    queue.add(node.left());
+                }
             }
 
-            if (!node.right().root.isDisabled() && ((PathCard) node.root.getCard()).isEast() && ((PathCard) node.right().root.getCard()).isWest()) {
-                x = node.right().root.getX();
-                y = node.right().root.getY();
-                grid[x][y].setConnectedToMain(true);
-                queue.add(node.right());
+            if (node.right() != null) {
+                if (!node.right().root.isDisabled() && ((PathCard) node.root.getCard()).isEast() && ((PathCard) node.right().root.getCard()).isWest()) {
+                    x = node.right().root.getX();
+                    y = node.right().root.getY();
+                    grid[x][y].setConnectedToMain(true);
+                    queue.add(node.right());
+                }
             }
 
-            if (!node.up().root.isDisabled() && ((PathCard) node.root.getCard()).isNorth() && ((PathCard) node.up().root.getCard()).isSouth()) {
-                x = node.up().root.getX();
-                y = node.up().root.getY();
-                grid[x][y].setConnectedToMain(true);
-                queue.add(node.up());
+            if (node.up() != null) {
+                if (!node.up().root.isDisabled() && ((PathCard) node.root.getCard()).isNorth() && ((PathCard) node.up().root.getCard()).isSouth()) {
+                    x = node.up().root.getX();
+                    y = node.up().root.getY();
+                    grid[x][y].setConnectedToMain(true);
+                    queue.add(node.up());
+                }
             }
 
-            if (!node.down().root.isDisabled() && ((PathCard) node.root.getCard()).isSouth() && ((PathCard) node.down().root.getCard()).isNorth()) {
-                x = node.down().root.getX();
-                y = node.down().root.getY();
-                grid[x][y].setConnectedToMain(true);
-                queue.add(node.down());
+            if (node.down() != null) {
+                if (!node.down().root.isDisabled() && ((PathCard) node.root.getCard()).isSouth() && ((PathCard) node.down().root.getCard()).isNorth()) {
+                    x = node.down().root.getX();
+                    y = node.down().root.getY();
+                    grid[x][y].setConnectedToMain(true);
+                    queue.add(node.down());
+                }
             }
         }
 
