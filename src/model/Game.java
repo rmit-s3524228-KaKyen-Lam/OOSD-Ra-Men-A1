@@ -3,6 +3,7 @@ package model;
 import controller.GameController;
 import controller.GameLogic;
 import controller.LogicCheckerBridge;
+import model.pathcard.PathCard_Empty;
 import view.Notification;
 
 import java.util.ArrayList;
@@ -10,15 +11,16 @@ import java.util.ArrayList;
 /**
  * This is the class that contains all the information regarding the game itself,
  * as well as the bare game logic essentials.
- *
+ * <p>
  * The higher level logic such as card placement checking is handled by GameLogic class instead.
- *
+ * <p>
  * The Game class is an example of the Information Expert principle as it has the information required to assign
  * responsibilities to objects such as Player and Deck.
  *
  * @author David Limantoro s3503728
  */
 public class Game {
+
     private final int NUM_OF_PLAYER = 4;
 
     private GameLogic gameLogic;
@@ -26,9 +28,11 @@ public class Game {
     private Board board = new Board();
     private Deck deck = new Deck();
     private Player[] players;
+    private CommandHistory commandHistory;
 
     private int gameTurnNumber = 0;
     private int playerTurnNumber = 0;
+    private int nextPlayerTurnNumber = 1;
     private int numOfSaboteurs = 0;
     private boolean noMoreCardNotifiedOnce = false;
 
@@ -42,6 +46,7 @@ public class Game {
         for (int i = 0; i < players.length; i++) {
             players[i] = new Player(0, "miner", new ArrayList<>(), null);
         }
+        commandHistory = new CommandHistory(board, deck, players);
     }
 
     /**
@@ -77,7 +82,7 @@ public class Game {
     /**
      * Method to increase player's score.
      * This method is when a game round is over.
-     *
+     * <p>
      * precondition, the player number must not be more than the maximum number of player
      *
      * @param winnerPlayerNumber the player number that wins the game.
@@ -88,9 +93,22 @@ public class Game {
     }
 
     /**
+     * Deletes the card and move to next turn
+     */
+    public void playDiscardCard() {
+        Command command = new Command_DiscardCard(playerTurnNumber, selectedCard,
+                players[playerTurnNumber].getRecentlyDrawnCard(), null);
+        if (commandHistory.executeAndAddHistory(command, playerTurnNumber)) {
+            nextTurn();
+        } else {
+            Notification.showAlertBoxErrorMessage("Cannot remove card");
+        }
+    }
+
+    /**
      * Method to place a path card on the board.
      * If a card is placed successfully, the specified location will be redrawn and the nextTurn() method is initiated.
-     *
+     * <p>
      * precondition:
      * 1. selectedCard must not be null
      * 2. selectedCard must be either subclass of PathCard or ActionCard
@@ -98,40 +116,64 @@ public class Game {
      * @param x column number of the board
      * @param y row number of the board
      */
-    public void placeCard(int x, int y) {
-        if (selectedCard instanceof PathCard) {
-            if (gameLogic.placeCardOnBoard(x, y, selectedCard)) {
+    public void playPathCard(int x, int y) {
+        if (board.getGridAtLocation(x, y).getCard() instanceof PathCard_Empty) {
+            Object[] target = new Object[1];
+            target[0] = board.getGridAtLocation(x, y);
+            Command command = new Command_PlayCard(playerTurnNumber, selectedCard,
+                    players[playerTurnNumber].getRecentlyDrawnCard(), target);
+            if (commandHistory.executeAndAddHistory(command, playerTurnNumber)) {
+                gameLogic.checkGoalCardNeighbor(x, y, (PathCard) command.getCardToUse());
+                gameCon.redrawGridXY(x, y);
                 nextTurn();
             } else {
                 Notification.showAlertBoxErrorMessage("This path card placement is invalid");
             }
-        } else if (selectedCard instanceof ActionCard) {
-
-            // check that action card are placed on top of path card, as per requirement.
-            if (board.getGridAtLocation(x, y).getCard() instanceof PathCard) {
-                handleActionCard((ActionCard) selectedCard);
-                nextTurn();
-            } else {
-                Notification.showAlertBoxErrorMessage("Cannot play action card on non-path card");
-            }
+        } else {
+            Notification.showAlertBoxErrorMessage("Cannot place the card on top of this path");
         }
     }
 
     /**
      * Handle action cards
-     *
+     * <p>
      * precondition, selectedCard must not be null
      */
-    private void handleActionCard(ActionCard actionCard) {
-        //TODO handle action card
+    public void playActionCard(int x, int y) {
+        if (board.getGridAtLocation(x, y).getCard() instanceof PathCard) {
+            Object[] target = new Object[5];
+            target[0] = board.getGridAtLocation(x, y);
+            target[1] = board.getGridAtLocation(x - 1, y);
+            target[2] = board.getGridAtLocation(x, y - 1);
+            target[3] = board.getGridAtLocation(x + 1, y);
+            target[4] = board.getGridAtLocation(x, y + 1);
+            Command command = new Command_PlayCard(playerTurnNumber, selectedCard,
+                    players[playerTurnNumber].getRecentlyDrawnCard(), target);
+            if (commandHistory.executeAndAddHistory(command, playerTurnNumber)) {
+                nextTurn();
+            } else {
+                Notification.showAlertBoxErrorMessage("Cannot play this action card");
+            }
+        } else {
+            Notification.showAlertBoxErrorMessage("Cannot play action card on non-path card");
+        }
+    }
+
+    public boolean undoTurn() {
+        if (players[playerTurnNumber].getUndoCount() < 2 && commandHistory.undoTurn(playerTurnNumber)) {
+            players[playerTurnNumber].incrementUndoCount();
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
      * This method is called after a card is used correctly and moves the game to next turn.
-     *
+     * <p>
      * It checks if the game is over or not. If not, it increments the player turn number,
      * removes the currently selected card from player's hand and draws a card from a deck.
-     *
+     * <p>
      * precondition, selectedCard must not be null
      */
     public void nextTurn() {
@@ -141,14 +183,10 @@ public class Game {
             Notification.showAlertBoxNotificationMessage("The gold is found. This round is over");
             gameStart(gameCon);
         }
-
-        // discard selected card from player hand
-        players[playerTurnNumber].removeCard(selectedCard);
         selectedCard = null;
 
         // Checks if the deck runs out of card. If it doesn't, draw a card from the deck to current player.
-        if (deck.getPointer() == deck.getDeckSize() - 30) {
-
+        if (deck.getPointer() == deck.getDeckSize()) {
             // Notify the users (once per round) that there is no more card in the deck
             if (!noMoreCardNotifiedOnce) {
                 Notification.showAlertBoxNotificationMessage("There is no more card in the deck");
@@ -159,9 +197,16 @@ public class Game {
         }
 
 
-        playerTurnNumber++;
-        if (playerTurnNumber >= NUM_OF_PLAYER) {
-            playerTurnNumber %= NUM_OF_PLAYER;
+        playerTurnNumber = nextPlayerTurnNumber;
+        while (true) {
+            nextPlayerTurnNumber++;
+            if (nextPlayerTurnNumber >= NUM_OF_PLAYER) {
+                nextPlayerTurnNumber %= NUM_OF_PLAYER;
+            }
+            Player nextPlayer = players[nextPlayerTurnNumber];
+            if (nextPlayer.getBrokenTool().size() == 0) {
+                break;
+            }
         }
 
         gameCon.redrawDeck(players[playerTurnNumber].getHand());
@@ -194,6 +239,10 @@ public class Game {
         return players;
     }
 
+    public int getNextPlayerTurnNumber() {
+        return nextPlayerTurnNumber;
+    }
+
     public void setSelectedCard(Card selectedCard) {
         this.selectedCard = selectedCard;
     }
@@ -205,5 +254,9 @@ public class Game {
      */
     public void setSelectedCard(int cardNumberInCurrentHand) {
         this.selectedCard = players[playerTurnNumber].getHand().get(cardNumberInCurrentHand);
+    }
+
+    public void setNextPlayerTurnNumber(int nextPlayerTurnNumber) {
+        this.nextPlayerTurnNumber = nextPlayerTurnNumber;
     }
 }

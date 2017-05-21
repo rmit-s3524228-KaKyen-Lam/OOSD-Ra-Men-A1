@@ -13,8 +13,4 @@ public class PathCard_T extends PathCard {
         super(true, false, true, true, true, "resources/Shape_T.png");
     }
 
-    @Override
-    public void cardAction() {
-
-    }
 }

@@ -13,8 +13,4 @@ public class PathCard_DeadEnd extends PathCard {
         super(false, true, false, false, false, "resources/Shape_Dead.png");
     }
 
-    @Override
-    public void cardAction() {
-
-    }
 }

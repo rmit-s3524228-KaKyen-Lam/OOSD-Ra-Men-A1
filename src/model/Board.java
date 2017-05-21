@@ -171,7 +171,7 @@ public class Board {
                 if (!isFilled[j][i]) {
                     if (i == startPathY && j == startPathX) {
                         grid[j][i] = new Grid(j, i, CardFlyweight.getCard("CROSS_SHAPE", 0));
-                        ((PathCard) (grid[j][i].getCard())).setValid(true);
+//                        ((PathCard) (grid[j][i].getCard())).setValid(true);
                         grid[j][i].setConnectedToMain(false);
                         isFilled[j][i] = true;
                     } else {
@@ -189,15 +189,16 @@ public class Board {
         for (int i = 0; i < gridMaxHeight; i++) {
             for (int j = 0; j < gridMaxWidth; j++) {
                 if ((i == startGoalYList.get(0) || i == startGoalYList.get(1)) && j == startGoalX) {
-                    grid[j][i] = new Grid(j, i, new GoalCard_Coal());
+                    grid[j][i] = new Grid(j, i, CardFlyweight.getCard("COAL_HIDDEN", 0));
                 } else if (i == startGoalYList.get(2) && j == startGoalX) {
-                    grid[j][i] = new Grid(j, i, new GoalCard_Gold());
+                    grid[j][i] = new Grid(j, i, CardFlyweight.getCard("GOLD_HIDDEN", 0));
                     goldLocation = grid[j][i];
                 } else if (i == startPathY && j == startPathX) {
-                    grid[j][i] = new Grid(j, i, new PathCard_Cross());
-                    ((PathCard) (grid[j][i].getCard())).setValid(true);
+                    grid[j][i] = new Grid(j, i, CardFlyweight.getCard("CROSS_SHAPE", 0));
+                    grid[j][i].setConnectedToMain(true);
+//                    ((PathCard) (grid[j][i].getCard())).setValid(true);
                 } else {
-                    grid[j][i] = new Grid(j, i, new PathCard_Empty());
+                    grid[j][i] = new Grid(j, i, CardFlyweight.getCard("EMPTY", 0));
                 }
             }
             System.out.println();

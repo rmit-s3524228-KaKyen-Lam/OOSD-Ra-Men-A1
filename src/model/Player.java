@@ -1,5 +1,7 @@
 package model;
 
+import library.DeepCopier;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -14,6 +16,8 @@ public class Player {
     private String role;
     private ArrayList<String> brokenTool;
     private ArrayList<Card> hand;
+    private Card recentlyDrawnCard;
+    private int undoCount = 0;
 
     /**
      * Creates a player with initial values, if any (in case if the game implements save/load feature)
@@ -36,6 +40,7 @@ public class Player {
      * @param card Card to be added
      */
     void addCard(Card card) {
+        recentlyDrawnCard = card;
         hand.add(card);
     }
 
@@ -71,6 +76,10 @@ public class Player {
         return -1;
     }
 
+    public void incrementUndoCount() {
+        undoCount++;
+    }
+
 
     public int getScore() {
         return score;
@@ -98,5 +107,13 @@ public class Player {
 
     public ArrayList<Card> getHand() {
         return hand;
+    }
+
+    public int getUndoCount() {
+        return undoCount;
+    }
+
+    public Card getRecentlyDrawnCard() {
+        return (Card) DeepCopier.copy(recentlyDrawnCard);
     }
 }
