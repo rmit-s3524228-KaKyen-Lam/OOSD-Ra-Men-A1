@@ -83,7 +83,7 @@ public class GameLogic {
         Grid westGrid = board.getGridAtLocation(x - 1, y);
         if (westGrid != null) {
             Card westCard = westGrid.getCard();
-            if (westCard != null && (westCard instanceof GoalCard || westCard.getId().equals("empty"))) {
+            if (westCard != null && (westCard instanceof GoalCard || westCard instanceof PathCard_Empty)) {
                 westConnectCheck = true;
             } else {
                 if (cardToPlace.isWest()) {
@@ -149,7 +149,7 @@ public class GameLogic {
         Grid southGrid = board.getGridAtLocation(x, y + 1);
         if (southGrid != null) {
             Card southCard = southGrid.getCard();
-            if (southCard != null && (southCard instanceof GoalCard || southCard.getId().equals("empty"))) {
+            if (southCard != null && (southCard instanceof GoalCard || southCard instanceof PathCard_Empty)) {
                 southConnectCheck = true;
             } else {
                 if (cardToPlace.isSouth()) {
