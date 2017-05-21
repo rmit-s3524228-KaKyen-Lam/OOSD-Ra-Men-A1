@@ -6,61 +6,58 @@ import model.goalcard.GoalCard_Goal;
 import model.goalcard.GoalCard_Gold;
 import model.pathcard.*;
 
-import java.util.HashMap;
-
 /**
+ * Factory class used to make cards when they are needed in conjunction with the
+ * flyweight pattern.
+ *
  * @author Fabio Monsalve s3585826
  */
 class CardFactory {
-  private HashMap<String, Card> cardHashMap = new HashMap<>();
-  private String[] tokens;
 
+  /*
+  Switch which uses passes card objects to the flyweight class.
+  Also rotates cards which need rotation.
+   */
   Card makeCard(String cardType, int rotation) {
     switch (cardType) {
       case "T_SHAPE":
         PathCard_T T_Card = new PathCard_T();
-        if(rotation != 0){
+        if(rotation != 0)
           return rotateCard(T_Card, rotation);
-        }else{
+        else
           return T_Card;
-        }
       case "T_SHAPE_DEAD":
         PathCard_T_Dead T_Dead_Card = new PathCard_T_Dead();
-        if(rotation != 0){
+        if(rotation != 0)
           return rotateCard(T_Dead_Card, rotation);
-        }else{
+        else
           return T_Dead_Card;
-        }
       case "LINE_SHAPE":
         PathCard_Line Line_Card = new PathCard_Line();
-        if(rotation != 0){
+        if(rotation != 0)
           return rotateCard(Line_Card, rotation);
-        }else {
+        else
           return Line_Card;
-        }
       case "LINE_SHAPE_DEAD":
         PathCard_Line_Dead Line_Dead_Card = new PathCard_Line_Dead();
-        if(rotation != 0){
+        if(rotation != 0)
           return rotateCard(Line_Dead_Card, rotation);
-        }else{
+        else
           return Line_Dead_Card;
-        }
       case "L_SHAPE":
         PathCard_L L_Card = new PathCard_L();
-        if(rotation != 0){
+        if(rotation != 0)
           return rotateCard(L_Card, rotation);
-        }else{
+        else
           return L_Card;
-        }
       case "L_SHAPE DEAD":
         PathCard_L_Dead L_Dead_Card = new PathCard_L_Dead();
-        if(rotation != 0){
+        if(rotation != 0)
           return rotateCard(L_Dead_Card, rotation);
-        }else{
+        else
           return L_Dead_Card;
-        }
       case "CROSS_SHAPE":
-          return new PathCard_Cross();
+        return new PathCard_Cross();
       case "CROSS_SHAPE_DEAD":
         return new PathCard_Cross_Dead();
       case "DEAD":
@@ -91,6 +88,12 @@ class CardFactory {
     return null;
   }
 
+  /**
+   *
+   * @param card  Card object which is returned after being rotated
+   * @param rotationValue Number of rotations needed
+   * @return Rotated Card object
+   */
   private Card rotateCard(PathCard card, int rotationValue) {
     switch (rotationValue) {
       case 90:

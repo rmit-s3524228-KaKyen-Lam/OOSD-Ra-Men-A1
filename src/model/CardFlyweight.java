@@ -3,14 +3,29 @@ package model;
 import java.util.HashMap;
 
 /**
- * Created by orlandok on 19/5/17.
- * *
+ * Flyweight pattern.
+ * Keeps on object of each card in cardHashMap.
+ * If it doesn't contain card object requested it asks the factory to produce
+ * one
+ *
+ * @author Fabio Monsalve s3585826
  */
-public class CardFlyweight {
+class CardFlyweight {
   private static CardFactory cardFactory = new CardFactory();
-  public static HashMap<String, Card[]> cardHashMap = new HashMap<>();
+  private static HashMap<String, Card[]> cardHashMap = new HashMap<>();
 
-  public static Card getCard(String cardType, int rotationValue) {
+  /**
+   * A single object of every card is kept in cardHashMap with the key being
+   * cardType and the Object being an array of Cards where it stores single
+   * objects of the possible rotation values.
+   *
+   * @param cardType Key for hashmap and also used to create objects through the
+   *                 Factory
+   * @param rotationValue There are a total of 4 possible rotations, an array of
+   *                      size 4 is created for each.
+   * @return Requested card
+   */
+  static Card getCard(String cardType, int rotationValue) {
 
     if (cardHashMap.containsKey(cardType)) {
       if (cardHashMap.get(cardType)[rotationValue] == null) {

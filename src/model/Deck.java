@@ -12,8 +12,6 @@ import java.util.Random;
  *
  * @author Fabio Monsalve s3585826
  */
-
-// TEST
 class Deck {
   private ArrayList<Card> cards;
   private int pointer = 0;
@@ -87,7 +85,6 @@ class Deck {
       InputStream fis = new FileInputStream("cardConfig.txt");
       InputStreamReader isr = new InputStreamReader(fis);
       BufferedReader br = new BufferedReader(isr);
-      CardFactory cardFactory = new CardFactory();
 
       while ((line = br.readLine()) != null) {
         tokens = line.split(",");
