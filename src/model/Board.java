@@ -39,6 +39,7 @@ public class Board {
     private boolean[][] isFilled;
     private Grid goldLocation;
     Queue<Node> queue = new LinkedList<>();
+    private ArrayList<Grid> goalList= new ArrayList<>();
 
     public void configureBoard(int widthMax, int heightMax) {
         gridMaxWidth = widthMax;
@@ -52,36 +53,43 @@ public class Board {
         }
     }
 
-    public void configureGoalNo(int goalAmount) {
-        goalNo = goalAmount;
+
+    public boolean inputCheck(int width, int height) {
+        if (width < 0 || width > gridMaxWidth) {
+            System.out.println ("Invalid width. Please input width between 0 - " + gridMaxWidth);
+            return false;
+        } else if (height < 0 || height > gridMaxHeight) {
+            System.out.println ("Invalid height. Please input width between 0 - " + gridMaxHeight);
+            return false;
+        } else if (isFilled[width][height] == true) {
+            System.out.println ("Invalid position. That grid has been occupied.");
+            return false;
+        } else {
+            return true;
+        }
+
     }
 
-    public String configureGoalPos(String name, int width, int height) {
-        boolean isValid = true;
-        if (width < 0 || width > gridMaxWidth) {
-            isValid = false;
-            return ("Invalid width. Please input width between 0 - " + gridMaxWidth);
-        }
+    public String configureGoalPos(int amount, String name, int width, int height) {
+        int i = 0;
 
-        if (height < 0 || height > gridMaxHeight) {
-            isValid = false;
-            return ("Invalid height. Please input width between 0 - " + gridMaxHeight);
-        }
+        while (i<amount) {
 
-        if (isFilled[width][height] == true) {
-            isValid = false;
-            return ("Invalid position. That grid has been occupied.");
-        }
+           boolean validInput = inputCheck(width, height);
 
-        if (isValid) {
-            isFilled[width][height] = true;
-            if (name.equals("coal")) {
-                grid[width][height] = new Grid(width, height, CardFlyweight.getCard("COAL", 0));
-                return ("Coal created at (" + width + ", " + height + ")");
-            } else if (name.equals("gold")) {
-                grid[width][height] = new Grid(width, height, CardFlyweight.getCard("GOLD", 0));
-                goldLocation = grid[width][height];
-                return ("Gold created at (" + width + ", " + height + ")");
+            if (validInput) {
+                isFilled[width][height] = true;
+                if (name.equals("coal")) {
+                    grid[width][height] = new Grid(width, height, CardFlyweight.getCard("COAL", 0));
+                    i++;
+                    return ("Coal created at (" + width + ", " + height + ")");
+                } else if (name.equals("gold")) {
+                    grid[width][height] = new Grid(width, height, CardFlyweight.getCard("GOLD", 0));
+                    goldLocation = grid[width][height];
+                    i++;
+                    return ("Gold created at (" + width + ", " + height + ")");
+
+                }
             }
         }
         return ("Internal error. No loop triggered.");
