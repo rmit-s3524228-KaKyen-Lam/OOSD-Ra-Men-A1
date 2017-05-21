@@ -42,6 +42,7 @@ public class Game {
         for (int i = 0; i < players.length; i++) {
             players[i] = new Player(0, "miner", new ArrayList<>(), null);
         }
+        board.
     }
 
     /**
@@ -146,8 +147,8 @@ public class Game {
         players[playerTurnNumber].removeCard(selectedCard);
         selectedCard = null;
 
-        // Checks if the deck runs out of card. If it doesn't, draw a card from the deck to current player.
-        if (deck.getPointer() == deck.getDeckSize() - 30) {
+        // Checks if the deck runs out of cards. If it doesn't, draw a card from the deck to current player.
+        if (deck.getDeckSize() == 0) {
 
             // Notify the users (once per round) that there is no more card in the deck
             if (!noMoreCardNotifiedOnce) {
@@ -157,7 +158,6 @@ public class Game {
         } else {
             players[playerTurnNumber].addCard(deck.draw(1)[0]);
         }
-
 
         playerTurnNumber++;
         if (playerTurnNumber >= NUM_OF_PLAYER) {

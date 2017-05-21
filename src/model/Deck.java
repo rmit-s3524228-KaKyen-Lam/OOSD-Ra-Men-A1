@@ -14,7 +14,6 @@ import java.util.Random;
  */
 class Deck {
   private ArrayList<Card> cards;
-  private int pointer = 0;
   private ArrayList<Integer> goldDeck = new ArrayList<>();
 
   Deck() {
@@ -31,8 +30,8 @@ class Deck {
     Card cardsOut[] = new Card[numCards];
 
     for(int i = 0; i < numCards; i++){
-      cardsOut[i] = cards.get(pointer);
-      pointer ++;
+      cardsOut[i] = cards.get(0);
+      cards.remove(0);
     }
 
     return cardsOut;
@@ -41,8 +40,12 @@ class Deck {
   /**
    * Randomise order of cards in cards array
    */
-  private void randomise() {
+  public void randomise() {
     Collections.shuffle(cards);
+  }
+
+  public void addCard(Card card){
+    cards.add(card);
   }
 
   /**
@@ -204,10 +207,6 @@ class Deck {
       goldDeck.remove(temp);
     }
     return goldPool;
-  }
-
-  public int getPointer() {
-    return pointer;
   }
 
   public int getDeckSize() {
