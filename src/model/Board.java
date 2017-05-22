@@ -213,7 +213,6 @@ public class Board {
                     grid[j][i] = new Grid(j, i, CardFlyweight.getCard("EMPTY", 0));
                 }
             }
-            System.out.println();
         }
     }
 

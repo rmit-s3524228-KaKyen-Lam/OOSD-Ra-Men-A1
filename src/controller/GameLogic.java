@@ -35,20 +35,22 @@ public class GameLogic {
      * @param card card to be placed in the board at location x,y
      */
     public void checkGoalCardNeighbor(int x, int y, PathCard card) {
-        if (card.isWest()) {
-            checkGoalCard(board.getGridAtLocation(x - 1, y));
-        }
+        if (card.isCentre()) {
+            if (card.isWest()) {
+                checkGoalCard(board.getGridAtLocation(x - 1, y));
+            }
 
-        if (card.isNorth()) {
-            checkGoalCard(board.getGridAtLocation(x, y - 1));
-        }
+            if (card.isNorth()) {
+                checkGoalCard(board.getGridAtLocation(x, y - 1));
+            }
 
-        if (card.isEast()) {
-            checkGoalCard(board.getGridAtLocation(x + 1, y));
-        }
+            if (card.isEast()) {
+                checkGoalCard(board.getGridAtLocation(x + 1, y));
+            }
 
-        if (card.isSouth()) {
-            checkGoalCard(board.getGridAtLocation(x, y + 1));
+            if (card.isSouth()) {
+                checkGoalCard(board.getGridAtLocation(x, y + 1));
+            }
         }
     }
 
