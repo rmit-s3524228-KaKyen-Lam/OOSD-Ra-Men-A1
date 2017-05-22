@@ -20,6 +20,7 @@ public class BoardDraw {
     private Label boardLabel;
     private Game game;
     private ImageView[][] images;
+    private ImageFlyweight imageFlyweight;
 
     /**
      * Creates a draw class for board section
@@ -32,6 +33,7 @@ public class BoardDraw {
         this.gridGameBoard = gridGameBoard;
         this.boardLabel = boardLabel;
         this.game = game;
+        imageFlyweight = new ImageFlyweightImpl();
     }
 
     /**
@@ -69,7 +71,7 @@ public class BoardDraw {
         Grid[][] gameBoard = game.getBoard().getGrid();
         Card currentGridCard = gameBoard[x][y].getCard();
 
-        imageToDrawOnGrid = new ImageView(ImageFlyweight.requestImage(currentGridCard));
+        imageToDrawOnGrid = new ImageView(imageFlyweight.requestImage(currentGridCard));
         if (currentGridCard instanceof PathCard) {
             int rotateVal = 0;
             for (int i = 0; i < ((PathCard) currentGridCard).getRotateVal(); i++) {
