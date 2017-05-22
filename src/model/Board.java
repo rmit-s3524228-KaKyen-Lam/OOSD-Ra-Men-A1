@@ -117,10 +117,10 @@ public class Board {
 
         while (!queue.isEmpty()) {
             Node node = queue.remove();
-            System.out.print(node.root + " ");
+            //System.out.print(node.root + " ");
 
             if (node.left() != null) {
-                if (!node.left().root.isDisabled() && ((PathCard) node.root.getCard()).isWest() && ((PathCard) node.left().root.getCard()).isEast()) {
+                if (!node.left().root.isConnectedToMain() && !node.left().root.isDisabled() && ((PathCard) node.root.getCard()).isWest() && ((PathCard) node.left().root.getCard()).isEast()) {
                     x = node.left().root.getX();
                     y = node.left().root.getY();
                     grid[x][y].setConnectedToMain(true);
@@ -129,7 +129,7 @@ public class Board {
             }
 
             if (node.right() != null) {
-                if (!node.right().root.isDisabled() && ((PathCard) node.root.getCard()).isEast() && ((PathCard) node.right().root.getCard()).isWest()) {
+                if (!node.right().root.isConnectedToMain() && !node.right().root.isDisabled() && ((PathCard) node.root.getCard()).isEast() && ((PathCard) node.right().root.getCard()).isWest()) {
                     x = node.right().root.getX();
                     y = node.right().root.getY();
                     grid[x][y].setConnectedToMain(true);
@@ -138,7 +138,7 @@ public class Board {
             }
 
             if (node.up() != null) {
-                if (!node.up().root.isDisabled() && ((PathCard) node.root.getCard()).isNorth() && ((PathCard) node.up().root.getCard()).isSouth()) {
+                if (!node.up().root.isConnectedToMain() && !node.up().root.isDisabled() && ((PathCard) node.root.getCard()).isNorth() && ((PathCard) node.up().root.getCard()).isSouth()) {
                     x = node.up().root.getX();
                     y = node.up().root.getY();
                     grid[x][y].setConnectedToMain(true);
@@ -147,7 +147,7 @@ public class Board {
             }
 
             if (node.down() != null) {
-                if (!node.down().root.isDisabled() && ((PathCard) node.root.getCard()).isSouth() && ((PathCard) node.down().root.getCard()).isNorth()) {
+                if (!node.down().root.isConnectedToMain() && !node.down().root.isDisabled() && ((PathCard) node.root.getCard()).isSouth() && ((PathCard) node.down().root.getCard()).isNorth()) {
                     x = node.down().root.getX();
                     y = node.down().root.getY();
                     grid[x][y].setConnectedToMain(true);
@@ -235,6 +235,25 @@ public class Board {
      */
     public void placeCardOnLocation(int x, int y, Card card) {
         grid[x][y].setCard(card);
+        grid[x][y].setConnectedToMain(true);
+        Grid westGrid = getGridAtLocation(x - 1, y);
+        Grid northGrid = getGridAtLocation(x, y - 1);
+        Grid eastGrid = getGridAtLocation(x + 1, y);
+        Grid southGrid = getGridAtLocation(x, y + 1);
+        if (westGrid != null && ((PathCard) card).isWest() && !westGrid.isConnectedToMain() &&
+                !(westGrid.getCard() instanceof PathCard_Empty)) {
+            calculateBoard();
+        } else if (northGrid != null && ((PathCard) card).isNorth() && !northGrid.isConnectedToMain() &&
+                !(northGrid.getCard() instanceof PathCard_Empty)) {
+            calculateBoard();
+        } else if (eastGrid != null && ((PathCard) card).isEast() && !eastGrid.isConnectedToMain() &&
+                !(eastGrid.getCard() instanceof PathCard_Empty)) {
+            calculateBoard();
+        } else if (southGrid != null && ((PathCard) card).isSouth() && !southGrid.isConnectedToMain() &&
+                !(southGrid.getCard() instanceof PathCard_Empty)) {
+            calculateBoard();
+        }
+
     }
 
     /**

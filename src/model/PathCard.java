@@ -126,9 +126,9 @@ public abstract class PathCard extends Card {
     @Override
     public boolean cardAction(Object[] target) {
         Grid targetGrid = (Grid) target[0];
+        Board targetBoard = (Board) target[1];
         if (LogicCheckerBridge.checkIfValid(this, targetGrid.getX(), targetGrid.getY())) {
-            targetGrid.setCard(this);
-            targetGrid.setConnectedToMain(true);
+            targetBoard.placeCardOnLocation(targetGrid.getX(), targetGrid.getY(), this);
             return true;
         }
         return false;

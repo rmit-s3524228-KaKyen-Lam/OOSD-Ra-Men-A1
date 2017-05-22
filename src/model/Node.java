@@ -33,7 +33,7 @@ public class Node {
 
     public Node up() {
         if (root.getY() + 1 >= 0) {
-            Grid up = grid[root.getX()][root.getY() + 1];
+            Grid up = grid[root.getX()][root.getY() - 1];
             return new Node(grid, up);
         } else {
             return null;
@@ -42,7 +42,7 @@ public class Node {
 
     public Node down() {
         if (root.getY() - 1 <= Board.gridMaxHeight) {
-            Grid down = grid[root.getX()][root.getY() - 1];
+            Grid down = grid[root.getX()][root.getY() + 1];
             return new Node(grid, down);
         } else {
             return null;

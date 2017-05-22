@@ -118,8 +118,9 @@ public class Game {
      */
     public void playPathCard(int x, int y) {
         if (board.getGridAtLocation(x, y).getCard() instanceof PathCard_Empty) {
-            Object[] target = new Object[1];
+            Object[] target = new Object[2];
             target[0] = board.getGridAtLocation(x, y);
+            target[1] = board;
             Command command = new Command_PlayCard(playerTurnNumber, selectedCard,
                     players[playerTurnNumber].getRecentlyDrawnCard(), target);
             if (commandHistory.executeAndAddHistory(command, playerTurnNumber)) {
@@ -151,6 +152,7 @@ public class Game {
             Command command = new Command_PlayCard(playerTurnNumber, selectedCard,
                     players[playerTurnNumber].getRecentlyDrawnCard(), target);
             if (commandHistory.executeAndAddHistory(command, playerTurnNumber)) {
+                gameCon.redrawGrid();
                 nextTurn();
             } else {
                 Notification.showAlertBoxErrorMessage("Cannot play this action card");
