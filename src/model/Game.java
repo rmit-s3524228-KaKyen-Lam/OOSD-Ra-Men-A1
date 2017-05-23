@@ -7,6 +7,7 @@ import model.pathcard.PathCard_Empty;
 import view.Notification;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * This is the class that contains all the information regarding the game itself,
@@ -89,7 +90,18 @@ public class Game {
      */
     private void shareGold(int winnerPlayerNumber) {
         ArrayList<Integer> goldPool = deck.getGoldPool(NUM_OF_PLAYER - numOfSaboteurs);
-        //TODO add player's score accordingly in regards to goldPool
+
+        int j = 1;
+        for (int i = 0; i < players.length; i++) {
+            if (players[i].getRole().equals("miner")) {
+                if (i == winnerPlayerNumber) {
+                    players[i].setScore(players[i].getScore() + goldPool.get(0));
+                } else {
+                    players[i].setScore(players[i].getScore() + goldPool.get(j));
+                    j++;
+                }
+            }
+        }
     }
 
     /**
