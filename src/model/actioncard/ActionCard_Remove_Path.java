@@ -2,6 +2,9 @@ package model.actioncard;
 
 import model.*;
 import model.pathcard.*;
+import view.Notification;
+
+import java.util.Random;
 
 /**
  * Action card representing the ability to remove a new path to an existing eligible path card
@@ -17,35 +20,45 @@ public class ActionCard_Remove_Path extends ActionCard {
     public boolean cardAction(Object[] target) {
         Grid targetGrid = (Grid) target[0];
         PathCard currentCard = (PathCard) targetGrid.getCard();
-        if (currentCard instanceof PathCard_Cross) {
-            // show option between possible orientations of T
-            targetGrid.setCard((PathCard) CardFlyweight.getCard("T_SHAPE", currentCard.getRotateVal()));
-        } else if (currentCard instanceof PathCard_Cross_Dead) {
-            // show option between possible orientations of T hole
-            targetGrid.setCard((PathCard) CardFlyweight.getCard("T_SHAPE_DEAD", currentCard.getRotateVal()));
-        } else if (currentCard instanceof PathCard_DeadEnd) {
-            // ask user if he/she wants to remove path completely
-            targetGrid.setCard((PathCard) CardFlyweight.getCard("EMPTY", currentCard.getRotateVal()));
-        } else if (currentCard instanceof PathCard_T) {
-            // show option between possible orientations of line or L
-            targetGrid.setCard((PathCard) CardFlyweight.getCard("L_SHAPE", currentCard.getRotateVal()));
-            targetGrid.setCard((PathCard) CardFlyweight.getCard("LINE_SHAPE", currentCard.getRotateVal()));
-        } else if (currentCard instanceof PathCard_T_Dead) {
-            // show option between possible orientations of line hole or L hole
-            targetGrid.setCard((PathCard) CardFlyweight.getCard("L_SHAPE_DEAD", currentCard.getRotateVal()));
-            targetGrid.setCard((PathCard) CardFlyweight.getCard("LINE_SHAPE_DEAD", currentCard.getRotateVal()));
-        } else if (currentCard instanceof PathCard_L || currentCard instanceof PathCard_Line ||
-                currentCard instanceof PathCard_L_Dead || currentCard instanceof PathCard_Line_Dead) {
-            // show option between possible orientations of dead end
-            targetGrid.setCard((PathCard) CardFlyweight.getCard("DEAD", currentCard.getRotateVal()));
-        } else {
-            //invalid, do nothing
-            return false;
+        String candidate = "";
+        if (currentCard.isWest()) {
+            candidate += "W";
         }
-        Board targetBoard = (Board) target[5];
-        targetBoard.calculateBoard();
-        return true;
-
+        if (currentCard.isNorth()) {
+            candidate += "N";
+        }
+        if (currentCard.isEast()) {
+            candidate += "E";
+        }
+        if (currentCard.isSouth()) {
+            candidate += "S";
+        }
+        if (!candidate.equals("")) {
+            Random rng = new Random();
+            int randomNumber = rng.nextInt(candidate.length());
+            String chosenCandidate = candidate.substring(randomNumber, randomNumber + 1);
+            if (chosenCandidate.equals("W")) {
+                targetGrid.setCard(CardFlyweight.getPathCard(false, currentCard.isNorth(),
+                        currentCard.isEast(), currentCard.isSouth(), currentCard.isCentre()));
+            }
+            if (chosenCandidate.equals("N")) {
+                targetGrid.setCard(CardFlyweight.getPathCard(currentCard.isWest(), false,
+                        currentCard.isEast(), currentCard.isSouth(), currentCard.isCentre()));
+            }
+            if (chosenCandidate.equals("E")) {
+                targetGrid.setCard(CardFlyweight.getPathCard(currentCard.isWest(), currentCard.isNorth(),
+                        false, currentCard.isSouth(), currentCard.isCentre()));
+            }
+            if (chosenCandidate.equals("S")) {
+                targetGrid.setCard(CardFlyweight.getPathCard(currentCard.isWest(), currentCard.isNorth(),
+                        currentCard.isEast(), false, currentCard.isCentre()));
+            }
+            Board targetBoard = (Board) target[5];
+            targetBoard.calculateBoard();
+            return true;
+        }
+        Notification.showAlertBoxErrorMessage("Cannot play this action card on this pathcard");
+        return false;
     }
 
     @Override
