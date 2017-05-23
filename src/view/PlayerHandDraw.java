@@ -75,9 +75,9 @@ public class PlayerHandDraw {
                 iv.setOnMouseClicked(new PlayerHandListener(handIndex, game, (cardNum) -> {
                     if (selectedCardIndex != -1) {
                         ImageView imageViewToReset = images[selectedCardIndex];
-                        imageViewToReset.setEffect(ImageViewTinter.removeTint);
+                        imageViewToReset.setEffect(ImageViewTinter.getInstance().removeTint);
                     }
-                    iv.setEffect(ImageViewTinter.grayToYellowTint);
+                    iv.setEffect(ImageViewTinter.getInstance().grayToYellowTint);
                     selectedCardIndex = cardNum;
                 }));
             } else {
@@ -86,7 +86,7 @@ public class PlayerHandDraw {
         }
         if (selectedCardIndex > -1 && game.getSelectedCard() != null) {
             game.setSelectedCard(selectedCardIndex);
-            images[selectedCardIndex].setEffect(ImageViewTinter.grayToYellowTint);
+            images[selectedCardIndex].setEffect(ImageViewTinter.getInstance().grayToYellowTint);
         }
     }
 }

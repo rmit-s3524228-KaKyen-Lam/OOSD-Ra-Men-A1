@@ -89,14 +89,14 @@ public class BoardDraw {
                 if (selectedCard != null && selectedCard instanceof PathCard) {
                     if (game.getBoard().getGridAtLocation(x, y).getCard() instanceof PathCard_Empty) {
                         if (LogicCheckerBridge.checkIfValid((PathCard) selectedCard, x, y)) {
-                            images[x][y].setEffect(ImageViewTinter.blueToGreenTint);
+                            images[x][y].setEffect(ImageViewTinter.getInstance().blueToGreenTint);
                             return;
                         } else {
-                            images[x][y].setEffect(ImageViewTinter.blueToRedTint);
+                            images[x][y].setEffect(ImageViewTinter.getInstance().blueToRedTint);
                             return;
                         }
                     }
-                    images[x][y].setEffect(ImageViewTinter.grayToRedTint);
+                    images[x][y].setEffect(ImageViewTinter.getInstance().grayToRedTint);
                 }
             }
         });
@@ -119,11 +119,11 @@ public class BoardDraw {
 
     private void drawNormal(ImageView imageView, Grid grid) {
         if (grid.isDisabled()) {
-            imageView.setEffect(ImageViewTinter.disabledTint);
+            imageView.setEffect(ImageViewTinter.getInstance().disabledTint);
         } else if ((!(grid.getCard() instanceof PathCard_Empty) && grid.getCard() instanceof PathCard && !grid.isConnectedToMain())) {
-            imageView.setEffect(ImageViewTinter.unconnectedTint);
+            imageView.setEffect(ImageViewTinter.getInstance().unconnectedTint);
         } else {
-            imageView.setEffect(ImageViewTinter.removeTint);
+            imageView.setEffect(ImageViewTinter.getInstance().removeTint);
         }
     }
 }
