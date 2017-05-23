@@ -137,7 +137,7 @@ public class Game {
                     players[playerTurnNumber].getRecentlyDrawnCard(), target);
             if (commandHistory.executeAndAddHistory(command, playerTurnNumber)) {
                 gameLogic.checkGoalCardNeighbor(x, y, (PathCard) command.getCardToUse());
-                gameCon.redrawGridXY(x, y);
+                gameCon.redrawGrid();
                 nextTurn();
             } else {
                 Notification.showAlertBoxErrorMessage("This path card placement is invalid");

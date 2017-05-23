@@ -28,8 +28,8 @@ public class Board {
     private int startGoalY1 = 1;
     private int startGoalY2 = 3;
     private int startGoalY3 = 5;
-    private int startPathX = 0;
-    private int startPathY = 3;
+    public static int startPathX = 0;
+    public static int startPathY = 3;
     private int x;
     private int y;
 
@@ -227,16 +227,16 @@ public class Board {
         Grid eastGrid = getGridAtLocation(x + 1, y);
         Grid southGrid = getGridAtLocation(x, y + 1);
         if (westGrid != null && ((PathCard) card).isWest() && !westGrid.isConnectedToMain() &&
-                !(westGrid.getCard() instanceof PathCard_Empty)) {
+                !(westGrid.getCard() instanceof PathCard_Empty) && westGrid.getCard() instanceof PathCard) {
             calculateBoard();
         } else if (northGrid != null && ((PathCard) card).isNorth() && !northGrid.isConnectedToMain() &&
-                !(northGrid.getCard() instanceof PathCard_Empty)) {
+                !(northGrid.getCard() instanceof PathCard_Empty) && northGrid.getCard() instanceof PathCard) {
             calculateBoard();
         } else if (eastGrid != null && ((PathCard) card).isEast() && !eastGrid.isConnectedToMain() &&
-                !(eastGrid.getCard() instanceof PathCard_Empty)) {
+                !(eastGrid.getCard() instanceof PathCard_Empty) && eastGrid.getCard() instanceof PathCard) {
             calculateBoard();
         } else if (southGrid != null && ((PathCard) card).isSouth() && !southGrid.isConnectedToMain() &&
-                !(southGrid.getCard() instanceof PathCard_Empty)) {
+                !(southGrid.getCard() instanceof PathCard_Empty) && southGrid.getCard() instanceof PathCard) {
             calculateBoard();
         }
 

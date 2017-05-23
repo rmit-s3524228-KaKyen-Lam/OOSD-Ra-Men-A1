@@ -1,8 +1,7 @@
 package model.actioncard;
 
-import model.ActionCard;
-import model.Board;
-import model.Grid;
+import model.*;
+import model.pathcard.*;
 
 /**
  * Action card for the ability to rotate an existing path card on board
@@ -17,6 +16,11 @@ public class ActionCard_Rotate_Path_Card extends ActionCard {
     @Override
     public boolean cardAction(Object[] target) {
         //show all possible option and listen for response
+        Grid targetGrid = (Grid) target[0];
+        PathCard currentCard = (PathCard) targetGrid.getCard();
+        targetGrid.setCard((PathCard) CardFlyweight.getCard(currentCard.getId(), currentCard.getRotateVal() + 1));
+        Board targetBoard = (Board) target[5];
+        targetBoard.calculateBoard();
         return true;
     }
 

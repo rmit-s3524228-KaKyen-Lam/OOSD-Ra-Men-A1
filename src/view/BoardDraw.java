@@ -79,6 +79,7 @@ public class BoardDraw {
             }
             imageToDrawOnGrid.setRotate(rotateVal);
         }
+        drawNormal(imageToDrawOnGrid, gameBoard[x][y]);
         images[x][y] = imageToDrawOnGrid;
 
         imageToDrawOnGrid.setOnMouseEntered(new EventHandler<MouseEvent>() {
@@ -103,11 +104,26 @@ public class BoardDraw {
         imageToDrawOnGrid.setOnMouseExited(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                images[x][y].setEffect(ImageViewTinter.removeTint);
+                drawNormal(images[x][y], gameBoard[x][y]);
+//                if (gameBoard[x][y].isDisabled()) {
+//                    images[x][y].setEffect(ImageViewTinter.darkTint);
+//                } else {
+//                    images[x][y].setEffect(ImageViewTinter.removeTint);
+//                }
             }
         });
 
         gridGameBoard.add(imageToDrawOnGrid, x, y);
         imageToDrawOnGrid.setOnMouseClicked(new GameBoardListener(x, y, game));
+    }
+
+    private void drawNormal(ImageView imageView, Grid grid) {
+        if (grid.isDisabled()) {
+            imageView.setEffect(ImageViewTinter.disabledTint);
+        } else if ((!(grid.getCard() instanceof PathCard_Empty) && grid.getCard() instanceof PathCard && !grid.isConnectedToMain())) {
+            imageView.setEffect(ImageViewTinter.unconnectedTint);
+        } else {
+            imageView.setEffect(ImageViewTinter.removeTint);
+        }
     }
 }

@@ -1,5 +1,6 @@
 package model;
 
+import java.nio.file.Path;
 import java.util.HashMap;
 
 /**
@@ -50,5 +51,106 @@ public class CardFlyweight {
 
             return card;
         }
+    }
+
+    public static PathCard getPathCard(boolean west, boolean north, boolean east, boolean south, boolean centre) {
+        int pathCount = 0;
+        if (west) {
+            pathCount++;
+        }
+        if (north) {
+            pathCount++;
+        }
+        if (east) {
+            pathCount++;
+        }
+        if (south) {
+            pathCount++;
+        }
+        switch (pathCount) {
+            case 0:
+                return (PathCard) getCard("EMPTY", 0);
+            case 1:
+                if (west) {
+                    return (PathCard) getCard("DEAD", 3);
+                } else if (north) {
+                    return (PathCard) getCard("DEAD", 0);
+                } else if (east) {
+                    return (PathCard) getCard("DEAD", 1);
+                } else if (south) {
+                    return (PathCard) getCard("DEAD", 2);
+                }
+            case 2:
+                if (west && north) {
+                    if (!centre) {
+                        return (PathCard) getCard("L_SHAPE_DEAD", 3);
+                    } else {
+                        return (PathCard) getCard("L_SHAPE", 3);
+                    }
+                } else if (north && east) {
+                    if (!centre) {
+                        return (PathCard) getCard("L_SHAPE_DEAD", 0);
+                    } else {
+                        return (PathCard) getCard("L_SHAPE", 0);
+                    }
+                } else if (east && south) {
+                    if (!centre) {
+                        return (PathCard) getCard("L_SHAPE_DEAD", 1);
+                    } else {
+                        return (PathCard) getCard("L_SHAPE", 1);
+                    }
+                } else if (south && west) {
+                    if (!centre) {
+                        return (PathCard) getCard("L_SHAPE_DEAD", 2);
+                    } else {
+                        return (PathCard) getCard("L_SHAPE", 2);
+                    }
+                } else if (south && north) {
+                    if (!centre) {
+                        return (PathCard) getCard("LINE_SHAPE_DEAD", 1);
+                    } else {
+                        return (PathCard) getCard("LINE_SHAPE", 1);
+                    }
+                } else if (east && west) {
+                    if (!centre) {
+                        return (PathCard) getCard("LINE_SHAPE_DEAD", 0);
+                    } else {
+                        return (PathCard) getCard("LINE_SHAPE", 0);
+                    }
+                }
+            case 3:
+                if (west && east && south) {
+                    if (!centre) {
+                        return (PathCard) getCard("T_SHAPE_DEAD", 0);
+                    } else {
+                        return (PathCard) getCard("T_SHAPE", 0);
+                    }
+                } else if (west && east && north) {
+                    if (!centre) {
+                        return (PathCard) getCard("T_SHAPE_DEAD", 2);
+                    } else {
+                        return (PathCard) getCard("T_SHAPE", 2);
+                    }
+                } else if (south && north && east) {
+                    if (!centre) {
+                        return (PathCard) getCard("T_SHAPE_DEAD", 3);
+                    } else {
+                        return (PathCard) getCard("T_SHAPE", 3);
+                    }
+                } else if (south && north && west) {
+                    if (!centre) {
+                        return (PathCard) getCard("T_SHAPE_DEAD", 1);
+                    } else {
+                        return (PathCard) getCard("T_SHAPE", 1);
+                    }
+                }
+            case 4:
+                if (centre) {
+                    return (PathCard) getCard("CROSS_SHAPE", 0);
+                } else {
+                    return (PathCard) getCard("CROSS_SHAPE_DEAD", 0);
+                }
+        }
+        return null;
     }
 }

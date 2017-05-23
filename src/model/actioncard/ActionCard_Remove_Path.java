@@ -1,9 +1,6 @@
 package model.actioncard;
 
-import model.ActionCard;
-import model.CardFlyweight;
-import model.Grid;
-import model.PathCard;
+import model.*;
 import model.pathcard.*;
 
 /**
@@ -16,7 +13,6 @@ public class ActionCard_Remove_Path extends ActionCard {
         super("resources/Action_Remove_Path.png", id);
     }
 
-    //TODO wait for flyweighted card
     @Override
     public boolean cardAction(Object[] target) {
         Grid targetGrid = (Grid) target[0];
@@ -46,6 +42,8 @@ public class ActionCard_Remove_Path extends ActionCard {
             //invalid, do nothing
             return false;
         }
+        Board targetBoard = (Board) target[5];
+        targetBoard.calculateBoard();
         return true;
 
     }

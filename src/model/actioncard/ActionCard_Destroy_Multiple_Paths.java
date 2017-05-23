@@ -22,19 +22,18 @@ public class ActionCard_Destroy_Multiple_Paths extends ActionCard {
         Grid targetGrid = (Grid) target[0];
         if (!(targetGrid.getCard() instanceof PathCard_Empty)) {
             for (int i = 0; i < 5; i++) {
-                if (target[i] == null) {
-                    // do nothing
-                } else if (target[i] instanceof Grid) {
+                if (target[i] instanceof Grid) {
                     targetGrid = (Grid) target[i];
-                    targetGrid.removeCardonGrid();
-                } else {
-                    Notification.showAlertBoxErrorMessage("That target is invalid");
+                    if (targetGrid.getX() != Board.startPathX || targetGrid.getY() != Board.startPathY) {
+                        targetGrid.removeCardonGrid();
+                    }
                 }
             }
             Board targetBoard = (Board) target[5];
             targetBoard.calculateBoard();
             return true;
         } else {
+            Notification.showAlertBoxErrorMessage("You have to aim at an existing path");
             return false;
         }
     }
