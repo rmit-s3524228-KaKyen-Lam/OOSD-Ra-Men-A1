@@ -20,6 +20,9 @@ public class Player {
     private int undoCount = 0;
     private int sickTurn = 0;
 
+    public static String ROLE_MINER = "miner";
+    public static String ROLE_SABOTEUR = "saboteur";
+
     /**
      * Creates a player with initial values, if any (in case if the game implements save/load feature)
      *
