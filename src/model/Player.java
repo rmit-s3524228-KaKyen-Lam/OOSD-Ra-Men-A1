@@ -18,6 +18,7 @@ public class Player {
     private ArrayList<Card> hand;
     private Card recentlyDrawnCard;
     private int undoCount = 0;
+    private int sickTurn = 0;
 
     /**
      * Creates a player with initial values, if any (in case if the game implements save/load feature)
@@ -61,6 +62,16 @@ public class Player {
     void setHand(Card[] hand) {
         this.hand = new ArrayList<>();
         Collections.addAll(this.hand, hand);
+    }
+
+    public boolean addStatus(String status) {
+        brokenTool.add(status);
+        return true;
+    }
+
+    public boolean removeStatus(String status) {
+        brokenTool.remove(status);
+        return true;
     }
 
     /**
@@ -115,5 +126,13 @@ public class Player {
 
     public Card getRecentlyDrawnCard() {
         return (Card) DeepCopier.copy(recentlyDrawnCard);
+    }
+
+    public int getSickTurn() {
+        return sickTurn;
+    }
+
+    public void setSickTurn(int sickTurn) {
+        this.sickTurn = sickTurn;
     }
 }
