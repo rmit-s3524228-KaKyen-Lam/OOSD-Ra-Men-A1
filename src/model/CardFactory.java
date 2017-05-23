@@ -82,8 +82,6 @@ class CardFactory {
                 return new ActionCard_Remove_Path(cardType);
             case "ROTATE_PATH":
                 return new ActionCard_Rotate_Path_Card(cardType);
-            case "SWAP_PATH":
-                return new ActionCard_Swap_Path_Cards(cardType);
             case "GOAL":
                 return new GoalCard_Goal(true, cardType);
             case "COAL_HIDDEN":

@@ -28,8 +28,8 @@ public class Board {
     private int startGoalY1 = 1;
     private int startGoalY2 = 3;
     private int startGoalY3 = 5;
-    private int startPathX = 0;
-    private int startPathY = 3;
+    public static int startPathX = 0;
+    public static int startPathY = 3;
     private int x;
     private int y;
 
