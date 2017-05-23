@@ -31,13 +31,15 @@ public class GameController implements Initializable {
   @FXML
   private Label playerLabel;
   @FXML
+
   private ImageView trashcanImageView;
   private BoardDraw boardDraw;
   private PlayerHandDraw playerHandDraw;
+  public static Game game = new Game();
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
-    Game game = new Game();
+
     boardDraw = new BoardDraw(gridGameBoard, boardLabel, game);
     playerHandDraw = new PlayerHandDraw(gridPlayerDeck, playerLabel, trashcanImageView, game);
     game.gameStart(this);
@@ -85,10 +87,5 @@ public class GameController implements Initializable {
    */
   public void redrawDeck(ArrayList<Card> currentPlayerHand) {
     playerHandDraw.redrawPlayerHand(currentPlayerHand);
-  }
-
-  public void configureBoard(int boardWidth, int boardHeight, int numCoal,
-                             int coalWidth){
-
   }
 }
