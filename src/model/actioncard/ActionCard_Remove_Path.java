@@ -11,8 +11,8 @@ import model.pathcard.*;
  * @author Fabio Monsalve Duque s3585826
  */
 public class ActionCard_Remove_Path extends ActionCard {
-    public ActionCard_Remove_Path() {
-        super("resources/Action_Remove_Path.png");
+    public ActionCard_Remove_Path(String id) {
+        super("resources/Action_Remove_Path.png", id);
     }
 
     //TODO wait for flyweighted card

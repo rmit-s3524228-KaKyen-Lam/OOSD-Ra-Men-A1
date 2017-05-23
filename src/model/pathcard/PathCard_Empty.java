@@ -9,8 +9,8 @@ import model.PathCard;
  */
 public class PathCard_Empty extends PathCard {
 
-    public PathCard_Empty() {
-        super(false, false, false, false, false, "resources/Unexplored.png");
+    public PathCard_Empty(String id) {
+        super(false, false, false, false, false, "resources/Unexplored.png", id);
     }
 
 }

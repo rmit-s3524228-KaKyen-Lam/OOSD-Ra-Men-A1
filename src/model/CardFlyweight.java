@@ -27,6 +27,12 @@ public class CardFlyweight {
      */
     public static Card getCard(String cardType, int rotationValue) {
 
+        if (rotationValue < 0) {
+            rotationValue += 4;
+        } else if (rotationValue > 3) {
+            rotationValue -= 4;
+        }
+
         if (cardHashMap.containsKey(cardType)) {
             if (cardHashMap.get(cardType)[rotationValue] == null) {
                 Card[] array = cardHashMap.get(cardType);

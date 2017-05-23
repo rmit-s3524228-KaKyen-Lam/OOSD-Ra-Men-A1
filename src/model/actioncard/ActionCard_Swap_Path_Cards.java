@@ -9,8 +9,8 @@ import model.*;
  * @author Fabio Monsalve Duque s3585826
  */
 public class ActionCard_Swap_Path_Cards extends ActionCard {
-    public ActionCard_Swap_Path_Cards() {
-        super("resources/Action_Swap.png");
+    public ActionCard_Swap_Path_Cards(String id) {
+        super("resources/Action_Swap.png", id);
     }
 
     @Override

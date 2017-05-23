@@ -162,6 +162,14 @@ public class Game {
         }
     }
 
+    public boolean rotateCard(int cardNum) {
+        ArrayList<Card> playerHand = players[playerTurnNumber].getHand();
+        playerHand.set(cardNum, CardFlyweight.getCard(playerHand.get(cardNum).getId(),
+                ((PathCard) playerHand.get(cardNum)).getRotateVal() + 1));
+        gameCon.redrawDeck(playerHand);
+        return true;
+    }
+
     public boolean undoTurn() {
         if (players[playerTurnNumber].getUndoCount() < 2 && commandHistory.undoTurn(playerTurnNumber)) {
             players[playerTurnNumber].incrementUndoCount();
@@ -244,6 +252,10 @@ public class Game {
 
     public int getNextPlayerTurnNumber() {
         return nextPlayerTurnNumber;
+    }
+
+    public void removeSelectedCard() {
+        this.selectedCard = null;
     }
 
     public void setSelectedCard(Card selectedCard) {

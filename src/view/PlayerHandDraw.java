@@ -7,6 +7,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import model.Card;
 import model.Game;
+import model.PathCard;
 
 import java.util.ArrayList;
 
@@ -22,6 +23,7 @@ public class PlayerHandDraw {
     private Game game;
     private int selectedCardIndex;
     private ImageView[] images;
+    private ImageFlyweight imageFlyweight;
 
     /**
      * Creates a draw class for player hand section
@@ -30,11 +32,12 @@ public class PlayerHandDraw {
      * @param playerLabel    JavaFX Label object of player's label
      * @param game           The game object
      */
-    public PlayerHandDraw(GridPane gridPlayerDeck, Label playerLabel, ImageView trashcanImageView, Game game) {
+    public PlayerHandDraw(GridPane gridPlayerDeck, Label playerLabel, ImageView trashcanImageView, Game game, ImageFlyweight imageFlyweight) {
         this.gridPlayerDeck = gridPlayerDeck;
         this.playerLabel = playerLabel;
         this.game = game;
         selectedCardIndex = -1;
+        this.imageFlyweight = imageFlyweight;
 
         trashcanImageView.setOnMouseClicked(new DiscardPileListener(this.game));
     }
@@ -57,8 +60,17 @@ public class PlayerHandDraw {
         images = new ImageView[currentPlayerHand.size()];
         for (int handIndex = 0; handIndex < currentPlayerHand.size(); handIndex++) {
             if (currentPlayerHand.get(handIndex) != null) {
-                ImageView iv = new ImageView(currentPlayerHand.get(handIndex).getImageResource());
+
+                ImageView iv = new ImageView(imageFlyweight.requestImage(currentPlayerHand.get(handIndex)));
+                if (currentPlayerHand.get(handIndex) instanceof PathCard) {
+                    int rotateVal = 0;
+                    for (int i = 0; i < ((PathCard) currentPlayerHand.get(handIndex)).getRotateVal(); i++) {
+                        rotateVal += 90;
+                    }
+                    iv.setRotate(rotateVal);
+                }
                 images[handIndex] = iv;
+
                 gridPlayerDeck.add(iv, handIndex, 0);
                 iv.setOnMouseClicked(new PlayerHandListener(handIndex, game, (cardNum) -> {
                     if (selectedCardIndex != -1) {
@@ -71,6 +83,10 @@ public class PlayerHandDraw {
             } else {
                 gridPlayerDeck.add(null, handIndex, 0);
             }
+        }
+        if (selectedCardIndex > -1 && game.getSelectedCard() != null) {
+            game.setSelectedCard(selectedCardIndex);
+            images[selectedCardIndex].setEffect(ImageViewTinter.grayToYellowTint);
         }
     }
 }

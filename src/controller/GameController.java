@@ -7,6 +7,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import model.*;
 import view.BoardDraw;
+import view.ImageFlyweight;
+import view.ImageFlyweightImpl;
 import view.PlayerHandDraw;
 
 import java.net.URL;
@@ -38,8 +40,9 @@ public class GameController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Game game = new Game();
-        boardDraw = new BoardDraw(gridGameBoard, boardLabel, game);
-        playerHandDraw = new PlayerHandDraw(gridPlayerDeck, playerLabel, trashcanImageView, game);
+        ImageFlyweight imageFlyweight = new ImageFlyweightImpl();
+        boardDraw = new BoardDraw(gridGameBoard, boardLabel, game, imageFlyweight);
+        playerHandDraw = new PlayerHandDraw(gridPlayerDeck, playerLabel, trashcanImageView, game, imageFlyweight);
         game.gameStart(this);
     }
 

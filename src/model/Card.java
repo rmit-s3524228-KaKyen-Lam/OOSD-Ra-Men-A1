@@ -21,9 +21,9 @@ public abstract class Card extends Drawable implements Serializable {
     /**
      * @param imageResource location of image file for card
      */
-    public Card(String imageResource) {
+    public Card(String imageResource, String id) {
         super(imageResource);
-
+        this.id = id;
     }
 
     /**

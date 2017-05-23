@@ -29,11 +29,11 @@ public class BoardDraw {
      * @param boardLabel    JavaFX Label object of board label
      * @param game          The game object
      */
-    public BoardDraw(GridPane gridGameBoard, Label boardLabel, Game game) {
+    public BoardDraw(GridPane gridGameBoard, Label boardLabel, Game game, ImageFlyweight imageFlyweight) {
         this.gridGameBoard = gridGameBoard;
         this.boardLabel = boardLabel;
         this.game = game;
-        imageFlyweight = new ImageFlyweightImpl();
+        this.imageFlyweight = imageFlyweight;
     }
 
     /**

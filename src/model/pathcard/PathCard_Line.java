@@ -9,8 +9,8 @@ import model.PathCard;
  */
 public class PathCard_Line extends PathCard {
 
-    public PathCard_Line() {
-        super(true, false, true, false, true, "resources/Shape_Line.png");
+    public PathCard_Line(String id) {
+        super(true, false, true, false, true, "resources/Shape_Line.png", id);
     }
 
 }

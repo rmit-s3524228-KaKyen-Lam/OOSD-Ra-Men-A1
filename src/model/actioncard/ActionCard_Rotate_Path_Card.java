@@ -10,8 +10,8 @@ import model.Grid;
  * @author Fabio Monsalve Duque s3585826
  */
 public class ActionCard_Rotate_Path_Card extends ActionCard {
-    public ActionCard_Rotate_Path_Card() {
-        super("resources/Action_Rotate.png");
+    public ActionCard_Rotate_Path_Card(String id) {
+        super("resources/Action_Rotate.png", id);
     }
 
     @Override

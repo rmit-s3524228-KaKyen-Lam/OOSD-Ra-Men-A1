@@ -30,8 +30,8 @@ public abstract class PathCard extends Card {
      * @param centre      true if center of the path is valid
      * @param imgResource imageResource for this path card
      */
-    public PathCard(boolean west, boolean north, boolean east, boolean south, boolean centre, String imgResource) {
-        super(imgResource);
+    public PathCard(boolean west, boolean north, boolean east, boolean south, boolean centre, String imgResource, String id) {
+        super(imgResource, id);
         this.west = west;
         this.north = north;
         this.east = east;
@@ -54,6 +54,11 @@ public abstract class PathCard extends Card {
         boolean tempSouth = south;
         boolean tempEast = east;
 
+        north = false;
+        west = false;
+        south = false;
+        east = false;
+
         // Stores original boolean values so as to not modify them twice
         boolean temp[] = {tempNorth, tempWest, tempSouth, tempEast};
 
@@ -62,19 +67,15 @@ public abstract class PathCard extends Card {
 
             if (temp[0]) {
                 east = true;
-                north = false;
             }
             if (temp[1]) {
                 north = true;
-                west = false;
             }
             if (temp[2]) {
                 west = true;
-                south = false;
             }
             if (temp[3]) {
                 south = true;
-                east = false;
             }
         } else if (direction.equals("acw")) {
             rotateVal--;
@@ -82,10 +83,10 @@ public abstract class PathCard extends Card {
                 west = true;
             }
             if (temp[1]) {
-                west = true;
+                south = true;
             }
             if (temp[2]) {
-                south = true;
+                east = true;
             }
             if (temp[3]) {
                 north = true;

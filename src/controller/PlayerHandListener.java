@@ -3,6 +3,7 @@ package controller;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import model.Game;
+import view.Notification;
 import view.PlayerHandListenerCallback;
 
 /**
@@ -37,7 +38,12 @@ public class PlayerHandListener implements EventHandler<MouseEvent> {
      */
     @Override
     public void handle(MouseEvent event) {
-        game.setSelectedCard(cardNum);
-        callback.highlightSelectedCard(cardNum);
+        if (event.getButton().toString().equals("PRIMARY")) {
+            game.setSelectedCard(cardNum);
+            callback.highlightSelectedCard(cardNum);
+        }
+        if (event.getButton().toString().equals("SECONDARY")) {
+            game.rotateCard(cardNum);
+        }
     }
 }

@@ -39,20 +39,22 @@ public class GameBoardListener implements EventHandler<MouseEvent> {
      */
     @Override
     public void handle(MouseEvent event) {
-        Card selCard = game.getSelectedCard();
-        if (selCard != null) {
-            if (selCard instanceof PathCard) {
-                game.playPathCard(x, y);
-            } else if (selCard instanceof ActionCard) {
-                game.playActionCard(x, y);
-            } else {
-                Notification.showAlertBoxErrorMessage("Cannot play this type of card to board");
-            }
+        if (event.getButton().toString().equals("PRIMARY")) {
+            Card selCard = game.getSelectedCard();
+            if (selCard != null) {
+                if (selCard instanceof PathCard) {
+                    game.playPathCard(x, y);
+                } else if (selCard instanceof ActionCard) {
+                    game.playActionCard(x, y);
+                } else {
+                    Notification.showAlertBoxErrorMessage("Cannot play this type of card to board");
+                }
 //            else if (selCard instanceof PersonalCard) {
 //                game.playPersonalCard(x, y);
 //            }
-        } else {
-            Notification.showAlertBoxErrorMessage("Cannot play card: No card is currently selected");
+            } else {
+                Notification.showAlertBoxErrorMessage("Cannot play card: No card is currently selected");
+            }
         }
     }
 }
