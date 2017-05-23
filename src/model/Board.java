@@ -70,29 +70,15 @@ public class Board {
 
     }
 
-    public String configureGoalPos(int amount, String name, int width, int height) {
-        int i = 0;
+    public void configureGoalPos(String name, int width, int height) {
 
-        while (i < amount) {
-
-            boolean validInput = inputCheck(width, height);
-
-            if (validInput) {
-                isFilled[width][height] = true;
-                if (name.equals("coal")) {
-                    grid[width][height] = new Grid(width, height, CardFlyweight.getCard("COAL", 0));
-                    i++;
-                    return ("Coal created at (" + width + ", " + height + ")");
-                } else if (name.equals("gold")) {
-                    grid[width][height] = new Grid(width, height, CardFlyweight.getCard("GOLD", 0));
-                    goldLocation = grid[width][height];
-                    i++;
-                    return ("Gold created at (" + width + ", " + height + ")");
-
-                }
-            }
+        isFilled[width][height] = true;
+        if (name.equals("coal")) {
+            grid[width][height] = new Grid(width, height, CardFlyweight.getCard("COAL", 0));
+        } else if (name.equals("gold")) {
+            grid[width][height] = new Grid(width, height, CardFlyweight.getCard("GOLD", 0));
+            goldLocation = grid[width][height];
         }
-        return ("Internal error. No loop triggered.");
     }
 
     public void calculateBoard() {
