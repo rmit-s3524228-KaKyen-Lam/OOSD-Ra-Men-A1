@@ -1,11 +1,12 @@
 package model.personalcard;
 
 import model.PersonalCard;
+import model.Player;
 
 /**
  * Created by Ka Kyen Lam on 23/05/2017.
  */
-public class PersonalCard_Sick extends PersonalCard{
+public class PersonalCard_Sick extends PersonalCard {
     /**
      * @param imageResource location of image file for card
      * @param id
@@ -26,6 +27,8 @@ public class PersonalCard_Sick extends PersonalCard{
 
     @Override
     public void undoCardAction(Object[] target, Object[] undoExtraInformation) {
-
+        Player targetPlayer = (Player) target[0];
+        Player targetPlayerBeforeCardAction = (Player) undoExtraInformation[0];
+        targetPlayer.setSickTurn(targetPlayerBeforeCardAction.getSickTurn());
     }
 }
