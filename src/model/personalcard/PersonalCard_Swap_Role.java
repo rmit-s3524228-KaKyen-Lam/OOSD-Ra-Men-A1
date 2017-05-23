@@ -39,16 +39,6 @@ public class PersonalCard_Swap_Role extends PersonalCard {
 
     @Override
     public void undoCardAction(Object[] target, Object[] undoExtraInformation) {
-        Player player = (Player) target[0];
-        try {
-            String role = player.getRole();
-            if (role.equals(Player.ROLE_MINER)) {
-                ((Player) target[0]).setRole(Player.ROLE_SABOTEUR);
-            } else {
-                ((Player) target[0]).setRole(Player.ROLE_MINER);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        cardAction(target);
     }
 }
