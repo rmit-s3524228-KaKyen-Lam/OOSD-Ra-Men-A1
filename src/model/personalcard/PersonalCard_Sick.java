@@ -38,6 +38,8 @@ public class PersonalCard_Sick extends PersonalCard{
 
     @Override
     public void undoCardAction(Object[] target, Object[] undoExtraInformation) {
-
+        Player targetPlayer = (Player) target[0];
+        Player targetPlayerBeforeCardAction = (Player) undoExtraInformation[0];
+        targetPlayer.setSickTurn(targetPlayerBeforeCardAction.getSickTurn());
     }
 }
