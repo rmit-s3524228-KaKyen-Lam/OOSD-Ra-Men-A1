@@ -53,5 +53,11 @@
             <Font name="System Italic" size="13.0" />
          </font>
       </Label>
+      <Label fx:id="warningLabel" layoutX="145.0" layoutY="372.0" text="Please enter a valid number" textFill="RED" visible="false" />
+      <Label layoutX="343.0" layoutY="123.0" text="Max 10x10">
+         <font>
+            <Font name="System Italic" size="13.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

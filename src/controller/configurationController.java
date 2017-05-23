@@ -1,15 +1,18 @@
 package controller;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.fxml.JavaFXBuilderFactory;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 /**
@@ -39,37 +42,80 @@ public class configurationController implements Initializable{
   private Button coalButton;
   @FXML
   private Button goldButton;
+  @FXML
+  private Label warningLabel;
 
-  private ArrayList<int []> goldPosList = new ArrayList<>();
-  private ArrayList<int []> coalPosList = new ArrayList<>();
-=
+  private int coalCounter = 0;
+  private int goldCounter = 0;
+
   @Override
   public void initialize(URL location, ResourceBundle resources) {
 
-    submitButton.setOnAction(new EventHandler<ActionEvent>() {
-      @Override public void handle(ActionEvent e) {
-        int width = Integer.parseInt(boardWidth.getText());
-        int height = Integer.parseInt((boardHeight.getText()));
-        GameController.game.getBoard().configureBoard(width, height);
+    GameController gc = new GameController();
+
+
+    submitButton.setOnAction(e -> {
+      warningLabel.setVisible(false);
+      int width = Integer.parseInt(boardWidth.getText());
+      int height = Integer.parseInt((boardHeight.getText()));
+
+      if(width > 10 || height > 10){
+        warningLabel.setVisible(true);
+      } else {
+
+        try {
+          replaceSceneContent();
+          GameController.game.gameStart(gc);
+          GameController.game.getBoard().configureBoard(width, height);
+          System.out.println("changed scene");
+        } catch (IOException e1) {
+          System.out.println("file not found");
+        }
       }
     });
 
-    coalButton.setOnAction(new EventHandler<ActionEvent>() {
-      @Override public void handle(ActionEvent e) {
-        int [] array = new int[2];
-        array[0] = Integer.parseInt(coalWidth.getText());
-        array[1] = Integer.parseInt(coalHeight.getText());
-        coalPosList.add(array);
+    coalButton.setOnAction(e -> {
+      warningLabel.setVisible(false);
+      int width =  Integer.parseInt(coalWidth.getText());
+      int height = Integer.parseInt(coalHeight.getText());
+
+      if(width > 10 || height > 10){
+        warningLabel.setVisible(true);
+      } else {
+        GameController.game.getBoard().configureGoalPos("coal", width, height);
+        coalCounter++;
+        numCoalLabel.setText(String.valueOf(coalCounter));
       }
     });
 
-    goldButton.setOnAction(new EventHandler<ActionEvent>() {
-      @Override public void handle(ActionEvent e) {
-        int [] array = new int[2];
-        array[0] = Integer.parseInt(goldWidth.getText());
-        array[1] = Integer.parseInt(goldHeight.getText());
-        goldPosList.add(array);
+    goldButton.setOnAction(e -> {
+      warningLabel.setVisible(false);
+      int width =  Integer.parseInt(goldWidth.getText());
+      int height = Integer.parseInt(goldHeight.getText());
+
+      if(width > 10 || height > 10){
+        warningLabel.setVisible(true);
+      } else {
+        GameController.game.getBoard().configureGoalPos("gold", width, height);
+        coalCounter++;
+        numGoldLabel.setText(String.valueOf(goldCounter));
       }
     });
+  }
+
+  private void replaceSceneContent() throws IOException {
+    Stage stage = new Stage();
+        Parent page = (Parent) FXMLLoader.load(getClass().getResource("/resources/gameLayout.fxml"), null, new JavaFXBuilderFactory());
+    Scene scene = stage.getScene();
+
+    if (scene == null) {
+      scene = new Scene(page, 900, 900);
+      stage.setScene(scene);
+    } else {
+      stage.getScene().setRoot(page);
+    }
+    stage.sizeToScene();
+    stage.show();
+
   }
 }

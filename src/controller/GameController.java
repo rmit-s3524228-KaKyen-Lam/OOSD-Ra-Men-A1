@@ -39,11 +39,11 @@ public class GameController implements Initializable {
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
-
     boardDraw = new BoardDraw(gridGameBoard, boardLabel, game);
     playerHandDraw = new PlayerHandDraw(gridPlayerDeck, playerLabel, trashcanImageView, game);
-    game.gameStart(this);
   }
+
+
 
   /**
    * Change the Label of the board in the gameLogic window

@@ -68,7 +68,6 @@ public class Game {
             //TODO change their role here
             //TODO if someone is saboteurs, do numOfSaboteurs++;
         }
-
         gameCon.redrawGrid();
         gameCon.redrawDeck(players[playerTurnNumber].getHand());
         gameCon.changePlayerLabel(playerTurnNumber, players[playerTurnNumber].getRole());
