@@ -1,6 +1,9 @@
 package model.personalcard;
 
 import model.PersonalCard;
+import model.Player;
+
+import java.util.Random;
 
 /**
  * Created by Ka Kyen Lam on 23/05/2017.
@@ -21,7 +24,16 @@ public class PersonalCard_Sick extends PersonalCard{
      */
     @Override
     public boolean cardAction(Object[] target) {
-        return false;
+        Player player = (Player) target[0];
+        try {
+            Random random = new Random();
+            int rng = random.nextInt(2) + 1;
+            player.setSickTurn(rng);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     @Override
