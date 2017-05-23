@@ -68,13 +68,21 @@ public class Player {
     }
 
     public boolean addStatus(String status) {
-        brokenTool.add(status);
-        return true;
+        if (brokenTool.indexOf(status) == -1) {
+            brokenTool.add(status);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public boolean removeStatus(String status) {
-        brokenTool.remove(status);
-        return true;
+        if (brokenTool.indexOf(status) > -1) {
+            brokenTool.remove(status);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
