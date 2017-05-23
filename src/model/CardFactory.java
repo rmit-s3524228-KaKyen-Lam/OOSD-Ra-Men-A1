@@ -61,7 +61,11 @@ class CardFactory {
             case "CROSS_SHAPE_DEAD":
                 return new PathCard_Cross_Dead(cardType);
             case "DEAD":
-                return new PathCard_DeadEnd(cardType);
+                PathCard_DeadEnd DeadEnd_Card = new PathCard_DeadEnd(cardType);
+                if (rotation != 0)
+                    return rotateCard(DeadEnd_Card, rotation);
+                else
+                    return DeadEnd_Card;
             case "EMPTY":
                 return new PathCard_Empty(cardType);
             case "ADD_PATH":

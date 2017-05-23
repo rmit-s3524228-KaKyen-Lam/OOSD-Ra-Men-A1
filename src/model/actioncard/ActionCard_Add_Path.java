@@ -1,6 +1,7 @@
 package model.actioncard;
 
 import model.ActionCard;
+import model.CardFlyweight;
 import model.Grid;
 import model.PathCard;
 import model.pathcard.*;
@@ -25,14 +26,20 @@ public class ActionCard_Add_Path extends ActionCard {
             return false;
         } else if (currentCard instanceof PathCard_DeadEnd) {
             // show option between line and L
+            targetGrid.setCard((PathCard) CardFlyweight.getCard("LINE_SHAPE", currentCard.getRotateVal()));
+            targetGrid.setCard((PathCard) CardFlyweight.getCard("L_SHAPE", currentCard.getRotateVal()));
         } else if (currentCard instanceof PathCard_L || currentCard instanceof PathCard_Line) {
             // show option between possible orientations of T
+            targetGrid.setCard((PathCard) CardFlyweight.getCard("T_SHAPE", currentCard.getRotateVal()));
         } else if (currentCard instanceof PathCard_L_Dead || currentCard instanceof PathCard_Line_Dead) {
             // show option between possible orientations of T hole
+            targetGrid.setCard((PathCard) CardFlyweight.getCard("T_SHAPE_DEAD", currentCard.getRotateVal()));
         } else if (currentCard instanceof PathCard_T) {
             // show option between possible orientations of cross
+            targetGrid.setCard((PathCard) CardFlyweight.getCard("CROSS_SHAPE", currentCard.getRotateVal()));
         } else if (currentCard instanceof PathCard_T_Dead) {
             // show option between possible orientations of cross hole
+            targetGrid.setCard((PathCard) CardFlyweight.getCard("CROSS_SHAPE_DEAD", currentCard.getRotateVal()));
         } else {
             //invalid, do nothing
             return false;
