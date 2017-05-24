@@ -5,6 +5,7 @@ import model.goalcard.GoalCard_Coal;
 import model.goalcard.GoalCard_Goal;
 import model.goalcard.GoalCard_Gold;
 import model.pathcard.*;
+import model.personalcard.*;
 
 /**
  * Factory class used to make cards when they are needed in conjunction with the
@@ -90,8 +91,18 @@ class CardFactory {
                 return new GoalCard_Coal(false, cardType);
             case "GOLD_HIDDEN":
                 return new GoalCard_Gold(true, cardType);
-            case "GOLD_REVEALED":
-                return new GoalCard_Gold(false, cardType);
+            case "BREAK_LANTERN":
+                return new PersonalCard_Break_Lantern(cardType);
+            case "BREAK_PICKAXE":
+                return new PersonalCard_Break_Pickaxe(cardType);
+            case "FIX_LANTERN":
+                return new PersonalCard_Fix_Lantern(cardType);
+            case "FIX_PICKAXE":
+                return new PersonalCard_Fix_Pickaxe(cardType);
+            case "SICK":
+                return new PersonalCard_Sick(cardType);
+            case "SWAP_ROLE":
+                return new PersonalCard_Swap_Role(cardType);
         }
         return null;
     }

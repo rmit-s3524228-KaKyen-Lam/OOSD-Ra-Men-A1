@@ -8,11 +8,10 @@ import model.Player;
  */
 public class PersonalCard_Break_Pickaxe extends PersonalCard {
     /**
-     * @param imageResource location of image file for card
      * @param id
      */
-    public PersonalCard_Break_Pickaxe(String imageResource, String id) {
-        super(imageResource, id);
+    public PersonalCard_Break_Pickaxe(String id) {
+        super("resources/Personal_Break_Pickaxe.png", id);
     }
 
     /**

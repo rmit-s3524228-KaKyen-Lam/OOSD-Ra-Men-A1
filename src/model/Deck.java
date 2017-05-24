@@ -177,6 +177,36 @@ class Deck implements Serializable {
                             cards.add(CardFlyweight.getCard(tokens[0], 0));
                         }
                         break;
+                    case "BREAK_LANTERN":
+                        for (int i = 0; i < Integer.parseInt(tokens[1]); i++) {
+                            cards.add(CardFlyweight.getCard(tokens[0], 0));
+                        }
+                        break;
+                    case "BREAK_PICKAXE":
+                        for (int i = 0; i < Integer.parseInt(tokens[1]); i++) {
+                            cards.add(CardFlyweight.getCard(tokens[0], 0));
+                        }
+                        break;
+                    case "FIX_LANTERN":
+                        for (int i = 0; i < Integer.parseInt(tokens[1]); i++) {
+                            cards.add(CardFlyweight.getCard(tokens[0], 0));
+                        }
+                        break;
+                    case "FIX_PICKAXE":
+                        for (int i = 0; i < Integer.parseInt(tokens[1]); i++) {
+                            cards.add(CardFlyweight.getCard(tokens[0], 0));
+                        }
+                        break;
+                    case "SICK":
+                        for (int i = 0; i < Integer.parseInt(tokens[1]); i++) {
+                            cards.add(CardFlyweight.getCard(tokens[0], 0));
+                        }
+                        break;
+                    case "SWAP_ROLE":
+                        for (int i = 0; i < Integer.parseInt(tokens[1]); i++) {
+                            cards.add(CardFlyweight.getCard(tokens[0], 0));
+                        }
+                        break;
                     case "SWAP_PATH":
                         for (int i = 0; i < Integer.parseInt(tokens[1]); i++) {
                             cards.add(CardFlyweight.getCard(tokens[0], 0));

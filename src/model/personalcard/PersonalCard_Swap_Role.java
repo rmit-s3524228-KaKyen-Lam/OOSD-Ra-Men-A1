@@ -8,11 +8,10 @@ import model.Player;
  */
 public class PersonalCard_Swap_Role extends PersonalCard {
     /**
-     * @param imageResource location of image file for card
      * @param id
      */
-    public PersonalCard_Swap_Role(String imageResource, String id) {
-        super(imageResource, id);
+    public PersonalCard_Swap_Role(String id) {
+        super("resources/Personal_Swap_Role.png", id);
     }
 
     /**

@@ -8,11 +8,10 @@ import model.Player;
  */
 public class PersonalCard_Fix_Lantern extends PersonalCard {
     /**
-     * @param imageResource location of image file for card
      * @param id
      */
-    public PersonalCard_Fix_Lantern(String imageResource, String id) {
-        super(imageResource, id);
+    public PersonalCard_Fix_Lantern(String id) {
+        super("resources/Personal_Fix_Lantern.png", id);
     }
 
     /**

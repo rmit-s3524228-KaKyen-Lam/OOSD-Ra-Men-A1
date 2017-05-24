@@ -10,11 +10,10 @@ import java.util.Random;
  */
 public class PersonalCard_Sick extends PersonalCard{
     /**
-     * @param imageResource location of image file for card
      * @param id
      */
-    public PersonalCard_Sick(String imageResource, String id) {
-        super(imageResource, id);
+    public PersonalCard_Sick(String id) {
+        super("resources/Personal_Sick.png", id);
     }
 
     /**
