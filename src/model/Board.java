@@ -71,15 +71,35 @@ public class Board {
 
     }
 
-    public void configureGoalPos(String name, int width, int height) {
-
-        isFilled[width][height] = true;
-        if (name.equals("coal")) {
-            grid[width][height] = new Grid(width, height, CardFlyweight.getCard("COAL", 0));
-        } else if (name.equals("gold")) {
-            grid[width][height] = new Grid(width, height, CardFlyweight.getCard("GOLD", 0));
-            goldLocation = grid[width][height];
+    public String  configureGoalPos(String name, int width, int height) {
+        boolean isValid = true;
+        if (width < 0 || width > gridMaxWidth) {
+            isValid = false;
+            return ("Invalid width. Please input width between 0 - " + gridMaxWidth);
         }
+
+        if (height < 0 || height > gridMaxHeight) {
+            isValid = false;
+            return ("Invalid height. Please input width between 0 - " + gridMaxHeight);
+        }
+
+        if (isFilled[width][height] == true) {
+            isValid = false;
+            return ("Invalid position. That grid has been occupied.");
+        }
+
+        if (isValid) {
+            isFilled[width][height] = true;
+            if (name.equals("coal")) {
+                grid[width][height] = new Grid(width, height, CardFlyweight.getCard("COAL", 0));
+                return ("Coal created at (" + width + ", " + height + ")");
+            } else if (name.equals("gold")) {
+                grid[width][height] = new Grid(width, height, CardFlyweight.getCard("GOLD", 0));
+                goldLocation = grid[width][height];
+                return ("Gold created at (" + width + ", " + height + ")");
+            }
+        }
+        return ("Internal error. No loop triggered.");
     }
 
     public void calculateBoard() {
