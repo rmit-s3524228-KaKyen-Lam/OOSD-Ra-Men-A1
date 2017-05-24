@@ -19,11 +19,9 @@ public class GameLogic {
      * Creates a gameLogic logic object
      *
      * @param board   the gameLogic board
-     * @param gameCon the gameLogic controller object that communicates with the view class
      */
-    public GameLogic(Board board, GameController gameCon) {
+    public GameLogic(Board board) {
         this.board = board;
-        this.gameCon = gameCon;
     }
 
     /**

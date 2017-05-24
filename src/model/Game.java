@@ -136,7 +136,7 @@ public class Game {
                     players[playerTurnNumber].getRecentlyDrawnCard(), target);
             if (commandHistory.executeAndAddHistory(command, playerTurnNumber)) {
                 gameLogic.checkGoalCardNeighbor(x, y, (PathCard) command.getCardToUse());
-                gameCon.redrawGrid();
+                GameController.redrawGrid();
                 nextTurn();
             } else {
                 Notification.showAlertBoxErrorMessage("This path card placement is invalid");
@@ -163,7 +163,7 @@ public class Game {
             Command command = new Command_PlayCard(playerTurnNumber, selectedCard,
                     players[playerTurnNumber].getRecentlyDrawnCard(), target);
             if (commandHistory.executeAndAddHistory(command, playerTurnNumber)) {
-                gameCon.redrawGrid();
+                GameController.redrawGrid();
                 nextTurn();
             } else {
                 Notification.showAlertBoxErrorMessage("Cannot play this action card");
@@ -177,7 +177,7 @@ public class Game {
         ArrayList<Card> playerHand = players[playerTurnNumber].getHand();
         playerHand.set(cardNum, CardFlyweight.getCard(playerHand.get(cardNum).getId(),
                 ((PathCard) playerHand.get(cardNum)).getRotateVal() + 1));
-        gameCon.redrawDeck(playerHand);
+        GameController.redrawDeck(playerHand);
         return true;
     }
 
