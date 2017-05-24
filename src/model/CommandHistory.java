@@ -40,7 +40,7 @@ public class CommandHistory implements Serializable {
      */
     public void saveHistory(String filename) {
         try {
-            FileOutputStream fout = new FileOutputStream("save\\cmdHistory.dat");
+            FileOutputStream fout = new FileOutputStream(filename);
             ObjectOutputStream oos = new ObjectOutputStream(fout);
             oos.writeObject(commandHistory);
         } catch (IOException e) {
@@ -55,7 +55,7 @@ public class CommandHistory implements Serializable {
      */
     public void loadHistory(String filename) {
         try {
-            FileInputStream fis = new FileInputStream("save\\cmdHistory.dat");
+            FileInputStream fis = new FileInputStream(filename);
             ObjectInputStream ois = new ObjectInputStream(fis);
             commandHistory = (ArrayList<Command>) ois.readObject();
         } catch (IOException e) {

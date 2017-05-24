@@ -49,7 +49,7 @@ public class Game {
         commandHistory = new CommandHistory(board, deck, players);
     }
 
-    public void gameInitialize(){
+    public void gameInitialize() {
         //board.initBoard();
         deck.initialiseDeck();
 
@@ -206,6 +206,8 @@ public class Game {
             gameStart();
         }
         selectedCard = null;
+        State state = new State(this);
+        state.saveState("save.sav");
 
         // Checks if the deck runs out of card. If it doesn't, draw a card from the deck to current player.
         if (deck.getDeckSize() == 0) {
@@ -278,5 +280,9 @@ public class Game {
 
     public void setNextPlayerTurnNumber(int nextPlayerTurnNumber) {
         this.nextPlayerTurnNumber = nextPlayerTurnNumber;
+    }
+
+    public CommandHistory getCommandHistory() {
+        return commandHistory;
     }
 }

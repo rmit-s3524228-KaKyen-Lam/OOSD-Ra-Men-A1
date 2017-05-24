@@ -2,12 +2,14 @@ package model;
 
 import model.pathcard.PathCard_Empty;
 
+import java.io.Serializable;
+
 /**
  * Grid class containing x-coordinate, y-coordinate, and card
  *
  * @author Ka Kyen Lam s3524228
  */
-public class Grid {
+public class Grid implements Serializable {
 
     private int x;
     private int y;

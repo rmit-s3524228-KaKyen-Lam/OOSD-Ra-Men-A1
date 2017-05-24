@@ -2,6 +2,7 @@ package model;
 
 import library.DeepCopier;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -10,7 +11,7 @@ import java.util.Collections;
  *
  * @author Ka Kyen Lam s3524228
  */
-public class Player {
+public class Player implements Serializable {
 
     private int score;
     private String role;

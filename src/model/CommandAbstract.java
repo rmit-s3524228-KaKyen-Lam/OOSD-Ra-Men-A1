@@ -2,10 +2,12 @@ package model;
 
 import library.DeepCopier;
 
+import java.io.Serializable;
+
 /**
  * @author David Limantoro (s3503728) on 5/18/2017.
  */
-public abstract class CommandAbstract implements Command {
+public abstract class CommandAbstract implements Command, Serializable {
 
     private int playerNumber;
     private Card cardToUse;

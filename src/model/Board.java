@@ -5,6 +5,7 @@ import model.goalcard.GoalCard_Gold;
 import model.pathcard.PathCard_Cross;
 import model.pathcard.PathCard_Empty;
 
+import java.io.Serializable;
 import java.util.*;
 
 /*http://stackoverflow.com/questions/9369368/2d-arraylist-in-java
@@ -16,7 +17,7 @@ import java.util.*;
  *
  * @author Ka Kyen Lam s3524228.
  */
-public class Board {
+public class Board implements Serializable {
 
     public static final int MAX_ALLOWED_WIDTH = 10;
     public static final int MAX_ALLOWED_HEIGHT = 10;
@@ -73,7 +74,7 @@ public class Board {
 
     }
 
-    public String  configureGoalPos(String name, int width, int height) {
+    public String configureGoalPos(String name, int width, int height) {
         boolean isValid = true;
         if (width < 0 || width > gridMaxWidth) {
             isValid = false;
@@ -129,8 +130,7 @@ public class Board {
             //System.out.print(node.root + " ");
 
 
-
-            if (((PathCard) node.root.getCard()).isCentre()){
+            if (((PathCard) node.root.getCard()).isCentre()) {
 
                 if (node.left() != null) {
                     if (!node.left().root.isConnectedToMain() && !node.left().root.isDisabled() && ((PathCard) node.root.getCard()).isWest() && ((PathCard) node.left().root.getCard()).isEast()) {
