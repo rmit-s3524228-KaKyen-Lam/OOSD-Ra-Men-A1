@@ -73,7 +73,7 @@ public class Game {
             //TODO if someone is saboteurs, do numOfSaboteurs++;
         }
 
-        loadGame("test.sav");
+//        loadGame("test.sav");
 
         GameController.redrawGrid();
         GameController.redrawDeck(players[getPlayerTurnNumber()].getHand());
