@@ -7,7 +7,6 @@ import model.pathcard.PathCard_Empty;
 import view.Notification;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  * This is the class that contains all the information regarding the game itself,
@@ -55,7 +54,7 @@ public class Game {
 
         // Assigns the GameController so that Game can communicate with the viewer
         gameLogic = new GameLogic(board);
-        LogicCheckerBridge.initialize(gameLogic, this);
+        LogicCheckerBridge.initialize(gameLogic);
     }
 
     /**
@@ -73,6 +72,8 @@ public class Game {
             //TODO change their role here
             //TODO if someone is saboteurs, do numOfSaboteurs++;
         }
+
+        loadGame("test.sav");
 
         GameController.redrawGrid();
         GameController.redrawDeck(players[getPlayerTurnNumber()].getHand());
@@ -206,8 +207,8 @@ public class Game {
             gameStart();
         }
         selectedCard = null;
-        State state = new State(this);
-        state.saveState("save.sav");
+
+        //saveGame("test.sav");
 
         // Checks if the deck runs out of card. If it doesn't, draw a card from the deck to current player.
         if (deck.getDeckSize() == 0) {
@@ -229,6 +230,31 @@ public class Game {
 
         GameController.redrawDeck(players[playerTurnNumber].getHand());
         GameController.changePlayerLabel(playerTurnNumber, players[playerTurnNumber].getRole());
+    }
+
+    public void saveGame(String filename) {
+        GameState state = new GameState(this);
+        if (state.saveState(filename)) {
+            Notification.showAlertBoxNotificationMessage("Save successful");
+        } else {
+            Notification.showAlertBoxErrorMessage("Save failed");
+        }
+    }
+
+    public void loadGame(String filename) {
+        GameState loadState = GameState.loadState(filename);
+        if (loadState != null) {
+            Notification.showAlertBoxNotificationMessage("Game loaded");
+            board = loadState.getBoard();
+            players = loadState.getPlayers();
+            commandHistory = loadState.getCommandHistory();
+            deck = loadState.getDeck();
+            gameTurnNumber = loadState.getGameTurnNumber();
+            playerTurnNumber = loadState.getPlayerTurnNumber();
+            nextPlayerTurnNumber = loadState.getNextPlayerTurnNumber();
+            noMoreCardNotifiedOnce = loadState.isNoMoreCardNotifiedOnce();
+            gameLogic.setBoard(board);
+        }
     }
 
     // Getters and Setters
@@ -284,5 +310,9 @@ public class Game {
 
     public CommandHistory getCommandHistory() {
         return commandHistory;
+    }
+
+    public boolean isNoMoreCardNotifiedOnce() {
+        return noMoreCardNotifiedOnce;
     }
 }

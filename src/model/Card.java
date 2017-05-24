@@ -14,7 +14,7 @@ import java.io.Serializable;
  *
  * @author Fabio Monsalve Duque s3585826
  */
-public abstract class Card extends Drawable implements Serializable {
+public abstract class Card extends Drawable  {
     private String id;
     // private Board board; // This will be used for implementation of cardAction method.
 

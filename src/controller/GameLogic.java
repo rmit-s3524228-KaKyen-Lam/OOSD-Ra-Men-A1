@@ -13,12 +13,11 @@ import model.pathcard.PathCard_Empty;
 public class GameLogic {
 
     private Board board;
-    private GameController gameCon;
 
     /**
      * Creates a gameLogic logic object
      *
-     * @param board   the gameLogic board
+     * @param board the gameLogic board
      */
     public GameLogic(Board board) {
         this.board = board;
@@ -65,7 +64,7 @@ public class GameLogic {
             } else {
                 gridToCheck.setCard(CardFlyweight.getCard("COAL_REVEALED", 0));
             }
-            gameCon.redrawGridXY(gridToCheck.getX(), gridToCheck.getY());
+            GameController.redrawGridXY(gridToCheck.getX(), gridToCheck.getY());
         }
     }
 
@@ -183,34 +182,11 @@ public class GameLogic {
         return westConnectCheck && northConnectCheck && eastConnectCheck && southConnectCheck && atLeastOneValidPath;
     }
 
-    /**
-     * Method to place a path card on the board.
-     * If a card is placed successfully, the specified location will be redrawn and the nextTurn() method is initiated.
-     *
-     * precondition, selectedCard must be a path card
-     *
-     * @param x column number of the board
-     * @param y row number of the board
-     * @return true if card is placed on the board successfully, otherwise false
-     */
-    public boolean placeCardOnBoard(int x, int y, Card selectedCard) {
-        if (selectedCard != null && selectedCard instanceof PathCard) {
-            if (cardPlacementCheck(x, y, (PathCard) selectedCard)) {
-                board.placeCardOnLocation(x, y, selectedCard);
-                if (((PathCard) selectedCard).isCentre()) {
-//                    ((PathCard) selectedCard).setValid(true);
-                } else {
-//                    ((PathCard) selectedCard).setValid(false);
-                }
-                checkGoalCardNeighbor(x, y, (PathCard) selectedCard);
-                gameCon.redrawGridXY(x, y);
-                return true;
-            } else {
-                return false;
-            }
-        } else {
-            return false;
-        }
+    public Board getBoard() {
+        return board;
     }
 
+    public void setBoard(Board board) {
+        this.board = board;
+    }
 }

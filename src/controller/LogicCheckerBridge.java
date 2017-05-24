@@ -8,11 +8,9 @@ import model.PathCard;
  */
 public class LogicCheckerBridge {
     private static GameLogic gameLogic;
-    private static Game game;
 
-    public static void initialize(GameLogic gameLogic, Game game) {
+    public static void initialize(GameLogic gameLogic) {
         LogicCheckerBridge.gameLogic = gameLogic;
-        LogicCheckerBridge.game = game;
     }
 
     public static boolean checkIfValid(PathCard card, int x, int y) {
