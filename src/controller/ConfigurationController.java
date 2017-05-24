@@ -58,8 +58,9 @@ public class ConfigurationController implements Initializable {
             int width = Integer.parseInt(boardWidth.getText());
             int height = Integer.parseInt((boardHeight.getText()));
 
-            if (width >= Board.MAX_ALLOWED_WIDTH || height >= Board.MAX_ALLOWED_HEIGHT ||
-                    width < Board.MIN_ALLOWED_WIDTH || height < Board.MIN_ALLOWED_HEIGHT) {
+            if (width > Board.MAX_ALLOWED_WIDTH || height > Board.MAX_ALLOWED_HEIGHT ||
+                    width <= Board.MIN_ALLOWED_WIDTH || height <= Board.MIN_ALLOWED_HEIGHT) {
+                warningLabel.setText("Board size must be between 4x4 and 10x10");
                 warningLabel.setVisible(true);
             } else {
 
@@ -71,7 +72,7 @@ public class ConfigurationController implements Initializable {
                         GameController.game.gameStart();
                     } catch (IOException e1) {
                         e1.printStackTrace();
-                        System.out.println("file not found");
+                        Notification.showAlertBoxErrorMessage("Error loading the game with current configuration");
                     }
                 } else {
                     Notification.showAlertBoxErrorMessage("The gold must have a position defined");
@@ -81,11 +82,12 @@ public class ConfigurationController implements Initializable {
 
         coalButton.setOnAction(e -> {
             warningLabel.setVisible(false);
-            int x = Integer.parseInt(coalWidth.getText());
-            int y = Integer.parseInt(coalHeight.getText());
+            int x = Integer.parseInt(coalWidth.getText()) - 1;
+            int y = Integer.parseInt(coalHeight.getText()) - 1;
 
-            if (x >= Board.MAX_ALLOWED_WIDTH || y >= Board.MAX_ALLOWED_HEIGHT ||
-                    x < Board.MIN_ALLOWED_WIDTH || y < Board.MIN_ALLOWED_HEIGHT) {
+            if (y >= Board.gridMaxHeight || x >= Board.gridMaxWidth || x < 0 || y < 0) {
+                warningLabel.setText("Location must be between 1,1 and " + Integer.parseInt(boardWidth.getText()) +
+                        "," + Integer.parseInt(boardHeight.getText()));
                 warningLabel.setVisible(true);
             } else {
                 if (GameController.game.getBoard().getIsFilled() == null) {
@@ -95,7 +97,8 @@ public class ConfigurationController implements Initializable {
                 }
                 String reply = GameController.game.getBoard().configureGoalPos("coal", x, y);
                 if (reply.contains("Invalid")) {
-                    Notification.showAlertBoxErrorMessage(reply);
+                    warningLabel.setText(reply);
+                    warningLabel.setVisible(true);
                 } else {
                     coalCounter++;
                     numCoalLabel.setText(String.valueOf(coalCounter));
@@ -105,11 +108,12 @@ public class ConfigurationController implements Initializable {
 
         goldButton.setOnAction(e -> {
             warningLabel.setVisible(false);
-            int x = Integer.parseInt(goldWidth.getText());
-            int y = Integer.parseInt(goldHeight.getText());
+            int x = Integer.parseInt(goldWidth.getText()) - 1;
+            int y = Integer.parseInt(goldHeight.getText()) - 1;
 
-            if (x >= Board.MAX_ALLOWED_WIDTH || y >= Board.MAX_ALLOWED_HEIGHT ||
-                    x < Board.MIN_ALLOWED_WIDTH || y < Board.MIN_ALLOWED_HEIGHT) {
+            if (y >= Board.gridMaxHeight || x >= Board.gridMaxWidth || x < 0 || y < 0) {
+                warningLabel.setText("Location must be between 1,1 and " + Integer.parseInt(boardWidth.getText()) +
+                        "," + Integer.parseInt(boardHeight.getText()));
                 warningLabel.setVisible(true);
             } else {
                 if (GameController.game.getBoard().getIsFilled() == null) {
@@ -119,7 +123,8 @@ public class ConfigurationController implements Initializable {
                 }
                 String reply = GameController.game.getBoard().configureGoalPos("gold", x, y);
                 if (reply.contains("Invalid")) {
-                    Notification.showAlertBoxErrorMessage(reply);
+                    warningLabel.setText(reply);
+                    warningLabel.setVisible(true);
                 } else {
                     goldCounter++;
                     numGoldLabel.setText(String.valueOf(goldCounter));

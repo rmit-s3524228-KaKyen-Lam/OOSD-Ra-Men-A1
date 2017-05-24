@@ -20,7 +20,7 @@ public class GameMain extends Application {
         // "gameLayout.fxml" as an example of the protected variations principle
         Parent root = FXMLLoader.load(getClass().getResource("resources/configLayout.fxml"));
         primaryStage.setTitle("RA-MEN Game");
-        primaryStage.setScene(new Scene(root, WIDTH, HEIGHT));
+        primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }
 
