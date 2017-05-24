@@ -6,13 +6,13 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="450.0" prefWidth="443.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.configurationController">
+<AnchorPane prefHeight="450.0" prefWidth="443.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ConfigurationController">
    <children>
       <Label layoutX="104.0" layoutY="233.0" text="No. of coal:" />
       <Label layoutX="104.0" layoutY="123.0" prefHeight="17.0" prefWidth="41.0" text="Width:" />
-      <TextField fx:id="boardWidth" layoutX="165.0" layoutY="120.0" prefHeight="0.0" prefWidth="34.0" />
+      <TextField fx:id="boardWidth" layoutX="165.0" layoutY="120.0" prefHeight="0.0" prefWidth="34.0" text="9" />
       <Label layoutX="104.0" layoutY="163.0" text="Position of Coal:" />
-      <TextField fx:id="boardHeight" layoutX="275.0" layoutY="120.0" prefHeight="0.0" prefWidth="34.0" />
+      <TextField fx:id="boardHeight" layoutX="275.0" layoutY="120.0" prefHeight="0.0" prefWidth="34.0" text="7" />
       <Label layoutX="104.0" layoutY="93.0" text="Board Size:" />
       <TextField fx:id="coalWidth" layoutX="165.0" layoutY="190.0" prefHeight="0.0" prefWidth="34.0" />
       <TextField fx:id="coalHeight" layoutX="275.0" layoutY="190.0" prefHeight="0.0" prefWidth="34.0" />

@@ -10,6 +10,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import model.Board;
+import view.Notification;
 
 import java.io.IOException;
 import java.net.URL;
@@ -19,7 +21,7 @@ import java.util.ResourceBundle;
  * Created by orlandok on 21/5/17.
  * *
  */
-public class configurationController implements Initializable {
+public class ConfigurationController implements Initializable {
     @FXML
     private TextField boardWidth;
     @FXML
@@ -74,10 +76,10 @@ public class configurationController implements Initializable {
 
         coalButton.setOnAction(e -> {
             warningLabel.setVisible(false);
-            int width = Integer.parseInt(coalWidth.getText());
-            int height = Integer.parseInt(coalHeight.getText());
+            int x = Integer.parseInt(coalWidth.getText());
+            int y = Integer.parseInt(coalHeight.getText());
 
-            if (width > 10 || height > 10) {
+            if (x > 10 || y > 10) {
                 warningLabel.setVisible(true);
             } else {
                 if (GameController.game.getBoard().getIsFilled() == null) {
@@ -85,18 +87,22 @@ public class configurationController implements Initializable {
                     int bHeight = Integer.parseInt((boardHeight.getText()));
                     GameController.game.getBoard().configureBoard(bWidth, bHeight);
                 }
-                GameController.game.getBoard().configureGoalPos("coal", width, height);
-                coalCounter++;
-                numCoalLabel.setText(String.valueOf(coalCounter));
+                String reply = GameController.game.getBoard().configureGoalPos("coal", x, y);
+                if (reply.contains("Invalid")) {
+                    Notification.showAlertBoxErrorMessage(reply);
+                } else {
+                    coalCounter++;
+                    numCoalLabel.setText(String.valueOf(coalCounter));
+                }
             }
         });
 
         goldButton.setOnAction(e -> {
             warningLabel.setVisible(false);
-            int width = Integer.parseInt(goldWidth.getText());
-            int height = Integer.parseInt(goldHeight.getText());
+            int x = Integer.parseInt(goldWidth.getText());
+            int y = Integer.parseInt(goldHeight.getText());
 
-            if (width > 10 || height > 10) {
+            if (x > (Board.MAX_ALLOWED_WIDTH - 1) || y > (Board.MAX_ALLOWED_HEIGHT - 1)) {
                 warningLabel.setVisible(true);
             } else {
                 if (GameController.game.getBoard().getIsFilled() == null) {
@@ -104,9 +110,13 @@ public class configurationController implements Initializable {
                     int bHeight = Integer.parseInt((boardHeight.getText()));
                     GameController.game.getBoard().configureBoard(bWidth, bHeight);
                 }
-                GameController.game.getBoard().configureGoalPos("gold", width, height);
-                coalCounter++;
-                numGoldLabel.setText(String.valueOf(goldCounter));
+                String reply = GameController.game.getBoard().configureGoalPos("gold", x, y);
+                if (reply.contains("Invalid")) {
+                    Notification.showAlertBoxErrorMessage(reply);
+                } else {
+                    goldCounter++;
+                    numGoldLabel.setText(String.valueOf(goldCounter));
+                }
             }
         });
     }
