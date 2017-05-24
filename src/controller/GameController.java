@@ -9,6 +9,7 @@ import javafx.scene.layout.GridPane;
 import model.*;
 import view.*;
 
+import javax.management.Notification;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -69,7 +70,9 @@ public class GameController implements Initializable {
         });
 
         buttonUndo.setOnMouseClicked(event -> {
-            System.out.println("buttonUndo");
+            if (!game.undoTurn()) {
+                GameNotification.showAlertBoxErrorMessage("Cannot undo, this player used undo twice or haven't played at least one turn");
+            }
         });
     }
 

@@ -73,8 +73,6 @@ public class Game {
             //TODO if someone is saboteurs, do numOfSaboteurs++;
         }
 
-//        loadGame("test.sav");
-
         GameController.redrawGrid();
         GameController.redrawDeck(players[getPlayerTurnNumber()].getHand());
         GameController.changePlayerLabel(getPlayerTurnNumber(), players[getPlayerTurnNumber()].getRole());
@@ -185,6 +183,9 @@ public class Game {
     public boolean undoTurn() {
         if (players[playerTurnNumber].getUndoCount() < 2 && commandHistory.undoTurn(playerTurnNumber)) {
             players[playerTurnNumber].incrementUndoCount();
+            GameController.redrawGrid();
+            GameController.redrawDeck(players[getPlayerTurnNumber()].getHand());
+            GameController.changePlayerLabel(getPlayerTurnNumber(), players[getPlayerTurnNumber()].getRole());
             return true;
         } else {
             return false;
@@ -207,8 +208,6 @@ public class Game {
             gameStart();
         }
         selectedCard = null;
-
-        //saveGame("test.sav");
 
         // Checks if the deck runs out of card. If it doesn't, draw a card from the deck to current player.
         if (deck.getDeckSize() == 0) {
@@ -244,7 +243,6 @@ public class Game {
     public void loadGame(String filename) {
         GameState loadState = GameState.loadState(filename);
         if (loadState != null) {
-            GameNotification.showAlertBoxNotificationMessage("Game loaded");
             board = loadState.getBoard();
             players = loadState.getPlayers();
             commandHistory = loadState.getCommandHistory();
@@ -254,10 +252,11 @@ public class Game {
             nextPlayerTurnNumber = loadState.getNextPlayerTurnNumber();
             noMoreCardNotifiedOnce = loadState.isNoMoreCardNotifiedOnce();
             gameLogic.setBoard(board);
+            GameController.redrawGrid();
+            GameController.redrawDeck(players[getPlayerTurnNumber()].getHand());
+            GameController.changePlayerLabel(getPlayerTurnNumber(), players[getPlayerTurnNumber()].getRole());
+            GameNotification.showAlertBoxNotificationMessage("Game loaded");
         }
-        GameController.redrawGrid();
-        GameController.redrawDeck(players[getPlayerTurnNumber()].getHand());
-        GameController.changePlayerLabel(getPlayerTurnNumber(), players[getPlayerTurnNumber()].getRole());
     }
 
     // Getters and Setters

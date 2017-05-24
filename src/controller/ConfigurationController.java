@@ -56,8 +56,17 @@ public class ConfigurationController implements Initializable {
 
         submitButton.setOnAction(e -> {
             warningLabel.setVisible(false);
-            int width = Integer.parseInt(boardWidth.getText());
-            int height = Integer.parseInt((boardHeight.getText()));
+
+            int width, height;
+
+            try {
+                width = Integer.parseInt(boardWidth.getText());
+                height = Integer.parseInt((boardHeight.getText()));
+            } catch (NumberFormatException nfe) {
+                warningLabel.setText("Please input valid number");
+                warningLabel.setVisible(true);
+                return;
+            }
 
             if (width > Board.MAX_ALLOWED_WIDTH || height > Board.MAX_ALLOWED_HEIGHT ||
                     width <= Board.MIN_ALLOWED_WIDTH || height <= Board.MIN_ALLOWED_HEIGHT) {
@@ -83,8 +92,17 @@ public class ConfigurationController implements Initializable {
 
         coalButton.setOnAction(e -> {
             warningLabel.setVisible(false);
-            int x = Integer.parseInt(coalWidth.getText()) - 1;
-            int y = Integer.parseInt(coalHeight.getText()) - 1;
+
+            int x, y;
+
+            try {
+                x = Integer.parseInt(coalWidth.getText()) - 1;
+                y = Integer.parseInt(coalHeight.getText()) - 1;
+            } catch (NumberFormatException nfe) {
+                warningLabel.setText("Please input valid number");
+                warningLabel.setVisible(true);
+                return;
+            }
 
             if (y >= Board.gridMaxHeight || x >= Board.gridMaxWidth || x < 0 || y < 0) {
                 warningLabel.setText("Location must be between 1,1 and " + Integer.parseInt(boardWidth.getText()) +
@@ -109,8 +127,17 @@ public class ConfigurationController implements Initializable {
 
         goldButton.setOnAction(e -> {
             warningLabel.setVisible(false);
-            int x = Integer.parseInt(goldWidth.getText()) - 1;
-            int y = Integer.parseInt(goldHeight.getText()) - 1;
+
+            int x, y;
+
+            try {
+                x = Integer.parseInt(goldWidth.getText()) - 1;
+                y = Integer.parseInt(goldHeight.getText()) - 1;
+            } catch (NumberFormatException nfe) {
+                warningLabel.setText("Please input valid number");
+                warningLabel.setVisible(true);
+                return;
+            }
 
             if (y >= Board.gridMaxHeight || x >= Board.gridMaxWidth || x < 0 || y < 0) {
                 warningLabel.setText("Location must be between 1,1 and " + Integer.parseInt(boardWidth.getText()) +

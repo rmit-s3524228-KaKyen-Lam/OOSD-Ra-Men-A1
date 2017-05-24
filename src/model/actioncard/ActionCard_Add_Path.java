@@ -63,7 +63,7 @@ public class ActionCard_Add_Path extends ActionCard {
     @Override
     public void undoCardAction(Object[] target, Object[] undoExtraInformation) {
         Grid targetGrid = (Grid) target[0];
-        PathCard oldCard = (PathCard) undoExtraInformation[0];
-        targetGrid.setCard(oldCard);
+        Grid oldGrid = (Grid) undoExtraInformation[0];
+        targetGrid.setCard(oldGrid.getCard());
     }
 }
