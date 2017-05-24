@@ -20,6 +20,8 @@ public class Board {
 
     public static final int MAX_ALLOWED_WIDTH = 10;
     public static final int MAX_ALLOWED_HEIGHT = 10;
+    public static final int MIN_ALLOWED_WIDTH = 4;
+    public static final int MIN_ALLOWED_HEIGHT = 4;
     public static int gridMaxWidth = 9;
     public static int gridMaxHeight = 7;
 

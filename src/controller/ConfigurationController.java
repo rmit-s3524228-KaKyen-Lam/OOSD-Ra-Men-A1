@@ -58,19 +58,23 @@ public class ConfigurationController implements Initializable {
             int width = Integer.parseInt(boardWidth.getText());
             int height = Integer.parseInt((boardHeight.getText()));
 
-            if (width > 10 || height > 10) {
+            if (width >= Board.MAX_ALLOWED_WIDTH || height >= Board.MAX_ALLOWED_HEIGHT ||
+                    width < Board.MIN_ALLOWED_WIDTH || height < Board.MIN_ALLOWED_HEIGHT) {
                 warningLabel.setVisible(true);
             } else {
 
-                try {
-                    replaceSceneContent();
-                    GameController.game.gameInitialize();
-                    GameController.game.getBoard().initBoardNew();
-                    GameController.game.gameStart();
-                    System.out.println("changed scene");
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                    System.out.println("file not found");
+                if (goldCounter > 0) {
+                    try {
+                        replaceSceneContent();
+                        GameController.game.gameInitialize();
+                        GameController.game.getBoard().initBoardNew();
+                        GameController.game.gameStart();
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                        System.out.println("file not found");
+                    }
+                } else {
+                    Notification.showAlertBoxErrorMessage("The gold must have a position defined");
                 }
             }
         });
@@ -80,7 +84,8 @@ public class ConfigurationController implements Initializable {
             int x = Integer.parseInt(coalWidth.getText());
             int y = Integer.parseInt(coalHeight.getText());
 
-            if (x > 10 || y > 10) {
+            if (x >= Board.MAX_ALLOWED_WIDTH || y >= Board.MAX_ALLOWED_HEIGHT ||
+                    x < Board.MIN_ALLOWED_WIDTH || y < Board.MIN_ALLOWED_HEIGHT) {
                 warningLabel.setVisible(true);
             } else {
                 if (GameController.game.getBoard().getIsFilled() == null) {
@@ -103,7 +108,8 @@ public class ConfigurationController implements Initializable {
             int x = Integer.parseInt(goldWidth.getText());
             int y = Integer.parseInt(goldHeight.getText());
 
-            if (x > (Board.MAX_ALLOWED_WIDTH - 1) || y > (Board.MAX_ALLOWED_HEIGHT - 1)) {
+            if (x >= Board.MAX_ALLOWED_WIDTH || y >= Board.MAX_ALLOWED_HEIGHT ||
+                    x < Board.MIN_ALLOWED_WIDTH || y < Board.MIN_ALLOWED_HEIGHT) {
                 warningLabel.setVisible(true);
             } else {
                 if (GameController.game.getBoard().getIsFilled() == null) {
