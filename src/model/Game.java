@@ -54,8 +54,8 @@ public class Game {
         deck.initialiseDeck();
 
         // Assigns the GameController so that Game can communicate with the viewer
-        LogicCheckerBridge.initialize(gameLogic, this);
         gameLogic = new GameLogic(board);
+        LogicCheckerBridge.initialize(gameLogic, this);
     }
 
     /**

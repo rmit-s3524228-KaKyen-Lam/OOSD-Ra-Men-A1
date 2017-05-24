@@ -91,10 +91,10 @@ public class Board {
         if (isValid) {
             isFilled[width][height] = true;
             if (name.equals("coal")) {
-                grid[width][height] = new Grid(width, height, CardFlyweight.getCard("COAL", 0));
+                grid[width][height] = new Grid(width, height, CardFlyweight.getCard("COAL_HIDDEN", 0));
                 return ("Coal created at (" + width + ", " + height + ")");
             } else if (name.equals("gold")) {
-                grid[width][height] = new Grid(width, height, CardFlyweight.getCard("GOLD", 0));
+                grid[width][height] = new Grid(width, height, CardFlyweight.getCard("GOLD_HIDDEN", 0));
                 goldLocation = grid[width][height];
                 return ("Gold created at (" + width + ", " + height + ")");
             }
@@ -197,7 +197,7 @@ public class Board {
                     if (i == startPathY && j == startPathX) {
                         grid[j][i] = new Grid(j, i, CardFlyweight.getCard("CROSS_SHAPE", 0));
 //                        ((PathCard) (grid[j][i].getCard())).setValid(true);
-                        grid[j][i].setConnectedToMain(false);
+                        grid[j][i].setConnectedToMain(true);
                         isFilled[j][i] = true;
                     } else {
                         grid[j][i] = new Grid(j, i, CardFlyweight.getCard("EMPTY", 0));
