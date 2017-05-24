@@ -3,9 +3,8 @@ package model.actioncard;
 import model.ActionCard;
 import model.Board;
 import model.Grid;
-import model.PathCard;
 import model.pathcard.PathCard_Empty;
-import view.Notification;
+import view.GameNotification;
 
 /**
  * Action card for the ability to destroy a particular path card
@@ -22,7 +21,7 @@ public class ActionCard_Destroy_Path_Card extends ActionCard {
         Grid targetGrid = (Grid) target[0];
         if (!(targetGrid.getCard() instanceof PathCard_Empty)) {
             if (targetGrid.getX() == Board.startPathX && targetGrid.getY() == Board.startPathY) {
-                Notification.showAlertBoxErrorMessage("Cannot destroy starting point");
+                GameNotification.showAlertBoxErrorMessage("Cannot destroy starting point");
                 return false;
             } else {
                 targetGrid.removeCardonGrid();

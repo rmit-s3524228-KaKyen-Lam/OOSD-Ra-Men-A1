@@ -10,7 +10,7 @@ import java.util.Optional;
  *
  * @author David Limantoro s3503728
  */
-public class Notification {
+public class GameNotification {
 
     /**
      * @param message

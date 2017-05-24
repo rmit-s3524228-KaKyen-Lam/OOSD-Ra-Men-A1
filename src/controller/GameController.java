@@ -2,14 +2,12 @@ package controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import model.*;
-import view.BoardDraw;
-import view.ImageFlyweight;
-import view.ImageFlyweightImpl;
-import view.PlayerHandDraw;
+import view.*;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -33,6 +31,14 @@ public class GameController implements Initializable {
     private Label playerLabel;
     @FXML
     private ImageView trashcanImageView;
+    @FXML
+    private Button buttonChangeTheme;
+    @FXML
+    private Button buttonLoadGame;
+    @FXML
+    private Button buttonSaveGame;
+    @FXML
+    private Button buttonUndo;
 
     private static BoardDraw boardDraw;
     private static PlayerHandDraw playerHandDraw;
@@ -43,6 +49,28 @@ public class GameController implements Initializable {
         ImageFlyweight imageFlyweight = new ImageFlyweightImpl();
         boardDraw = new BoardDraw(gridGameBoard, boardLabel, game, imageFlyweight);
         playerHandDraw = new PlayerHandDraw(gridPlayerDeck, playerLabel, trashcanImageView, game, imageFlyweight);
+
+        buttonChangeTheme.setOnMouseClicked(event -> {
+            System.out.println("buttonChangeTheme");
+        });
+
+        buttonLoadGame.setOnMouseClicked(event -> {
+            String filename = GameDialog.askUser("Load Game", "");
+            if (!filename.equals(GameDialog.CANCEL_DEFAULT_VALUE_RETURNED)) {
+                game.loadGame(filename);
+            }
+        });
+
+        buttonSaveGame.setOnMouseClicked(event -> {
+            String filename = GameDialog.askUser("Save Game", "");
+            if (!filename.equals(GameDialog.CANCEL_DEFAULT_VALUE_RETURNED)) {
+                game.saveGame(filename);
+            }
+        });
+
+        buttonUndo.setOnMouseClicked(event -> {
+            System.out.println("buttonUndo");
+        });
     }
 
     /**

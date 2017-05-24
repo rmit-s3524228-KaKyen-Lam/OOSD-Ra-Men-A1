@@ -11,7 +11,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Board;
-import view.Notification;
+import view.GameDialog;
+import view.GameNotification;
 
 import java.io.IOException;
 import java.net.URL;
@@ -72,10 +73,10 @@ public class ConfigurationController implements Initializable {
                         GameController.game.gameStart();
                     } catch (IOException e1) {
                         e1.printStackTrace();
-                        Notification.showAlertBoxErrorMessage("Error loading the game with current configuration");
+                        GameNotification.showAlertBoxErrorMessage("Error loading the game with current configuration");
                     }
                 } else {
-                    Notification.showAlertBoxErrorMessage("The gold must have a position defined");
+                    GameNotification.showAlertBoxErrorMessage("The gold must have a position defined");
                 }
             }
         });
@@ -135,7 +136,7 @@ public class ConfigurationController implements Initializable {
 
     private void replaceSceneContent() throws IOException {
         Stage stage = new Stage();
-        Parent page = (Parent) FXMLLoader.load(getClass().getResource("/resources/gameLayout.fxml"), null, new JavaFXBuilderFactory());
+        Parent page = (Parent) FXMLLoader.load(getClass().getResource("/resources/gameLayoutNew.fxml"), null, new JavaFXBuilderFactory());
         Scene scene = stage.getScene();
 
         if (scene == null) {

@@ -1,8 +1,7 @@
 package model.actioncard;
 
 import model.*;
-import model.pathcard.*;
-import view.Notification;
+import view.GameNotification;
 
 import java.util.Random;
 
@@ -57,7 +56,7 @@ public class ActionCard_Add_Path extends ActionCard {
             targetBoard.calculateBoard();
             return true;
         }
-        Notification.showAlertBoxErrorMessage("Cannot play this action card on this pathcard");
+        GameNotification.showAlertBoxErrorMessage("Cannot play this action card on this pathcard");
         return false;
     }
 

@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="900.0" minWidth="886.0" prefHeight="900.0" prefWidth="886.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.GameController">
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="900.0" minWidth="886.0" prefHeight="900.0" prefWidth="886.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.GameController">
     <tabs>
         <Tab text="Game">
             <content>
@@ -77,8 +77,8 @@
                                         <Glow />
                                     </effect>
                                 </GridPane>
-                                <Button layoutX="742.0" layoutY="16.0" mnemonicParsing="false" text="Change Theme" />
-                                <Button layoutX="625.0" layoutY="16.0" mnemonicParsing="false" text="Load Game" />
+                                <Button fx:id="buttonChangeTheme" layoutX="742.0" layoutY="16.0" mnemonicParsing="false" text="Change Theme" />
+                                <Button fx:id="buttonLoadGame" layoutX="625.0" layoutY="16.0" mnemonicParsing="false" text="Load Game" />
                             </children>
                         </AnchorPane>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
@@ -102,8 +102,8 @@
                                     <image>
                                         <Image url="@Trash.png" />
                                     </image></ImageView>
-                                <Button defaultButton="true" layoutX="32.0" layoutY="58.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="100.0" text="Save Game" />
-                                <Button defaultButton="true" layoutX="415.0" layoutY="7.0" mnemonicParsing="false" text="Undo" />
+                                <Button fx:id="buttonSaveGame" defaultButton="true" layoutX="32.0" layoutY="58.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="100.0" text="Save Game" />
+                                <Button fx:id="buttonUndo" defaultButton="true" layoutX="415.0" layoutY="7.0" mnemonicParsing="false" text="Undo" />
                             </children>
                         </AnchorPane>
                     </items>

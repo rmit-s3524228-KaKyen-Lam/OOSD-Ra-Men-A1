@@ -6,7 +6,7 @@ import model.ActionCard;
 import model.Card;
 import model.Game;
 import model.PathCard;
-import view.Notification;
+import view.GameNotification;
 
 /**
  * This is a class specifically dedicated for listening to click events on the gameLogic board GridPane
@@ -47,13 +47,13 @@ public class GameBoardListener implements EventHandler<MouseEvent> {
                 } else if (selCard instanceof ActionCard) {
                     game.playActionCard(x, y);
                 } else {
-                    Notification.showAlertBoxErrorMessage("Cannot play this type of card to board");
+                    GameNotification.showAlertBoxErrorMessage("Cannot play this type of card to board");
                 }
 //            else if (selCard instanceof PersonalCard) {
 //                game.playPersonalCard(x, y);
 //            }
             } else {
-                Notification.showAlertBoxErrorMessage("Cannot play card: No card is currently selected");
+                GameNotification.showAlertBoxErrorMessage("Cannot play card: No card is currently selected");
             }
         }
     }

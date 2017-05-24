@@ -4,7 +4,7 @@ import controller.GameController;
 import controller.GameLogic;
 import controller.LogicCheckerBridge;
 import model.pathcard.PathCard_Empty;
-import view.Notification;
+import view.GameNotification;
 
 import java.util.ArrayList;
 
@@ -113,7 +113,7 @@ public class Game {
         if (commandHistory.executeAndAddHistory(command, playerTurnNumber)) {
             nextTurn();
         } else {
-            Notification.showAlertBoxErrorMessage("Cannot remove card");
+            GameNotification.showAlertBoxErrorMessage("Cannot remove card");
         }
     }
 
@@ -140,10 +140,10 @@ public class Game {
                 GameController.redrawGrid();
                 nextTurn();
             } else {
-                Notification.showAlertBoxErrorMessage("This path card placement is invalid");
+                GameNotification.showAlertBoxErrorMessage("This path card placement is invalid");
             }
         } else {
-            Notification.showAlertBoxErrorMessage("Cannot place the card on top of this path");
+            GameNotification.showAlertBoxErrorMessage("Cannot place the card on top of this path");
         }
     }
 
@@ -167,10 +167,10 @@ public class Game {
                 GameController.redrawGrid();
                 nextTurn();
             } else {
-                Notification.showAlertBoxErrorMessage("Cannot play this action card");
+                GameNotification.showAlertBoxErrorMessage("Cannot play this action card");
             }
         } else {
-            Notification.showAlertBoxErrorMessage("Cannot play action card on non-path card");
+            GameNotification.showAlertBoxErrorMessage("Cannot play action card on non-path card");
         }
     }
 
@@ -203,7 +203,7 @@ public class Game {
         gameTurnNumber++;
         if (board.goldIsFound()) {
             shareGold(playerTurnNumber);
-            Notification.showAlertBoxNotificationMessage("The gold is found. This round is over");
+            GameNotification.showAlertBoxNotificationMessage("The gold is found. This round is over");
             gameStart();
         }
         selectedCard = null;
@@ -215,7 +215,7 @@ public class Game {
 
             // Notify the users (once per round) that there is no more card in the deck
             if (!noMoreCardNotifiedOnce) {
-                Notification.showAlertBoxNotificationMessage("There is no more card in the deck");
+                GameNotification.showAlertBoxNotificationMessage("There is no more card in the deck");
                 noMoreCardNotifiedOnce = true;
             }
         } else {
@@ -235,16 +235,16 @@ public class Game {
     public void saveGame(String filename) {
         GameState state = new GameState(this);
         if (state.saveState(filename)) {
-            Notification.showAlertBoxNotificationMessage("Save successful");
+            GameNotification.showAlertBoxNotificationMessage("Save successful");
         } else {
-            Notification.showAlertBoxErrorMessage("Save failed");
+            GameNotification.showAlertBoxErrorMessage("Save failed");
         }
     }
 
     public void loadGame(String filename) {
         GameState loadState = GameState.loadState(filename);
         if (loadState != null) {
-            Notification.showAlertBoxNotificationMessage("Game loaded");
+            GameNotification.showAlertBoxNotificationMessage("Game loaded");
             board = loadState.getBoard();
             players = loadState.getPlayers();
             commandHistory = loadState.getCommandHistory();
@@ -255,6 +255,9 @@ public class Game {
             noMoreCardNotifiedOnce = loadState.isNoMoreCardNotifiedOnce();
             gameLogic.setBoard(board);
         }
+        GameController.redrawGrid();
+        GameController.redrawDeck(players[getPlayerTurnNumber()].getHand());
+        GameController.changePlayerLabel(getPlayerTurnNumber(), players[getPlayerTurnNumber()].getRole());
     }
 
     // Getters and Setters

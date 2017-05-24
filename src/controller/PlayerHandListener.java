@@ -3,7 +3,6 @@ package controller;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import model.Game;
-import view.Notification;
 import view.PlayerHandListenerCallback;
 
 /**

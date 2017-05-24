@@ -3,9 +3,8 @@ package model.actioncard;
 import model.ActionCard;
 import model.Board;
 import model.Grid;
-import model.PathCard;
 import model.pathcard.PathCard_Empty;
-import view.Notification;
+import view.GameNotification;
 
 /**
  * Action card for the ability to destroy an eligible path card and its neighbour path cards
@@ -33,7 +32,7 @@ public class ActionCard_Destroy_Multiple_Paths extends ActionCard {
             targetBoard.calculateBoard();
             return true;
         } else {
-            Notification.showAlertBoxErrorMessage("You have to aim at an existing path");
+            GameNotification.showAlertBoxErrorMessage("You have to aim at an existing path");
             return false;
         }
     }
@@ -48,7 +47,7 @@ public class ActionCard_Destroy_Multiple_Paths extends ActionCard {
                 Grid prevGrid = (Grid) undoExtraInformation[i];
                 targetGrid.setCard(prevGrid.getCard());
             } else {
-                Notification.showAlertBoxErrorMessage("That target is invalid");
+                GameNotification.showAlertBoxErrorMessage("That target is invalid");
             }
         }
     }
