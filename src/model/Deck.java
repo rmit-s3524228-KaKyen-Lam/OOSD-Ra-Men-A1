@@ -93,92 +93,92 @@ class Deck {
         tokens = line.split(",");
         switch (tokens[0]) {
           case "T_SHAPE":
-            for (int i = 0; i < Integer.parseInt(tokens[2]); i++) {
+            for (int i = 0; i < Integer.parseInt(tokens[1]); i++) {
               cards.add(CardFlyweight.getCard(tokens[0], 0));
             }
             break;
           case "T_SHAPE_DEAD":
-            for (int i = 0; i < Integer.parseInt(tokens[2]); i++) {
+            for (int i = 0; i < Integer.parseInt(tokens[1]); i++) {
               cards.add(CardFlyweight.getCard(tokens[0], 0));
             }
             break;
           case "LINE_SHAPE":
-            for (int i = 0; i < Integer.parseInt(tokens[2]); i++) {
+            for (int i = 0; i < Integer.parseInt(tokens[1]); i++) {
               cards.add(CardFlyweight.getCard(tokens[0], 0));
             }
             break;
           case "LINE_SHAPE_DEAD":
-            for (int i = 0; i < Integer.parseInt(tokens[2]); i++) {
+            for (int i = 0; i < Integer.parseInt(tokens[1]); i++) {
               cards.add(CardFlyweight.getCard(tokens[0], 0));
             }
             break;
           case "CROSS_SHAPE":
-            for (int i = 0; i < Integer.parseInt(tokens[2]); i++) {
+            for (int i = 0; i < Integer.parseInt(tokens[1]); i++) {
               cards.add(CardFlyweight.getCard(tokens[0], 0));
             }
             break;
           case "CROSS_SHAPE_DEAD":
-            for (int i = 0; i < Integer.parseInt(tokens[2]); i++) {
+            for (int i = 0; i < Integer.parseInt(tokens[1]); i++) {
               cards.add(CardFlyweight.getCard(tokens[0], 0));
             }
             break;
           case "L_SHAPE":
-            for (int i = 0; i < Integer.parseInt(tokens[2]); i++) {
+            for (int i = 0; i < Integer.parseInt(tokens[1]); i++) {
               cards.add(CardFlyweight.getCard(tokens[0], 0));
             }
             break;
           case "L_SHAPE_DEAD":
-            for (int i = 0; i < Integer.parseInt(tokens[2]); i++) {
+            for (int i = 0; i < Integer.parseInt(tokens[1]); i++) {
               cards.add(CardFlyweight.getCard(tokens[0], 0));
             }
             break;
           case "DEAD":
-            for (int i = 0; i < Integer.parseInt(tokens[2]); i++) {
+            for (int i = 0; i < Integer.parseInt(tokens[1]); i++) {
               cards.add(CardFlyweight.getCard(tokens[0], 0));
             }
             break;
           case "EMPTY":
-            for (int i = 0; i < Integer.parseInt(tokens[2]); i++) {
+            for (int i = 0; i < Integer.parseInt(tokens[1]); i++) {
               cards.add(CardFlyweight.getCard(tokens[0], 0));
             }
             break;
           case "ADD_PATH":
-            for (int i = 0; i < Integer.parseInt(tokens[2]); i++) {
+            for (int i = 0; i < Integer.parseInt(tokens[1]); i++) {
               cards.add(CardFlyweight.getCard(tokens[0], 0));
             }
             break;
           case "CLEAN_PATH":
-            for (int i = 0; i < Integer.parseInt(tokens[2]); i++) {
+            for (int i = 0; i < Integer.parseInt(tokens[1]); i++) {
               cards.add(CardFlyweight.getCard(tokens[0], 0));
             }
             break;
           case "CORRUPT_PATH":
-            for (int i = 0; i < Integer.parseInt(tokens[2]); i++) {
+            for (int i = 0; i < Integer.parseInt(tokens[1]); i++) {
               cards.add(CardFlyweight.getCard(tokens[0], 0));
             }
             break;
           case "DESTROY_M_PATHS":
-            for (int i = 0; i < Integer.parseInt(tokens[2]); i++) {
+            for (int i = 0; i < Integer.parseInt(tokens[1]); i++) {
               cards.add(CardFlyweight.getCard(tokens[0], 0));
             }
             break;
           case "DESTROY_PATH":
-            for (int i = 0; i < Integer.parseInt(tokens[2]); i++) {
+            for (int i = 0; i < Integer.parseInt(tokens[1]); i++) {
               cards.add(CardFlyweight.getCard(tokens[0], 0));
             }
             break;
           case "REMOVE_PATH":
-            for (int i = 0; i < Integer.parseInt(tokens[2]); i++) {
+            for (int i = 0; i < Integer.parseInt(tokens[1]); i++) {
               cards.add(CardFlyweight.getCard(tokens[0], 0));
             }
             break;
           case "ROTATE_PATH":
-            for (int i = 0; i < Integer.parseInt(tokens[2]); i++) {
+            for (int i = 0; i < Integer.parseInt(tokens[1]); i++) {
               cards.add(CardFlyweight.getCard(tokens[0], 0));
             }
             break;
           case "SWAP_PATH":
-            for (int i = 0; i < Integer.parseInt(tokens[2]); i++) {
+            for (int i = 0; i < Integer.parseInt(tokens[1]); i++) {
               cards.add(CardFlyweight.getCard(tokens[0], 0));
             }
             break;

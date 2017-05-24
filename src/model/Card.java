@@ -1,5 +1,7 @@
 package model;
 
+import java.io.Serializable;
+
 /**
  * Abstract class for all other game cards
  *
@@ -12,22 +14,24 @@ package model;
  *
  * @author Fabio Monsalve Duque s3585826
  */
-public abstract class Card extends Drawable {
+public abstract class Card extends Drawable implements Serializable {
     private String id;
     // private Board board; // This will be used for implementation of cardAction method.
 
     /**
      * @param imageResource location of image file for card
      */
-    public Card(String imageResource) {
+    public Card(String imageResource, String id) {
         super(imageResource);
-
+        this.id = id;
     }
 
     /**
      * Method for actions different types of cards might have. E.g. Breaking tools
      */
-    public abstract void cardAction();
+    public abstract boolean cardAction(Object[] target);
+
+    public abstract void undoCardAction(Object[] target, Object[] undoExtraInformation);
 
     public String getId() {
         return id;

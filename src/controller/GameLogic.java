@@ -1,6 +1,7 @@
 package controller;
 
 import model.*;
+import model.goalcard.GoalCard_Gold;
 import model.pathcard.PathCard_Empty;
 
 /**
@@ -12,14 +13,17 @@ import model.pathcard.PathCard_Empty;
 public class GameLogic {
 
     private Board board;
+    private GameController gameCon;
 
     /**
      * Creates a gameLogic logic object
      *
-     * @param board the gameLogic board
+     * @param board   the gameLogic board
+     * @param gameCon the gameLogic controller object that communicates with the view class
      */
-    public GameLogic(Board board) {
+    public GameLogic(Board board, GameController gameCon) {
         this.board = board;
+        this.gameCon = gameCon;
     }
 
     /**
@@ -30,21 +34,23 @@ public class GameLogic {
      * @param y    y coordinate on the board where the card is about to be placed
      * @param card card to be placed in the board at location x,y
      */
-    private void checkGoalCardNeighbor(int x, int y, PathCard card) {
-        if (card.isWest()) {
-            checkGoalCard(board.getGridAtLocation(x - 1, y));
-        }
+    public void checkGoalCardNeighbor(int x, int y, PathCard card) {
+        if (card.isCentre()) {
+            if (card.isWest()) {
+                checkGoalCard(board.getGridAtLocation(x - 1, y));
+            }
 
-        if (card.isNorth()) {
-            checkGoalCard(board.getGridAtLocation(x, y - 1));
-        }
+            if (card.isNorth()) {
+                checkGoalCard(board.getGridAtLocation(x, y - 1));
+            }
 
-        if (card.isEast()) {
-            checkGoalCard(board.getGridAtLocation(x + 1, y));
-        }
+            if (card.isEast()) {
+                checkGoalCard(board.getGridAtLocation(x + 1, y));
+            }
 
-        if (card.isSouth()) {
-            checkGoalCard(board.getGridAtLocation(x, y + 1));
+            if (card.isSouth()) {
+                checkGoalCard(board.getGridAtLocation(x, y + 1));
+            }
         }
     }
 
@@ -56,8 +62,12 @@ public class GameLogic {
      */
     private void checkGoalCard(Grid gridToCheck) {
         if (gridToCheck != null && gridToCheck.getCard() instanceof GoalCard) {
-            ((GoalCard) gridToCheck.getCard()).setHidden(false);
-            GameController.redrawGridXY(gridToCheck.getX(), gridToCheck.getY());
+            if (gridToCheck.getCard() instanceof GoalCard_Gold) {
+                gridToCheck.setCard(CardFlyweight.getCard("GOLD_REVEALED", 0));
+            } else {
+                gridToCheck.setCard(CardFlyweight.getCard("COAL_REVEALED", 0));
+            }
+            gameCon.redrawGridXY(gridToCheck.getX(), gridToCheck.getY());
         }
     }
 
@@ -84,8 +94,10 @@ public class GameLogic {
                 westConnectCheck = true;
             } else {
                 if (cardToPlace.isWest()) {
-                    if (((PathCard) westCard).isEast() && ((PathCard) westCard).isValid()) {
+                    if (((PathCard) westCard).isEast()) {
                         westConnectCheck = true;
+                    }
+                    if (westGrid.isConnectedToMain() && ((PathCard) westCard).isCentre()) {
                         atLeastOneValidPath = true;
                     }
                 } else {
@@ -106,8 +118,10 @@ public class GameLogic {
                 northConnectCheck = true;
             } else {
                 if (cardToPlace.isNorth()) {
-                    if (((PathCard) northCard).isSouth() && ((PathCard) northCard).isValid()) {
+                    if (((PathCard) northCard).isSouth()) {
                         northConnectCheck = true;
+                    }
+                    if (northGrid.isConnectedToMain() && ((PathCard) northCard).isCentre()) {
                         atLeastOneValidPath = true;
                     }
                 } else {
@@ -128,8 +142,10 @@ public class GameLogic {
                 eastConnectCheck = true;
             } else {
                 if (cardToPlace.isEast()) {
-                    if (((PathCard) eastCard).isWest() && ((PathCard) eastCard).isValid()) {
+                    if (((PathCard) eastCard).isWest()) {
                         eastConnectCheck = true;
+                    }
+                    if (eastGrid.isConnectedToMain() && ((PathCard) eastCard).isCentre()) {
                         atLeastOneValidPath = true;
                     }
                 } else {
@@ -150,8 +166,10 @@ public class GameLogic {
                 southConnectCheck = true;
             } else {
                 if (cardToPlace.isSouth()) {
-                    if (((PathCard) southCard).isNorth() && ((PathCard) southCard).isValid()) {
+                    if (((PathCard) southCard).isNorth()) {
                         southConnectCheck = true;
+                    }
+                    if (southGrid.isConnectedToMain() && ((PathCard) southCard).isCentre()) {
                         atLeastOneValidPath = true;
                     }
                 } else {
@@ -182,12 +200,12 @@ public class GameLogic {
             if (cardPlacementCheck(x, y, (PathCard) selectedCard)) {
                 board.placeCardOnLocation(x, y, selectedCard);
                 if (((PathCard) selectedCard).isCentre()) {
-                    ((PathCard) selectedCard).setValid(true);
+//                    ((PathCard) selectedCard).setValid(true);
                 } else {
-                    ((PathCard) selectedCard).setValid(false);
+//                    ((PathCard) selectedCard).setValid(false);
                 }
                 checkGoalCardNeighbor(x, y, (PathCard) selectedCard);
-                GameController.redrawGridXY(x, y);
+                gameCon.redrawGridXY(x, y);
                 return true;
             } else {
                 return false;

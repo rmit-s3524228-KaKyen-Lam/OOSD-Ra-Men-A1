@@ -28,8 +28,8 @@ public class Board {
     private int startGoalY1 = 1;
     private int startGoalY2 = 3;
     private int startGoalY3 = 5;
-    private int startPathX = 0;
-    private int startPathY = 3;
+    public static int startPathX = 0;
+    public static int startPathY = 3;
     private int x;
     private int y;
 
@@ -39,6 +39,7 @@ public class Board {
     private boolean[][] isFilled;
     private Grid goldLocation;
     Queue<Node> queue = new LinkedList<>();
+    private ArrayList<Grid> goalList = new ArrayList<>();
 
     public void configureBoard(int widthMax, int heightMax) {
         gridMaxWidth = widthMax;
@@ -53,39 +54,32 @@ public class Board {
         }
     }
 
-    public void configureGoalNo(int goalAmount) {
-        goalNo = goalAmount;
+
+    public boolean inputCheck(int width, int height) {
+        if (width < 0 || width > gridMaxWidth) {
+            System.out.println("Invalid width. Please input width between 0 - " + gridMaxWidth);
+            return false;
+        } else if (height < 0 || height > gridMaxHeight) {
+            System.out.println("Invalid height. Please input width between 0 - " + gridMaxHeight);
+            return false;
+        } else if (isFilled[width][height] == true) {
+            System.out.println("Invalid position. That grid has been occupied.");
+            return false;
+        } else {
+            return true;
+        }
+
     }
 
-    public String configureGoalPos(String name, int width, int height) {
-        boolean isValid = true;
-        if (width < 0 || width > gridMaxWidth) {
-            isValid = false;
-            return ("Invalid width. Please input width between 0 - " + gridMaxWidth);
-        }
+    public void configureGoalPos(String name, int width, int height) {
 
-        if (height < 0 || height > gridMaxHeight) {
-            isValid = false;
-            return ("Invalid height. Please input width between 0 - " + gridMaxHeight);
+        isFilled[width][height] = true;
+        if (name.equals("coal")) {
+            grid[width][height] = new Grid(width, height, CardFlyweight.getCard("COAL", 0));
+        } else if (name.equals("gold")) {
+            grid[width][height] = new Grid(width, height, CardFlyweight.getCard("GOLD", 0));
+            goldLocation = grid[width][height];
         }
-
-        if (isFilled[width][height] == true) {
-            isValid = false;
-            return ("Invalid position. That grid has been occupied.");
-        }
-
-        if (isValid) {
-            isFilled[width][height] = true;
-            if (name.equals("coal")) {
-                grid[width][height] = new Grid(width, height, CardFlyweight.getCard("COAL", 0));
-                return ("Coal created at (" + width + ", " + height + ")");
-            } else if (name.equals("gold")) {
-                grid[width][height] = new Grid(width, height, CardFlyweight.getCard("GOLD", 0));
-                goldLocation = grid[width][height];
-                return ("Gold created at (" + width + ", " + height + ")");
-            }
-        }
-        return ("Internal error. No loop triggered.");
     }
 
     public void calculateBoard() {
@@ -110,32 +104,50 @@ public class Board {
 
         while (!queue.isEmpty()) {
             Node node = queue.remove();
-            System.out.print(node.root + " ");
-            if (!node.left().root.isDisabled() && ((PathCard) node.root.getCard()).isWest() && ((PathCard) node.left().root.getCard()).isEast()) {
-                x = node.left().root.getX();
-                y = node.left().root.getY();
-                grid[x][y].setConnectedToMain(true);
-                queue.add(node.left());
-            }
-            if (!node.right().root.isDisabled() && ((PathCard) node.root.getCard()).isEast() && ((PathCard) node.right().root.getCard()).isWest()) {
-                x = node.right().root.getX();
-                y = node.right().root.getY();
-                grid[x][y].setConnectedToMain(true);
-                queue.add(node.right());
-            }
-            if (!node.up().root.isDisabled() && ((PathCard) node.root.getCard()).isNorth() && ((PathCard) node.up().root.getCard()).isSouth()) {
-                x = node.up().root.getX();
-                y = node.up().root.getY();
-                grid[x][y].setConnectedToMain(true);
-                queue.add(node.up());
-            }
-            if (!node.down().root.isDisabled() && ((PathCard) node.root.getCard()).isSouth() && ((PathCard) node.down().root.getCard()).isNorth()) {
-                x = node.down().root.getX();
-                y = node.down().root.getY();
-                grid[x][y].setConnectedToMain(true);
-                queue.add(node.down());
+            //System.out.print(node.root + " ");
+
+
+
+            if (((PathCard) node.root.getCard()).isCentre()){
+
+                if (node.left() != null) {
+                    if (!node.left().root.isConnectedToMain() && !node.left().root.isDisabled() && ((PathCard) node.root.getCard()).isWest() && ((PathCard) node.left().root.getCard()).isEast()) {
+                        x = node.left().root.getX();
+                        y = node.left().root.getY();
+                        grid[x][y].setConnectedToMain(true);
+                        queue.add(node.left());
+                    }
+                }
+
+                if (node.right() != null) {
+                    if (!node.right().root.isConnectedToMain() && !node.right().root.isDisabled() && ((PathCard) node.root.getCard()).isEast() && ((PathCard) node.right().root.getCard()).isWest()) {
+                        x = node.right().root.getX();
+                        y = node.right().root.getY();
+                        grid[x][y].setConnectedToMain(true);
+                        queue.add(node.right());
+                    }
+                }
+
+                if (node.up() != null) {
+                    if (!node.up().root.isConnectedToMain() && !node.up().root.isDisabled() && ((PathCard) node.root.getCard()).isNorth() && ((PathCard) node.up().root.getCard()).isSouth()) {
+                        x = node.up().root.getX();
+                        y = node.up().root.getY();
+                        grid[x][y].setConnectedToMain(true);
+                        queue.add(node.up());
+                    }
+                }
+
+                if (node.down() != null) {
+                    if (!node.down().root.isConnectedToMain() && !node.down().root.isDisabled() && ((PathCard) node.root.getCard()).isSouth() && ((PathCard) node.down().root.getCard()).isNorth()) {
+                        x = node.down().root.getX();
+                        y = node.down().root.getY();
+                        grid[x][y].setConnectedToMain(true);
+                        queue.add(node.down());
+                    }
+                }
             }
         }
+
 
     }
 
@@ -164,7 +176,7 @@ public class Board {
                 if (!isFilled[j][i]) {
                     if (i == startPathY && j == startPathX) {
                         grid[j][i] = new Grid(j, i, CardFlyweight.getCard("CROSS_SHAPE", 0));
-                        ((PathCard) (grid[j][i].getCard())).setValid(true);
+//                        ((PathCard) (grid[j][i].getCard())).setValid(true);
                         grid[j][i].setConnectedToMain(false);
                         isFilled[j][i] = true;
                     } else {
@@ -182,18 +194,18 @@ public class Board {
         for (int i = 0; i < gridMaxHeight; i++) {
             for (int j = 0; j < gridMaxWidth; j++) {
                 if ((i == startGoalYList.get(0) || i == startGoalYList.get(1)) && j == startGoalX) {
-                    grid[j][i] = new Grid(j, i, new GoalCard_Coal());
+                    grid[j][i] = new Grid(j, i, CardFlyweight.getCard("COAL_HIDDEN", 0));
                 } else if (i == startGoalYList.get(2) && j == startGoalX) {
-                    grid[j][i] = new Grid(j, i, new GoalCard_Gold());
+                    grid[j][i] = new Grid(j, i, CardFlyweight.getCard("GOLD_HIDDEN", 0));
                     goldLocation = grid[j][i];
                 } else if (i == startPathY && j == startPathX) {
-                    grid[j][i] = new Grid(j, i, new PathCard_Cross());
-                    ((PathCard) (grid[j][i].getCard())).setValid(true);
+                    grid[j][i] = new Grid(j, i, CardFlyweight.getCard("CROSS_SHAPE", 0));
+                    grid[j][i].setConnectedToMain(true);
+//                    ((PathCard) (grid[j][i].getCard())).setValid(true);
                 } else {
-                    grid[j][i] = new Grid(j, i, new PathCard_Empty());
+                    grid[j][i] = new Grid(j, i, CardFlyweight.getCard("EMPTY", 0));
                 }
             }
-            System.out.println();
         }
     }
 
@@ -216,6 +228,25 @@ public class Board {
      */
     public void placeCardOnLocation(int x, int y, Card card) {
         grid[x][y].setCard(card);
+        grid[x][y].setConnectedToMain(true);
+        Grid westGrid = getGridAtLocation(x - 1, y);
+        Grid northGrid = getGridAtLocation(x, y - 1);
+        Grid eastGrid = getGridAtLocation(x + 1, y);
+        Grid southGrid = getGridAtLocation(x, y + 1);
+        if (westGrid != null && ((PathCard) card).isWest() && !westGrid.isConnectedToMain() &&
+                !(westGrid.getCard() instanceof PathCard_Empty) && westGrid.getCard() instanceof PathCard) {
+            calculateBoard();
+        } else if (northGrid != null && ((PathCard) card).isNorth() && !northGrid.isConnectedToMain() &&
+                !(northGrid.getCard() instanceof PathCard_Empty) && northGrid.getCard() instanceof PathCard) {
+            calculateBoard();
+        } else if (eastGrid != null && ((PathCard) card).isEast() && !eastGrid.isConnectedToMain() &&
+                !(eastGrid.getCard() instanceof PathCard_Empty) && eastGrid.getCard() instanceof PathCard) {
+            calculateBoard();
+        } else if (southGrid != null && ((PathCard) card).isSouth() && !southGrid.isConnectedToMain() &&
+                !(southGrid.getCard() instanceof PathCard_Empty) && southGrid.getCard() instanceof PathCard) {
+            calculateBoard();
+        }
+
     }
 
     /**

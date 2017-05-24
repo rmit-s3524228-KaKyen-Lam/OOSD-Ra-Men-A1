@@ -5,9 +5,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import model.Card;
-import model.Game;
+import model.*;
 import view.BoardDraw;
+import view.ImageFlyweight;
+import view.ImageFlyweightImpl;
 import view.PlayerHandDraw;
 
 import java.net.URL;
@@ -39,10 +40,10 @@ public class GameController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        boardDraw = new BoardDraw(gridGameBoard, boardLabel, game);
-        playerHandDraw = new PlayerHandDraw(gridPlayerDeck, playerLabel, trashcanImageView, game);
+        ImageFlyweight imageFlyweight = new ImageFlyweightImpl();
+        boardDraw = new BoardDraw(gridGameBoard, boardLabel, game, imageFlyweight);
+        playerHandDraw = new PlayerHandDraw(gridPlayerDeck, playerLabel, trashcanImageView, game, imageFlyweight);
     }
-
 
     /**
      * Change the Label of the board in the gameLogic window

@@ -20,6 +20,7 @@ public class BoardDraw {
     private Label boardLabel;
     private Game game;
     private ImageView[][] images;
+    private ImageFlyweight imageFlyweight;
 
     /**
      * Creates a draw class for board section
@@ -28,10 +29,11 @@ public class BoardDraw {
      * @param boardLabel    JavaFX Label object of board label
      * @param game          The game object
      */
-    public BoardDraw(GridPane gridGameBoard, Label boardLabel, Game game) {
+    public BoardDraw(GridPane gridGameBoard, Label boardLabel, Game game, ImageFlyweight imageFlyweight) {
         this.gridGameBoard = gridGameBoard;
         this.boardLabel = boardLabel;
         this.game = game;
+        this.imageFlyweight = imageFlyweight;
     }
 
     /**
@@ -69,19 +71,17 @@ public class BoardDraw {
         Grid[][] gameBoard = game.getBoard().getGrid();
         Card currentGridCard = gameBoard[x][y].getCard();
 
-        if (currentGridCard instanceof GoalCard) {
-            if (((GoalCard) currentGridCard).isHidden()) {
-                imageToDrawOnGrid = new ImageView(((GoalCard) currentGridCard).getConcealedImageResource());
-            } else {
-                imageToDrawOnGrid = new ImageView(currentGridCard.getImageResource());
+        imageToDrawOnGrid = new ImageView(imageFlyweight.requestImage(currentGridCard));
+        if (currentGridCard instanceof PathCard) {
+            int rotateVal = 0;
+            for (int i = 0; i < ((PathCard) currentGridCard).getRotateVal(); i++) {
+                rotateVal += 90;
             }
-        } else {
-            imageToDrawOnGrid = new ImageView(currentGridCard.getImageResource());
+            imageToDrawOnGrid.setRotate(rotateVal);
         }
-
+        drawNormal(imageToDrawOnGrid, gameBoard[x][y]);
         images[x][y] = imageToDrawOnGrid;
 
-        // TODO Create dedicated class for these handlers and put it in the controller package.
         imageToDrawOnGrid.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -89,14 +89,14 @@ public class BoardDraw {
                 if (selectedCard != null && selectedCard instanceof PathCard) {
                     if (game.getBoard().getGridAtLocation(x, y).getCard() instanceof PathCard_Empty) {
                         if (LogicCheckerBridge.checkIfValid((PathCard) selectedCard, x, y)) {
-                            images[x][y].setEffect(ImageViewTinter.blueToGreenTint);
+                            images[x][y].setEffect(ImageViewTinter.getInstance().blueToGreenTint);
                             return;
                         } else {
-                            images[x][y].setEffect(ImageViewTinter.blueToRedTint);
+                            images[x][y].setEffect(ImageViewTinter.getInstance().blueToRedTint);
                             return;
                         }
                     }
-                    images[x][y].setEffect(ImageViewTinter.grayToRedTint);
+                    images[x][y].setEffect(ImageViewTinter.getInstance().grayToRedTint);
                 }
             }
         });
@@ -104,11 +104,26 @@ public class BoardDraw {
         imageToDrawOnGrid.setOnMouseExited(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                images[x][y].setEffect(ImageViewTinter.removeTint);
+                drawNormal(images[x][y], gameBoard[x][y]);
+//                if (gameBoard[x][y].isDisabled()) {
+//                    images[x][y].setEffect(ImageViewTinter.darkTint);
+//                } else {
+//                    images[x][y].setEffect(ImageViewTinter.removeTint);
+//                }
             }
         });
 
         gridGameBoard.add(imageToDrawOnGrid, x, y);
         imageToDrawOnGrid.setOnMouseClicked(new GameBoardListener(x, y, game));
+    }
+
+    private void drawNormal(ImageView imageView, Grid grid) {
+        if (grid.isDisabled()) {
+            imageView.setEffect(ImageViewTinter.getInstance().disabledTint);
+        } else if ((!(grid.getCard() instanceof PathCard_Empty) && grid.getCard() instanceof PathCard && !grid.isConnectedToMain())) {
+            imageView.setEffect(ImageViewTinter.getInstance().unconnectedTint);
+        } else {
+            imageView.setEffect(ImageViewTinter.getInstance().removeTint);
+        }
     }
 }
