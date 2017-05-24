@@ -44,7 +44,7 @@ public class Game {
     }
 
     public void gameInitialize(){
-        board.initBoard();
+        //board.initBoard();
         deck.initialiseDeck();
 
         // Assigns the GameController so that Game can communicate with the viewer

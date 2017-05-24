@@ -62,6 +62,8 @@ class CardFactory {
         return new PathCard_Cross_Dead();
       case "DEAD":
         return new PathCard_DeadEnd();
+      case "EMPTY":
+        return new PathCard_Empty();
       case "ADD_PATH":
         return new ActionCard_Add_Path();
       case "CLEAN_PATH":

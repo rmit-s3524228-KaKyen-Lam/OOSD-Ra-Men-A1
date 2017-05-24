@@ -65,7 +65,8 @@ public class ConfigurationController implements Initializable {
                 try {
                     replaceSceneContent();
                     GameController.game.gameInitialize();
-                    GameController.game.getBoard().configureBoard(width, height);
+                    GameController.game.getBoard().initBoardNew();
+                    GameController.game.gameStart();
                     System.out.println("changed scene");
                 } catch (IOException e1) {
                     e1.printStackTrace();
