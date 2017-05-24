@@ -12,17 +12,14 @@ import model.pathcard.PathCard_Empty;
 public class GameLogic {
 
     private Board board;
-    private GameController gameCon;
 
     /**
      * Creates a gameLogic logic object
      *
-     * @param board   the gameLogic board
-     * @param gameCon the gameLogic controller object that communicates with the view class
+     * @param board the gameLogic board
      */
-    public GameLogic(Board board, GameController gameCon) {
+    public GameLogic(Board board) {
         this.board = board;
-        this.gameCon = gameCon;
     }
 
     /**
@@ -60,7 +57,7 @@ public class GameLogic {
     private void checkGoalCard(Grid gridToCheck) {
         if (gridToCheck != null && gridToCheck.getCard() instanceof GoalCard) {
             ((GoalCard) gridToCheck.getCard()).setHidden(false);
-            gameCon.redrawGridXY(gridToCheck.getX(), gridToCheck.getY());
+            GameController.redrawGridXY(gridToCheck.getX(), gridToCheck.getY());
         }
     }
 
@@ -190,7 +187,7 @@ public class GameLogic {
                     ((PathCard) selectedCard).setValid(false);
                 }
                 checkGoalCardNeighbor(x, y, (PathCard) selectedCard);
-                gameCon.redrawGridXY(x, y);
+                GameController.redrawGridXY(x, y);
                 return true;
             } else {
                 return false;

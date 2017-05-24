@@ -22,7 +22,6 @@ public class Game {
     private final int NUM_OF_PLAYER = 4;
 
     private GameLogic gameLogic;
-    private GameController gameCon;
     private Board board = new Board();
     private Deck deck = new Deck();
     private Player[] players;
@@ -44,22 +43,22 @@ public class Game {
         }
     }
 
+    public void gameInitialize(){
+        board.initBoard();
+        deck.initialiseDeck();
+
+        // Assigns the GameController so that Game can communicate with the viewer
+        LogicCheckerBridge.initialize(gameLogic, this);
+        gameLogic = new GameLogic(board);
+    }
+
     /**
      * Start a new game.
      * Reinitialize the board, deck, each player's hand, and reassign player to different role.
      * Lastly, redraw the game window.
-     *
-     * @param gc gameController object that will talk to the viewer classes
      */
-    public void gameStart(GameController gc) {
-        board.initBoard();
-        deck.initialiseDeck();
+    public void gameStart() {
         noMoreCardNotifiedOnce = false;
-
-        // Assigns the GameController so that Game can communicate with the viewer
-        gameCon = gc;
-        gameLogic = new GameLogic(board, gameCon);
-        LogicCheckerBridge.initialize(gameLogic, this);
 
         // Initialize players
         numOfSaboteurs = 0;
@@ -68,9 +67,10 @@ public class Game {
             //TODO change their role here
             //TODO if someone is saboteurs, do numOfSaboteurs++;
         }
-        gameCon.redrawGrid();
-        gameCon.redrawDeck(players[playerTurnNumber].getHand());
-        gameCon.changePlayerLabel(playerTurnNumber, players[playerTurnNumber].getRole());
+
+        GameController.redrawGrid();
+        GameController.redrawDeck(players[getPlayerTurnNumber()].getHand());
+        GameController.changePlayerLabel(getPlayerTurnNumber(), players[getPlayerTurnNumber()].getRole());
     }
 
     /**
@@ -138,7 +138,7 @@ public class Game {
         if (board.goldIsFound()) {
             shareGold(playerTurnNumber);
             Notification.showAlertBoxNotificationMessage("The gold is found. This round is over");
-            gameStart(gameCon);
+            gameStart();
         }
 
         // discard selected card from player hand
@@ -162,8 +162,8 @@ public class Game {
             playerTurnNumber %= NUM_OF_PLAYER;
         }
 
-        gameCon.redrawDeck(players[playerTurnNumber].getHand());
-        gameCon.changePlayerLabel(playerTurnNumber, players[playerTurnNumber].getRole());
+        GameController.redrawDeck(players[playerTurnNumber].getHand());
+        GameController.changePlayerLabel(playerTurnNumber, players[playerTurnNumber].getRole());
     }
 
     // Getters and Setters

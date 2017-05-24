@@ -45,6 +45,7 @@ public class Board {
         gridMaxHeight = heightMax;
         grid = new Grid[gridMaxWidth][gridMaxHeight];
 
+        isFilled = new boolean[gridMaxWidth][gridMaxHeight];
         for (int i = 0; i < gridMaxHeight; i++) {
             for (int j = 0; j < gridMaxWidth; j++) {
                 isFilled[j][i] = false;
@@ -234,5 +235,9 @@ public class Board {
 
     public Grid[][] getGrid() {
         return grid;
+    }
+
+    public boolean[][] getIsFilled() {
+        return isFilled;
     }
 }
