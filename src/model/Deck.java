@@ -70,155 +70,37 @@ class Deck implements Serializable {
      * Create initial collection of Cards for deck
      */
     void initialiseDeck() {
-        initialiseGold();
+      initialiseGold();
 
     /*
      * Each token is a part of a line from the path card configuration file "cardConfig.txt". Token 0 refers to the
      * card name, token 1 refers to the type of path card, token 2 refers to the number of cards of this
      * specific configuration are needed
      */
-        String[] tokens;
-        String line;
+      String[] tokens;
+      String line;
 
      /*
       * Create input for to read from file, "cardConfig.txt" an external representation as an example of the
       * Protected variations principle
       */
-        try {
-            InputStream fis = new FileInputStream("cardConfig.txt");
-            InputStreamReader isr = new InputStreamReader(fis);
-            BufferedReader br = new BufferedReader(isr);
+      try {
+        InputStream fis = new FileInputStream("cardConfig.txt");
+        InputStreamReader isr = new InputStreamReader(fis);
+        BufferedReader br = new BufferedReader(isr);
 
-            while ((line = br.readLine()) != null) {
-                tokens = line.split(",");
-                switch (tokens[0]) {
-                    case "T_SHAPE":
-                        for (int i = 0; i < Integer.parseInt(tokens[1]); i++) {
-                            cards.add(CardFlyweight.getCard(tokens[0], 0));
-                        }
-                        break;
-                    case "T_SHAPE_DEAD":
-                        for (int i = 0; i < Integer.parseInt(tokens[1]); i++) {
-                            cards.add(CardFlyweight.getCard(tokens[0], 0));
-                        }
-                        break;
-                    case "LINE_SHAPE":
-                        for (int i = 0; i < Integer.parseInt(tokens[1]); i++) {
-                            cards.add(CardFlyweight.getCard(tokens[0], 0));
-                        }
-                        break;
-                    case "LINE_SHAPE_DEAD":
-                        for (int i = 0; i < Integer.parseInt(tokens[1]); i++) {
-                            cards.add(CardFlyweight.getCard(tokens[0], 0));
-                        }
-                        break;
-                    case "CROSS_SHAPE":
-                        for (int i = 0; i < Integer.parseInt(tokens[1]); i++) {
-                            cards.add(CardFlyweight.getCard(tokens[0], 0));
-                        }
-                        break;
-                    case "CROSS_SHAPE_DEAD":
-                        for (int i = 0; i < Integer.parseInt(tokens[1]); i++) {
-                            cards.add(CardFlyweight.getCard(tokens[0], 0));
-                        }
-                        break;
-                    case "L_SHAPE":
-                        for (int i = 0; i < Integer.parseInt(tokens[1]); i++) {
-                            cards.add(CardFlyweight.getCard(tokens[0], 0));
-                        }
-                        break;
-                    case "L_SHAPE_DEAD":
-                        for (int i = 0; i < Integer.parseInt(tokens[1]); i++) {
-                            cards.add(CardFlyweight.getCard(tokens[0], 0));
-                        }
-                        break;
-                    case "DEAD":
-                        for (int i = 0; i < Integer.parseInt(tokens[1]); i++) {
-                            cards.add(CardFlyweight.getCard(tokens[0], 0));
-                        }
-                        break;
-                    case "EMPTY":
-                        for (int i = 0; i < Integer.parseInt(tokens[1]); i++) {
-                            cards.add(CardFlyweight.getCard(tokens[0], 0));
-                        }
-                        break;
-                    case "ADD_PATH":
-                        for (int i = 0; i < Integer.parseInt(tokens[1]); i++) {
-                            cards.add(CardFlyweight.getCard(tokens[0], 0));
-                        }
-                        break;
-                    case "CLEAN_PATH":
-                        for (int i = 0; i < Integer.parseInt(tokens[1]); i++) {
-                            cards.add(CardFlyweight.getCard(tokens[0], 0));
-                        }
-                        break;
-                    case "CORRUPT_PATH":
-                        for (int i = 0; i < Integer.parseInt(tokens[1]); i++) {
-                            cards.add(CardFlyweight.getCard(tokens[0], 0));
-                        }
-                        break;
-                    case "DESTROY_M_PATHS":
-                        for (int i = 0; i < Integer.parseInt(tokens[1]); i++) {
-                            cards.add(CardFlyweight.getCard(tokens[0], 0));
-                        }
-                        break;
-                    case "DESTROY_PATH":
-                        for (int i = 0; i < Integer.parseInt(tokens[1]); i++) {
-                            cards.add(CardFlyweight.getCard(tokens[0], 0));
-                        }
-                        break;
-                    case "REMOVE_PATH":
-                        for (int i = 0; i < Integer.parseInt(tokens[1]); i++) {
-                            cards.add(CardFlyweight.getCard(tokens[0], 0));
-                        }
-                        break;
-                    case "ROTATE_PATH":
-                        for (int i = 0; i < Integer.parseInt(tokens[1]); i++) {
-                            cards.add(CardFlyweight.getCard(tokens[0], 0));
-                        }
-                        break;
-                    case "BREAK_LANTERN":
-                        for (int i = 0; i < Integer.parseInt(tokens[1]); i++) {
-                            cards.add(CardFlyweight.getCard(tokens[0], 0));
-                        }
-                        break;
-                    case "BREAK_PICKAXE":
-                        for (int i = 0; i < Integer.parseInt(tokens[1]); i++) {
-                            cards.add(CardFlyweight.getCard(tokens[0], 0));
-                        }
-                        break;
-                    case "FIX_LANTERN":
-                        for (int i = 0; i < Integer.parseInt(tokens[1]); i++) {
-                            cards.add(CardFlyweight.getCard(tokens[0], 0));
-                        }
-                        break;
-                    case "FIX_PICKAXE":
-                        for (int i = 0; i < Integer.parseInt(tokens[1]); i++) {
-                            cards.add(CardFlyweight.getCard(tokens[0], 0));
-                        }
-                        break;
-                    case "SICK":
-                        for (int i = 0; i < Integer.parseInt(tokens[1]); i++) {
-                            cards.add(CardFlyweight.getCard(tokens[0], 0));
-                        }
-                        break;
-                    case "SWAP_ROLE":
-                        for (int i = 0; i < Integer.parseInt(tokens[1]); i++) {
-                            cards.add(CardFlyweight.getCard(tokens[0], 0));
-                        }
-                        break;
-                    case "SWAP_PATH":
-                        for (int i = 0; i < Integer.parseInt(tokens[1]); i++) {
-                            cards.add(CardFlyweight.getCard(tokens[0], 0));
-                        }
-                        break;
-                }
-            }
-            randomise();
-        } catch (IOException e) {
-            System.out.println("File not found");
+        while ((line = br.readLine()) != null) {
+          tokens = line.split(",");
+          for (int i = 0; i < Integer.parseInt(tokens[1]); i++) {
+            cards.add(CardFlyweight.getCard(tokens[0], 0));
+          }
+          randomise();
         }
+      } catch (IOException e) {
+        System.out.println("File not found");
+      }
     }
+
 
     /**
      * Get a pool of gold cards from the deck
@@ -231,27 +113,26 @@ class Deck implements Serializable {
         ArrayList<Integer> goldPool = new ArrayList<>();
         Random randomNum = new Random();
 
-        int highest = 0;
-        for (int i = 0; i < (numCards); i++) {
-            int temp = randomNum.nextInt(goldDeck.size());
-            int gold = goldDeck.remove(temp);
-            if (highest < gold) {
-                highest = gold;
-            }
-            goldPool.add(gold);
+      int highest = 0;
+      for (int i = 0; i < (numCards); i++) {
+        int temp = randomNum.nextInt(goldDeck.size());
+        int gold = goldDeck.remove(temp);
+        if (highest < gold) {
+          highest = gold;
         }
+        goldPool.add(gold);
+      }
 
-        for (int i = 0; i < numCards; i++) {
-            if (goldPool.get(i) == highest) {
-                goldPool.remove(i);
-                goldPool.add(0, highest);
-                break;
-            }
+      for (int i = 0; i < numCards; i++) {
+        if (goldPool.get(i) == highest) {
+          goldPool.remove(i);
+          goldPool.add(0, highest);
+          break;
         }
+      }
 
-        return goldPool;
+      return goldPool;
     }
-
     public int getDeckSize() {
         return cards.size();
     }
