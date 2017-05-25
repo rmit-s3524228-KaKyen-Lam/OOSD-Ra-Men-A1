@@ -75,10 +75,17 @@ public class CommandHistory implements Serializable {
         int playerLatestTurn = checkLatestTurnOfPlayer(playerNumber);
         if (playerLatestTurn > -1) {
             for (int i = commandHistory.size() - 1; i >= playerLatestTurn; i--) {
-                commandHistory.get(i).undoAction(undoExtraInformation.get(i));
+                Command prevCommand = commandHistory.get(i);
+                prevCommand.undoAction(undoExtraInformation.get(i));
+                Player prevPlayer = players[prevCommand.getPlayerNumber()];
+                deck.addCard(prevPlayer.getRecentlyDrawnCard());
+                prevPlayer.removeCard(prevPlayer.getRecentlyDrawnCard().getId());
+                prevPlayer.addCard(prevCommand.getCardToUse());
+                prevPlayer.setRecentlyDrawnCard(prevCommand.getCardDrawnThisTurn());
                 commandHistory.remove(i);
                 undoExtraInformation.remove(i);
             }
+            deck.randomise();
             board.calculateBoard();
             return true;
         }
@@ -96,7 +103,7 @@ public class CommandHistory implements Serializable {
             undoExtraInformation.add(commandToAdd.getTarget());
             if (commandToAdd.doAction()) {
                 commandHistory.add(commandToAdd);
-                players[playerNumber].removeCard(commandToAdd.getCardToUse());
+                players[playerNumber].removeCard(commandToAdd.getCardToUse().getId());
                 return true;
             } else {
                 undoExtraInformation.remove(undoExtraInformation.size() - 1);

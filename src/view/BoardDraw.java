@@ -80,7 +80,7 @@ public class BoardDraw {
                 StringBuilder status = new StringBuilder();
                 status.append("(");
                 if (player.getSickTurn() > 0) {
-                    status.append("Sick for " + player.getSickTurn() + " turn,");
+                    status.append("Sick for " + player.getSickTurn() + " turn, ");
                 }
                 if (player.getBrokenTool().size() > 0) {
                     for (int i = 0; i < player.getBrokenTool().size(); i++) {

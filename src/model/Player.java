@@ -53,12 +53,16 @@ public class Player extends Drawable implements Serializable {
     }
 
     /**
-     * Remove card from hand
      *
-     * @param card Card to be removed
+     * @param cardID
      */
-    void removeCard(Card card) {
-        hand.remove(card);
+    void removeCard(String cardID) {
+        for (int i = 0; i < hand.size(); i++) {
+            if (hand.get(i).getId().equals(cardID)) {
+                hand.remove(i);
+                return;
+            }
+        }
     }
 
     /**
@@ -141,6 +145,10 @@ public class Player extends Drawable implements Serializable {
 
     public Card getRecentlyDrawnCard() {
         return (Card) DeepCopier.copy(recentlyDrawnCard);
+    }
+
+    public void setRecentlyDrawnCard(Card recentlyDrawnCard) {
+        this.recentlyDrawnCard = recentlyDrawnCard;
     }
 
     public int getSickTurn() {

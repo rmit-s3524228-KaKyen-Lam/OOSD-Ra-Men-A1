@@ -12,6 +12,8 @@ public interface Command {
 
     Card getCardToUse();
 
+    public Card getCardDrawnThisTurn();
+
     Object[] getTarget();
 
 }

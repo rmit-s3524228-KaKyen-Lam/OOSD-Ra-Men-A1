@@ -30,7 +30,7 @@ public class Game {
     private CommandHistory commandHistory;
 
     private int gameTurnNumber = 0;
-    private int playerTurnNumber = 0;
+    static int playerTurnNumber = 0;
     private int nextPlayerTurnNumber = 1;
     private int numOfSaboteurs = 0;
     private boolean noMoreCardNotifiedOnce = false;
