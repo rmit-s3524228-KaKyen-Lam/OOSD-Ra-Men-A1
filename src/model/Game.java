@@ -75,14 +75,12 @@ public class Game {
         numOfSaboteurs = 0;
         for (int i = 0; i < players.length; i++) {
             players[i].setHand(deck.draw(7));
-            //TODO change their role here
-            //TODO if someone is saboteurs, do numOfSaboteurs++;
         }
 
         GameController.redrawUsers();
         GameController.redrawGrid();
         GameController.redrawDeck(players[getPlayerTurnNumber()].getHand());
-        GameController.changePlayerLabel(getPlayerTurnNumber(), players[getPlayerTurnNumber()].getRole());
+        GameController.changePlayerLabel(getPlayerTurnNumber(), players[getPlayerTurnNumber()]);
     }
 
     public void gameRestart() {
@@ -121,18 +119,23 @@ public class Game {
      * @param winnerPlayerNumber the player number that wins the game.
      */
     private void shareGold(int winnerPlayerNumber) {
-        ArrayList<Integer> goldPool = deck.getGoldPool(NUM_OF_PLAYER - numOfSaboteurs);
+        String winningRole = players[winnerPlayerNumber].getRole();
 
-        int j = 1;
-        for (int i = 0; i < players.length; i++) {
-            if (players[i].getRole().equals("miner")) {
-                if (i == winnerPlayerNumber) {
-                    players[i].setScore(players[i].getScore() + goldPool.get(0));
-                } else {
-                    players[i].setScore(players[i].getScore() + goldPool.get(j));
-                    j++;
+        if (winningRole.equals(Player.ROLE_MINER)) {
+            ArrayList<Integer> goldPool = deck.getGoldPool(NUM_OF_PLAYER - numOfSaboteurs);
+            int j = 1;
+            for (int i = 0; i < players.length; i++) {
+                if (players[i].getRole().equals(Player.ROLE_MINER)) {
+                    if (i == winnerPlayerNumber) {
+                        players[i].addScore(goldPool.get(0));
+                    } else {
+                        players[i].addScore(goldPool.get(j));
+                        j++;
+                    }
                 }
             }
+        } else if (winningRole.equals(Player.ROLE_SABOTEUR)) {
+            players[winnerPlayerNumber].addScore(4);
         }
     }
 
@@ -233,7 +236,7 @@ public class Game {
             players[playerTurnNumber].incrementUndoCount();
             GameController.redrawGrid();
             GameController.redrawDeck(players[getPlayerTurnNumber()].getHand());
-            GameController.changePlayerLabel(getPlayerTurnNumber(), players[getPlayerTurnNumber()].getRole());
+            GameController.changePlayerLabel(getPlayerTurnNumber(), players[getPlayerTurnNumber()]);
             return true;
         } else {
             return false;
@@ -279,7 +282,7 @@ public class Game {
         if (players[playerTurnNumber].getSickTurn() == 0 && players[playerTurnNumber].getBrokenTool().size() == 0) {
             GameController.redrawUsers();
             GameController.redrawDeck(players[playerTurnNumber].getHand());
-            GameController.changePlayerLabel(playerTurnNumber, players[playerTurnNumber].getRole());
+            GameController.changePlayerLabel(playerTurnNumber, players[playerTurnNumber]);
         } else {
             if (players[playerTurnNumber].getSickTurn() > 0) {
                 players[playerTurnNumber].setSickTurn(players[playerTurnNumber].getSickTurn() - 1);
@@ -312,7 +315,7 @@ public class Game {
             gameLogic.setBoard(board);
             GameController.redrawGrid();
             GameController.redrawDeck(players[getPlayerTurnNumber()].getHand());
-            GameController.changePlayerLabel(getPlayerTurnNumber(), players[getPlayerTurnNumber()].getRole());
+            GameController.changePlayerLabel(getPlayerTurnNumber(), players[getPlayerTurnNumber()]);
             GameNotification.showAlertBoxNotificationMessage("Game loaded");
         }
     }

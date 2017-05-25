@@ -109,6 +109,10 @@ public class Player extends Drawable implements Serializable {
         return -1;
     }
 
+    public void addScore(int score) {
+        this.score += score;
+    }
+
     public void incrementUndoCount() {
         undoCount++;
     }

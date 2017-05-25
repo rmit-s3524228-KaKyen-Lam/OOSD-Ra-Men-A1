@@ -47,8 +47,8 @@ public class PlayerHandDraw {
      *
      * @param playerNum The player number (before added by one) to be placed on the label
      */
-    public void changePlayerLabel(int playerNum, String role) {
-        playerLabel.setText("Player " + (playerNum + 1) + "'s Hand (" + role + ")");
+    public void changePlayerLabel(int playerNum, String role, String score) {
+        playerLabel.setText("Player " + (playerNum + 1) + "'s Hand (" + role + ", score: " + score + ")");
     }
 
     /**

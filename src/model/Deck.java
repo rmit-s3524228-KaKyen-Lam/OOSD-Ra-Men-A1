@@ -231,11 +231,24 @@ class Deck implements Serializable {
         ArrayList<Integer> goldPool = new ArrayList<>();
         Random randomNum = new Random();
 
+        int highest = 0;
         for (int i = 0; i < (numCards); i++) {
             int temp = randomNum.nextInt(goldDeck.size());
-            goldPool.add(goldDeck.get(temp));
-            goldDeck.remove(temp);
+            int gold = goldDeck.remove(temp);
+            if (highest < gold) {
+                highest = gold;
+            }
+            goldPool.add(gold);
         }
+
+        for (int i = 0; i < numCards; i++) {
+            if (goldPool.get(i) == highest) {
+                goldPool.remove(i);
+                goldPool.add(0, highest);
+                break;
+            }
+        }
+
         return goldPool;
     }
 
