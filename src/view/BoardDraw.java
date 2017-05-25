@@ -75,7 +75,7 @@ public class BoardDraw {
 
                 StringBuilder playerLabel = new StringBuilder();
                 playerLabel.append("Player " + (playerIndex + 1) + " ");
-                playerLabel.append(player.getRole() + "\n");
+                playerLabel.append(player.getRole() + ", score: " + player.getScore() + "\n");
 
                 StringBuilder status = new StringBuilder();
                 status.append("(");

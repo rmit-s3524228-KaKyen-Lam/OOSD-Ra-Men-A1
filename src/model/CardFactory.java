@@ -91,6 +91,8 @@ class CardFactory {
                 return new GoalCard_Coal(false, cardType);
             case "GOLD_HIDDEN":
                 return new GoalCard_Gold(true, cardType);
+            case "GOLD_REVEALED":
+                return new GoalCard_Gold(false, cardType);
             case "BREAK_LANTERN":
                 return new PersonalCard_Break_Lantern(cardType);
             case "BREAK_PICKAXE":

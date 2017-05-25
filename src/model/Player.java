@@ -53,7 +53,6 @@ public class Player extends Drawable implements Serializable {
     }
 
     /**
-     *
      * @param cardID
      */
     void removeCard(String cardID) {
@@ -71,7 +70,11 @@ public class Player extends Drawable implements Serializable {
      * @param hand Initial starting hand
      */
     void setHand(Card[] hand) {
-        this.hand = new ArrayList<>();
+        if (this.hand == null) {
+            this.hand = new ArrayList<>();
+        } else {
+            this.hand.clear();
+        }
         Collections.addAll(this.hand, hand);
     }
 

@@ -80,6 +80,12 @@ public class ConfigurationController implements Initializable {
                         GameController.game.gameInitialize();
                         GameController.game.getBoard().initBoardNew();
                         GameController.game.gameStart();
+
+                        // get a handle to the stage
+                        Stage stage = (Stage) goldButton.getScene().getWindow();
+                        // do what you have to do
+                        stage.close();
+
                     } catch (IOException e1) {
                         e1.printStackTrace();
                         GameNotification.showAlertBoxErrorMessage("Error loading the game with current configuration");

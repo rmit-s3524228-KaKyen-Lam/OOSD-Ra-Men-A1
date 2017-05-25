@@ -3,6 +3,8 @@ package model;
 import controller.GameController;
 import controller.GameLogic;
 import controller.LogicCheckerBridge;
+import model.goalcard.GoalCard_Coal;
+import model.goalcard.GoalCard_Gold;
 import model.pathcard.PathCard_Empty;
 import view.GameNotification;
 
@@ -43,14 +45,13 @@ public class Game {
     public Game() {
         players = new Player[NUM_OF_PLAYER];
         for (int i = 0; i < players.length; i++) {
-            players[i] = new Player(0, "miner", new ArrayList<>(), null, "" + i);
+            players[i] = new Player(0, "miner", new ArrayList<String>(), new ArrayList<Card>(), "" + i);
         }
         commandHistory = new CommandHistory(board, deck, players);
     }
 
     public void gameInitialize() {
         //board.initBoard();
-        deck.initialiseDeck();
 
         // Assigns the GameController so that Game can communicate with the viewer
         gameLogic = new GameLogic(board);
@@ -64,6 +65,11 @@ public class Game {
      */
     public void gameStart() {
         noMoreCardNotifiedOnce = false;
+        deck.initialiseDeck();
+
+        gameTurnNumber = 0;
+        playerTurnNumber = 0;
+        nextPlayerTurnNumber = 1;
 
         // Initialize players
         numOfSaboteurs = 0;
@@ -77,6 +83,33 @@ public class Game {
         GameController.redrawGrid();
         GameController.redrawDeck(players[getPlayerTurnNumber()].getHand());
         GameController.changePlayerLabel(getPlayerTurnNumber(), players[getPlayerTurnNumber()].getRole());
+    }
+
+    public void gameRestart() {
+        ArrayList<String> golds = new ArrayList<>();
+        ArrayList<String> coals = new ArrayList<>();
+
+        for (int x = 0; x < Board.gridMaxWidth; x++) {
+            for (int y = 0; y < Board.gridMaxHeight; y++) {
+                if (board.getGridAtLocation(x, y).getCard() instanceof GoalCard_Gold) {
+                    golds.add(x + "," + y);
+                } else if (board.getGridAtLocation(x, y).getCard() instanceof GoalCard_Coal) {
+                    coals.add(x + "," + y);
+                }
+            }
+        }
+
+        board.configureBoard(Board.gridMaxWidth, Board.gridMaxHeight);
+        for (String goldLocation : golds) {
+            String[] location = goldLocation.split(",");
+            board.configureGoalPos("gold", Integer.parseInt(location[0]), Integer.parseInt(location[1]));
+        }
+        for (String coalLocation : coals) {
+            String[] location = coalLocation.split(",");
+            board.configureGoalPos("coal", Integer.parseInt(location[0]), Integer.parseInt(location[1]));
+        }
+        board.initBoardNew();
+        gameStart();
     }
 
     /**
@@ -220,7 +253,8 @@ public class Game {
         if (board.goldIsFound()) {
             shareGold(playerTurnNumber);
             GameNotification.showAlertBoxNotificationMessage("The gold is found. This round is over");
-            gameStart();
+            gameRestart();
+            return;
         }
         selectedCard = null;
 
