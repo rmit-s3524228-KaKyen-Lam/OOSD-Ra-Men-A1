@@ -10,4 +10,11 @@ public abstract class ActionCard extends Card {
     public ActionCard(String imageResource, String id) {
         super(imageResource, id);
     }
+
+    @Override
+    public abstract boolean cardAction(Object[] target);
+
+
+    @Override
+    public abstract void undoCardAction(Object[] target, Object[] undoExtraInformation);
 }
