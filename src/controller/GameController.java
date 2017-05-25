@@ -9,7 +9,6 @@ import javafx.scene.layout.GridPane;
 import model.*;
 import view.*;
 
-import javax.management.Notification;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -40,6 +39,18 @@ public class GameController implements Initializable {
     private Button buttonSaveGame;
     @FXML
     private Button buttonUndo;
+    @FXML
+    private GridPane gridTarget1;
+    @FXML
+    private GridPane gridTarget2;
+    @FXML
+    private GridPane gridTarget3;
+    @FXML
+    private Label labelTarget1;
+    @FXML
+    private Label labelTarget2;
+    @FXML
+    private Label labelTarget3;
 
     private static BoardDraw boardDraw;
     private static PlayerHandDraw playerHandDraw;
@@ -48,7 +59,9 @@ public class GameController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         ImageFlyweight imageFlyweight = new ImageFlyweightImpl();
-        boardDraw = new BoardDraw(gridGameBoard, boardLabel, game, imageFlyweight);
+        GridPane[] gridTargets = {gridTarget1, gridTarget2, gridTarget3};
+        Label[] labelTargets = {labelTarget1, labelTarget2, labelTarget3};
+        boardDraw = new BoardDraw(gridGameBoard, boardLabel, gridTargets, labelTargets, game, imageFlyweight);
         playerHandDraw = new PlayerHandDraw(gridPlayerDeck, playerLabel, trashcanImageView, game, imageFlyweight);
 
         buttonChangeTheme.setOnMouseClicked(event -> {
@@ -86,10 +99,17 @@ public class GameController implements Initializable {
     }
 
     /**
+     *
+     */
+    public static void redrawUsers() {
+        boardDraw.redrawUsers();
+    }
+
+    /**
      * Redraws the whole gameLogic board
      */
     public static void redrawGrid() {
-        boardDraw.redrawBoard();
+        boardDraw.redrawGridXY();
     }
 
     /**
@@ -99,7 +119,7 @@ public class GameController implements Initializable {
      * @param y y coordinate of the board to be redrawn
      */
     public static void redrawGridXY(int x, int y) {
-        boardDraw.redrawGrid(x, y);
+        boardDraw.redrawGridXY(x, y);
     }
 
     /**

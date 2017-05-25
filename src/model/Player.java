@@ -11,8 +11,9 @@ import java.util.Collections;
  *
  * @author Ka Kyen Lam s3524228
  */
-public class Player implements Serializable {
+public class Player extends Drawable implements Serializable {
 
+    private String id;
     private int score;
     private String role;
     private ArrayList<String> brokenTool;
@@ -32,7 +33,9 @@ public class Player implements Serializable {
      * @param brokenTool ArrayList of broken tools (this should be an empty ArrayList by default)
      * @param hand       The cards of the player object is holding
      */
-    public Player(int score, String role, ArrayList<String> brokenTool, ArrayList<Card> hand) {
+    public Player(int score, String role, ArrayList<String> brokenTool, ArrayList<Card> hand, String id) {
+        super("resources/Player.png");
+        this.id = id;
         this.score = score;
         this.role = role;
         this.brokenTool = brokenTool;
@@ -146,5 +149,9 @@ public class Player implements Serializable {
 
     public void setSickTurn(int sickTurn) {
         this.sickTurn = sickTurn;
+    }
+
+    public String getId() {
+        return id;
     }
 }

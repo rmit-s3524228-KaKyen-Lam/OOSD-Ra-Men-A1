@@ -21,7 +21,7 @@ import java.util.ArrayList;
  */
 public class Game {
 
-    private final int NUM_OF_PLAYER = 4;
+    public static final int NUM_OF_PLAYER = 4;
 
     private GameLogic gameLogic;
     private Board board = new Board();
@@ -43,7 +43,7 @@ public class Game {
     public Game() {
         players = new Player[NUM_OF_PLAYER];
         for (int i = 0; i < players.length; i++) {
-            players[i] = new Player(0, "miner", new ArrayList<>(), null);
+            players[i] = new Player(0, "miner", new ArrayList<>(), null, "" + i);
         }
         commandHistory = new CommandHistory(board, deck, players);
     }
@@ -73,6 +73,7 @@ public class Game {
             //TODO if someone is saboteurs, do numOfSaboteurs++;
         }
 
+        GameController.redrawUsers();
         GameController.redrawGrid();
         GameController.redrawDeck(players[getPlayerTurnNumber()].getHand());
         GameController.changePlayerLabel(getPlayerTurnNumber(), players[getPlayerTurnNumber()].getRole());
@@ -112,6 +113,20 @@ public class Game {
             nextTurn();
         } else {
             GameNotification.showAlertBoxErrorMessage("Cannot remove card");
+        }
+    }
+
+    /**
+     *
+     */
+    public void playPersonalCard(int playerNumberTarget) {
+        Object[] target = {players[playerNumberTarget]};
+        Command command = new Command_PlayCard(playerTurnNumber, selectedCard,
+                players[playerTurnNumber].getRecentlyDrawnCard(), target);
+        if (commandHistory.executeAndAddHistory(command, playerTurnNumber)) {
+            nextTurn();
+        } else {
+            GameNotification.showAlertBoxErrorMessage("Cannot target this player right now");
         }
     }
 
@@ -227,8 +242,17 @@ public class Game {
             playerTurnNumber %= NUM_OF_PLAYER;
         }
 
-        GameController.redrawDeck(players[playerTurnNumber].getHand());
-        GameController.changePlayerLabel(playerTurnNumber, players[playerTurnNumber].getRole());
+        if (players[playerTurnNumber].getSickTurn() == 0 && players[playerTurnNumber].getBrokenTool().size() == 0) {
+            GameController.redrawUsers();
+            GameController.redrawDeck(players[playerTurnNumber].getHand());
+            GameController.changePlayerLabel(playerTurnNumber, players[playerTurnNumber].getRole());
+        } else {
+            if (players[playerTurnNumber].getSickTurn() > 0) {
+                players[playerTurnNumber].setSickTurn(players[playerTurnNumber].getSickTurn() - 1);
+            }
+            nextTurn();
+        }
+
     }
 
     public void saveGame(String filename) {

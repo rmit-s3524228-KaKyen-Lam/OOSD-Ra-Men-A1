@@ -44,7 +44,7 @@
                                     </rowConstraints>
                                 </GridPane>
                                 <Label fx:id="boardLabel" layoutX="14.0" layoutY="14.0" text="Game Board" />
-                                <GridPane gridLinesVisible="true" layoutX="416.0" layoutY="6.0" prefHeight="50.0" prefWidth="50.0">
+                                <GridPane fx:id="gridTarget2" gridLinesVisible="true" layoutX="402.0" layoutY="632.0" prefHeight="50.0" prefWidth="50.0">
                                     <columnConstraints>
                                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                     </columnConstraints>
@@ -55,7 +55,7 @@
                                         <Glow />
                                     </effect>
                                 </GridPane>
-                                <GridPane gridLinesVisible="true" layoutX="14.0" layoutY="319.0" prefHeight="50.0" prefWidth="50.0">
+                                <GridPane fx:id="gridTarget1" gridLinesVisible="true" layoutX="179.0" layoutY="632.0" prefHeight="50.0" prefWidth="50.0">
                                     <columnConstraints>
                                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                     </columnConstraints>
@@ -66,7 +66,7 @@
                                         <Glow />
                                     </effect>
                                 </GridPane>
-                                <GridPane gridLinesVisible="true" layoutX="820.0" layoutY="318.0" prefHeight="50.0" prefWidth="50.0">
+                                <GridPane fx:id="gridTarget3" gridLinesVisible="true" layoutX="664.0" layoutY="632.0" prefHeight="50.0" prefWidth="50.0">
                                     <columnConstraints>
                                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                     </columnConstraints>
@@ -79,6 +79,9 @@
                                 </GridPane>
                                 <Button fx:id="buttonChangeTheme" layoutX="742.0" layoutY="16.0" mnemonicParsing="false" text="Change Theme" />
                                 <Button fx:id="buttonLoadGame" layoutX="625.0" layoutY="16.0" mnemonicParsing="false" text="Load Game" />
+                        <Label fx:id="labelTarget1" layoutX="233.0" layoutY="649.0" text="Label" />
+                        <Label fx:id="labelTarget2" layoutX="456.0" layoutY="649.0" text="Label" />
+                        <Label fx:id="labelTarget3" layoutX="718.0" layoutY="649.0" text="Label" />
                             </children>
                         </AnchorPane>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">

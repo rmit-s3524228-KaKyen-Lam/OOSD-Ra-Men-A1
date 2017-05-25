@@ -2,6 +2,7 @@ package view;
 
 import controller.GameBoardListener;
 import controller.LogicCheckerBridge;
+import controller.PlayerTargetListener;
 import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -20,7 +21,9 @@ public class BoardDraw {
     private Label boardLabel;
     private Game game;
     private ImageView[][] images;
+    private GridPane[] gridTargets;
     private ImageFlyweight imageFlyweight;
+    private Label[] labelTargets;
 
     /**
      * Creates a draw class for board section
@@ -29,11 +32,14 @@ public class BoardDraw {
      * @param boardLabel    JavaFX Label object of board label
      * @param game          The game object
      */
-    public BoardDraw(GridPane gridGameBoard, Label boardLabel, Game game, ImageFlyweight imageFlyweight) {
+    public BoardDraw(GridPane gridGameBoard, Label boardLabel, GridPane[] gridTargets, Label[] labelTargets,
+                     Game game, ImageFlyweight imageFlyweight) {
         this.gridGameBoard = gridGameBoard;
         this.boardLabel = boardLabel;
         this.game = game;
         this.imageFlyweight = imageFlyweight;
+        this.gridTargets = gridTargets;
+        this.labelTargets = labelTargets;
     }
 
     /**
@@ -48,12 +54,50 @@ public class BoardDraw {
     /**
      * Redraws the whole game board
      */
-    public void redrawBoard() {
+    public void redrawGridXY() {
         images = new ImageView[model.Board.gridMaxWidth][Board.gridMaxHeight];
         for (int i = 0; i < model.Board.gridMaxWidth; i++) {
             for (int j = 0; j < model.Board.gridMaxHeight; j++) {
-                redrawGrid(i, j);
+                redrawGridXY(i, j);
             }
+        }
+    }
+
+    public void redrawUsers() {
+        int currentPlayerNumber = game.getPlayerTurnNumber();
+        int drawCount = 0, playerIndex = 0;
+        while (drawCount < 3) {
+            if (playerIndex != currentPlayerNumber) {
+                Player player = game.getPlayers()[playerIndex];
+                ImageView imageView = new ImageView(player.getImageResource());
+                imageView.setOnMouseClicked(new PlayerTargetListener(playerIndex, game));
+                gridTargets[drawCount].add(imageView, 0, 0);
+
+                StringBuilder playerLabel = new StringBuilder();
+                playerLabel.append("Player " + (playerIndex + 1) + " ");
+                playerLabel.append(player.getRole() + "\n");
+
+                StringBuilder status = new StringBuilder();
+                status.append("(");
+                if (player.getSickTurn() > 0) {
+                    status.append("Sick for " + player.getSickTurn() + " turn,");
+                }
+                if (player.getBrokenTool().size() > 0) {
+                    for (int i = 0; i < player.getBrokenTool().size(); i++) {
+                        if (i > 0) {
+                            status.append(",");
+                        }
+                        status.append(player.getBrokenTool().get(i) + " broken");
+                    }
+                } else {
+                    status.append("No broken tool");
+                }
+                status.append(")");
+
+                labelTargets[drawCount].setText(playerLabel.toString() + status.toString());
+                drawCount++;
+            }
+            playerIndex++;
         }
     }
 
@@ -65,7 +109,7 @@ public class BoardDraw {
      * @param x x coordinate of the board to be redrawn
      * @param y y coordinate of the board to be redrawn
      */
-    public void redrawGrid(int x, int y) {
+    public void redrawGridXY(int x, int y) {
 
         ImageView imageToDrawOnGrid;
         Grid[][] gameBoard = game.getBoard().getGrid();
@@ -105,11 +149,6 @@ public class BoardDraw {
             @Override
             public void handle(MouseEvent event) {
                 drawNormal(images[x][y], gameBoard[x][y]);
-//                if (gameBoard[x][y].isDisabled()) {
-//                    images[x][y].setEffect(ImageViewTinter.darkTint);
-//                } else {
-//                    images[x][y].setEffect(ImageViewTinter.removeTint);
-//                }
             }
         });
 
