@@ -1,8 +1,6 @@
 package model;
 
-import model.goalcard.GoalCard_Coal;
-import model.goalcard.GoalCard_Goal;
-import model.goalcard.GoalCard_Gold;
+import model.personalcard.*;
 
 /**
  * Created by orlandok on 25/5/17.
@@ -21,21 +19,25 @@ public class PersonalCardFactory extends AbstractCardFactory {
 
   @Override
   GoalCard getGoalCard(String cardType) {
-    switch(cardType) {
-      case "GOAL":
-        return new GoalCard_Goal(true, cardType);
-      case "COAL_HIDDEN":
-        return new GoalCard_Coal(true, cardType);
-      case "COAL_REVEALED":
-        return new GoalCard_Coal(false, cardType);
-      case "GOLD_HIDDEN":
-        return new GoalCard_Gold(true, cardType);
-    }
-        return null;
+    return null;
   }
 
   @Override
   PersonalCard getPersonalCard(String cardType) {
+    switch (cardType) {
+      case "PERSONAL_BREAK_LANTERN":
+        return new PersonalCard_Break_Lantern(cardType);
+      case "PERSONAL_BREAK_PICKAXE":
+        return new PersonalCard_Break_Pickaxe(cardType);
+      case "PERSONAL_FIX_LANTERN":
+        return new PersonalCard_Fix_Lantern(cardType);
+      case "PERSONAL_FIX_PICKAXE":
+        return new PersonalCard_Fix_Pickaxe(cardType);
+      case "PERSONAL_SICK":
+        return new PersonalCard_Sick(cardType);
+      case "PERSONAL_SWAP_ROLE":
+        return new PersonalCard_Swap_Role(cardType);
+    }
     return null;
   }
 }

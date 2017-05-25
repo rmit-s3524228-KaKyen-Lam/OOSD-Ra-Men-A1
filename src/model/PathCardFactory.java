@@ -6,7 +6,7 @@ import model.pathcard.*;
  * Created by orlandok on 25/5/17.
  * *
  */
-public class PatchCardFactory extends AbstractCardFactory {
+public class PathCardFactory extends AbstractCardFactory {
 
   @Override
   ActionCard getActionCard(String cardType) {
@@ -17,53 +17,53 @@ public class PatchCardFactory extends AbstractCardFactory {
   PathCard getPathCard(String cardType, int rotation) {
 
     switch (cardType){
-      case "T_SHAPE":
+      case "PATH_T_SHAPE":
         PathCard_T T_Card = new PathCard_T(cardType);
         if (rotation != 0)
           return rotateCard(T_Card, rotation);
         else
           return T_Card;
-      case "T_SHAPE_DEAD":
+      case "PATH_T_SHAPE_DEAD":
         PathCard_T_Dead T_Dead_Card = new PathCard_T_Dead(cardType);
         if (rotation != 0)
           return rotateCard(T_Dead_Card, rotation);
         else
           return T_Dead_Card;
-      case "LINE_SHAPE":
+      case "PATH_LINE_SHAPE":
         PathCard_Line Line_Card = new PathCard_Line(cardType);
         if (rotation != 0)
           return rotateCard(Line_Card, rotation);
         else
           return Line_Card;
-      case "LINE_SHAPE_DEAD":
+      case "PATH_LINE_SHAPE_DEAD":
         PathCard_Line_Dead Line_Dead_Card = new PathCard_Line_Dead(cardType);
         if (rotation != 0)
           return rotateCard(Line_Dead_Card, rotation);
         else
           return Line_Dead_Card;
-      case "L_SHAPE":
+      case "PATH_L_SHAPE":
         PathCard_L L_Card = new PathCard_L(cardType);
         if (rotation != 0)
           return rotateCard(L_Card, rotation);
         else
           return L_Card;
-      case "L_SHAPE_DEAD":
+      case "PATH_L_SHAPE_DEAD":
         PathCard_L_Dead L_Dead_Card = new PathCard_L_Dead(cardType);
         if (rotation != 0)
           return rotateCard(L_Dead_Card, rotation);
         else
           return L_Dead_Card;
-      case "CROSS_SHAPE":
+      case "PATH_CROSS_SHAPE":
         return new PathCard_Cross(cardType);
-      case "CROSS_SHAPE_DEAD":
+      case "PATH_CROSS_SHAPE_DEAD":
         return new PathCard_Cross_Dead(cardType);
-      case "DEAD":
+      case "PATH_DEAD":
         PathCard_DeadEnd DeadEnd_Card = new PathCard_DeadEnd(cardType);
         if (rotation != 0)
           return rotateCard(DeadEnd_Card, rotation);
         else
           return DeadEnd_Card;
-      case "EMPTY":
+      case "PATH_EMPTY":
         return new PathCard_Empty(cardType);
     }
     return null;

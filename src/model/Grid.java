@@ -1,7 +1,5 @@
 package model;
 
-import model.pathcard.PathCard_Empty;
-
 import java.io.Serializable;
 
 /**
@@ -37,7 +35,7 @@ public class Grid implements Serializable {
      * Remove card from this grid
      */
     public void removeCardonGrid() {
-        this.card = CardFlyweight.getCard("EMPTY", 0);
+        this.card = CardFlyweight.getCard("PATH_EMPTY", 0);
     }
 
     public Card getCard() {

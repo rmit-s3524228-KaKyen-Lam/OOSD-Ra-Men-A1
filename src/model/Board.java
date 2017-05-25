@@ -1,12 +1,12 @@
 package model;
 
-import model.goalcard.GoalCard_Coal;
-import model.goalcard.GoalCard_Gold;
-import model.pathcard.PathCard_Cross;
 import model.pathcard.PathCard_Empty;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.Queue;
 
 /*http://stackoverflow.com/questions/9369368/2d-arraylist-in-java
  https://www.thoughtco.com/generating-unique-random-numbers-2034208
@@ -94,10 +94,10 @@ public class Board implements Serializable {
         if (isValid) {
             isFilled[width][height] = true;
             if (name.equals("coal")) {
-                grid[width][height] = new Grid(width, height, CardFlyweight.getCard("COAL_HIDDEN", 0));
+                grid[width][height] = new Grid(width, height, CardFlyweight.getCard("GOAL_COAL_HIDDEN", 0));
                 return ("Coal created at (" + width + ", " + height + ")");
             } else if (name.equals("gold")) {
-                grid[width][height] = new Grid(width, height, CardFlyweight.getCard("GOLD_HIDDEN", 0));
+                grid[width][height] = new Grid(width, height, CardFlyweight.getCard("GOAL_GOLD_HIDDEN", 0));
                 goldLocation = grid[width][height];
                 return ("Gold created at (" + width + ", " + height + ")");
             }
@@ -197,12 +197,12 @@ public class Board implements Serializable {
             for (int j = 0; j < gridMaxWidth; j++) {
                 if (!isFilled[j][i]) {
                     if (i == startPathY && j == startPathX) {
-                        grid[j][i] = new Grid(j, i, CardFlyweight.getCard("CROSS_SHAPE", 0));
+                        grid[j][i] = new Grid(j, i, CardFlyweight.getCard("PATH_CROSS_SHAPE", 0));
 //                        ((PathCard) (grid[j][i].getCard())).setValid(true);
                         grid[j][i].setConnectedToMain(true);
                         isFilled[j][i] = true;
                     } else {
-                        grid[j][i] = new Grid(j, i, CardFlyweight.getCard("EMPTY", 0));
+                        grid[j][i] = new Grid(j, i, CardFlyweight.getCard("PATH_EMPTY", 0));
                         isFilled[j][i] = true;
                     }
                 }
@@ -216,16 +216,16 @@ public class Board implements Serializable {
         for (int i = 0; i < gridMaxHeight; i++) {
             for (int j = 0; j < gridMaxWidth; j++) {
                 if ((i == startGoalYList.get(0) || i == startGoalYList.get(1)) && j == startGoalX) {
-                    grid[j][i] = new Grid(j, i, CardFlyweight.getCard("COAL_HIDDEN", 0));
+                    grid[j][i] = new Grid(j, i, CardFlyweight.getCard("GOAL_COAL_HIDDEN", 0));
                 } else if (i == startGoalYList.get(2) && j == startGoalX) {
-                    grid[j][i] = new Grid(j, i, CardFlyweight.getCard("GOLD_HIDDEN", 0));
+                    grid[j][i] = new Grid(j, i, CardFlyweight.getCard("GOAL_GOLD_HIDDEN", 0));
                     goldLocation = grid[j][i];
                 } else if (i == startPathY && j == startPathX) {
-                    grid[j][i] = new Grid(j, i, CardFlyweight.getCard("CROSS_SHAPE", 0));
+                    grid[j][i] = new Grid(j, i, CardFlyweight.getCard("GOAL_CROSS_SHAPE", 0));
                     grid[j][i].setConnectedToMain(true);
 //                    ((PathCard) (grid[j][i].getCard())).setValid(true);
                 } else {
-                    grid[j][i] = new Grid(j, i, CardFlyweight.getCard("EMPTY", 0));
+                    grid[j][i] = new Grid(j, i, CardFlyweight.getCard("PATH_EMPTY", 0));
                 }
             }
         }

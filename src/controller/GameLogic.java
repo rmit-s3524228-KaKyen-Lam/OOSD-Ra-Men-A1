@@ -60,9 +60,9 @@ public class GameLogic {
     private void checkGoalCard(Grid gridToCheck) {
         if (gridToCheck != null && gridToCheck.getCard() instanceof GoalCard) {
             if (gridToCheck.getCard() instanceof GoalCard_Gold) {
-                gridToCheck.setCard(CardFlyweight.getCard("GOLD_REVEALED", 0));
+                gridToCheck.setCard(CardFlyweight.getCard("GOAL_GOLD_REVEALED", 0));
             } else {
-                gridToCheck.setCard(CardFlyweight.getCard("COAL_REVEALED", 0));
+                gridToCheck.setCard(CardFlyweight.getCard("GOAL_COAL_REVEALED", 0));
             }
             GameController.redrawGridXY(gridToCheck.getX(), gridToCheck.getY());
         }
