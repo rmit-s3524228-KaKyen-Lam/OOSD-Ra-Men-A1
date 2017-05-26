@@ -5,6 +5,7 @@ import controller.PlayerHandListener;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import model.Player;
 import model.card.Card;
 import model.Game;
 import model.card.pathcard.PathCard;
@@ -57,10 +58,17 @@ public class PlayerHandDraw {
      * @param currentPlayerHand the hand of current player, in ArrayList of Card format
      */
     public void redrawPlayerHand(ArrayList<Card> currentPlayerHand) {
-        images = new ImageView[currentPlayerHand.size()];
-        for (int handIndex = 0; handIndex < currentPlayerHand.size(); handIndex++) {
-            if (currentPlayerHand.get(handIndex) != null) {
+        // Remove previous player's hand ImageViews from gridPlayerDeck
+        if (images != null) {
+            for (int handIndex = 0; handIndex < Player.HAND_LIMIT; handIndex++) {
+                gridPlayerDeck.getChildren().remove(images[handIndex]);
+            }
+        }
 
+        // Draw current player's hand
+        images = new ImageView[Player.HAND_LIMIT];
+        for (int handIndex = 0; handIndex < Player.HAND_LIMIT; handIndex++) {
+            try {
                 ImageView iv = new ImageView(imageFlyweight.requestImage(currentPlayerHand.get(handIndex)));
                 if (currentPlayerHand.get(handIndex) instanceof PathCard) {
                     int rotateVal = 0;
@@ -71,17 +79,26 @@ public class PlayerHandDraw {
                 }
                 images[handIndex] = iv;
 
-                gridPlayerDeck.add(iv, handIndex, 0);
+                /*
+                Set click listener that allows Player's selected card to be highlighted
+                and remove previously selected card's highlight.
+                 */
                 iv.setOnMouseClicked(new PlayerHandListener(handIndex, game, (cardNum) -> {
                     if (selectedCardIndex != -1) {
-                        ImageView imageViewToReset = images[selectedCardIndex];
-                        imageViewToReset.setEffect(ImageViewTinter.getInstance().removeTint);
+                        if (selectedCardIndex < images.length) {
+                            ImageView imageViewToReset = images[selectedCardIndex];
+                            imageViewToReset.setEffect(ImageViewTinter.getInstance().noTint);
+                        }
                     }
                     iv.setEffect(ImageViewTinter.getInstance().grayToYellowTint);
                     selectedCardIndex = cardNum;
                 }));
-            } else {
-                gridPlayerDeck.add(null, handIndex, 0);
+                gridPlayerDeck.add(iv, handIndex, 0);
+
+            } catch (IndexOutOfBoundsException e) {
+                ImageView iv = new ImageView("resources/Blank_Card.png");
+                images[handIndex] = iv;
+                gridPlayerDeck.add(iv, handIndex, 0);
             }
         }
         if (selectedCardIndex > -1 && game.getSelectedCard() != null) {

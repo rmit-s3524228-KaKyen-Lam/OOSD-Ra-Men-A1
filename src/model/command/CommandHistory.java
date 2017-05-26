@@ -9,7 +9,7 @@ import java.io.*;
 import java.util.ArrayList;
 
 /**
- * This is the the class that executes the Command object as well as the tracking each command.
+ * This is the the class that executes the Command object as well as the tracker for each command executed.
  * Another purpose of this class is to undo commands, if needed.
  *
  * @author David Limantoro (s3503728) on 5/18/2017.
@@ -32,14 +32,12 @@ public class CommandHistory implements Serializable {
     /**
      * Method to clear the command history, used at the start of the game
      */
-    public void clearHistory(Object caller) {
-        if (caller instanceof Game) {
-            commandHistory.clear();
-        }
+    public void clearHistory() {
+        commandHistory.clear();
     }
 
     /**
-     * Method to save the command history into a textfile
+     * Method to save the command history into a text file
      *
      * @param filename The filename where this object will be saved to
      */
@@ -54,7 +52,7 @@ public class CommandHistory implements Serializable {
     }
 
     /**
-     * Method to load the command history from a textfile
+     * Method to load the command history from a text file
      *
      * @param filename The filename where this object will be loaded from
      */
@@ -68,6 +66,29 @@ public class CommandHistory implements Serializable {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Execute a command and stores it to history for keeping track of the game.
+     *
+     * @param commandToAdd The Command object to execute
+     * @return True if the command is executed correctly, otherwise false;
+     */
+    public boolean executeAndAddHistory(Command commandToAdd, int playerNumber) {
+        try {
+            undoExtraInformation.add(commandToAdd.getTarget());
+            if (commandToAdd.doAction()) {
+                commandHistory.add(commandToAdd);
+                players[playerNumber].removeCard(commandToAdd.getCardToUse().getId());
+                return true;
+            } else {
+                undoExtraInformation.remove(undoExtraInformation.size() - 1);
+                return false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     /**
@@ -93,29 +114,6 @@ public class CommandHistory implements Serializable {
             deck.randomise();
             board.calculateBoard();
             return true;
-        }
-        return false;
-    }
-
-    /**
-     * Execute a command and stores it to history for keeping track of the game.
-     *
-     * @param commandToAdd The Command object to execute
-     * @return True if the command is executed correctly, otherwise false;
-     */
-    public boolean executeAndAddHistory(Command commandToAdd, int playerNumber) {
-        try {
-            undoExtraInformation.add(commandToAdd.getTarget());
-            if (commandToAdd.doAction()) {
-                commandHistory.add(commandToAdd);
-                players[playerNumber].removeCard(commandToAdd.getCardToUse().getId());
-                return true;
-            } else {
-                undoExtraInformation.remove(undoExtraInformation.size() - 1);
-                return false;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
         return false;
     }

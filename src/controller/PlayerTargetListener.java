@@ -8,6 +8,8 @@ import model.card.personalcard.PersonalCard;
 import view.alertWindow.GameNotification;
 
 /**
+ * This is a class specifically dedicated for listening to click events on other player's GridPane on Board section
+ *
  * @author David Limantoro s3503728 on 2017/05/25.
  */
 public class PlayerTargetListener implements EventHandler<MouseEvent> {

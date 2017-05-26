@@ -15,13 +15,8 @@ import java.util.Random;
  * @author Fabio Monsalve s3585826
  */
 public class Deck implements Serializable {
-    private ArrayList<Card> cards;
+    private ArrayList<Card> cards = new ArrayList<>();
     private ArrayList<Integer> goldDeck = new ArrayList<>();
-
-    Deck() {
-        cards = new ArrayList<>();
-        initialiseDeck();
-    }
 
     /**
      * @param numCards used to keep track of next card to be drawn from the deck, the number increases deopending on the
@@ -46,6 +41,7 @@ public class Deck implements Serializable {
         Collections.shuffle(cards);
     }
 
+
     public void addCard(Card card) {
         cards.add(card);
     }
@@ -54,6 +50,8 @@ public class Deck implements Serializable {
      * Create gold deck with gold cards of different values
      */
     private void initialiseGold() {
+
+        goldDeck.clear();
 
         // Create gold deck
         int i;
@@ -73,6 +71,7 @@ public class Deck implements Serializable {
      */
     void initialiseDeck() {
         initialiseGold();
+        cards.clear();
 
     /*
      * Each token is a part of a line from the path card configuration file "cardConfig.txt". Token 0 refers to the
@@ -107,7 +106,7 @@ public class Deck implements Serializable {
     /**
      * Get a pool of gold cards from the deck
      *
-     * @return an arraylist containing gold cards
+     * @return an arraylist containing gold cards, with first element containing the highest value
      */
     ArrayList<Integer> getGoldPool(int numCards) {
 

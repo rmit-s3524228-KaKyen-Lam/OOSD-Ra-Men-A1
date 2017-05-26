@@ -23,8 +23,8 @@ import java.util.Queue;
  */
 public class Board implements Serializable {
 
-    public static final int MAX_ALLOWED_WIDTH = 10;
-    public static final int MAX_ALLOWED_HEIGHT = 10;
+    public static final int MAX_ALLOWED_WIDTH = 9;
+    public static final int MAX_ALLOWED_HEIGHT = 7;
     public static final int MIN_ALLOWED_WIDTH = 4;
     public static final int MIN_ALLOWED_HEIGHT = 4;
     public static int gridMaxWidth = 9;

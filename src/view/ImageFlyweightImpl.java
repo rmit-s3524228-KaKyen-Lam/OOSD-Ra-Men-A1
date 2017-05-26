@@ -6,7 +6,11 @@ import model.card.Card;
 import java.util.HashMap;
 
 /**
- * Flyweight pattern implementation of ImageView used in-game
+ * Implementation of ImageFlyweight, used by BoardDraw and PlayerHandDraw to minimize waste of memory
+ * creating ImageView objects.
+ *
+ * Additionally, this is a singleton class to further reduce memory waste.
+ * It contains a HashMap that uses card object as the key of the map since the cards are also flyweighted.
  *
  * @author David Limantoro s3503728
  */
@@ -21,10 +25,10 @@ public class ImageFlyweightImpl implements ImageFlyweight {
      * @return A flyweighted ImageView
      */
     public Image requestImage(Card card) {
-        if (hashMap.containsKey(card)) {
+        // Check if image of the card has been made or not
+        if (hashMap.containsKey(card)) { // return existing Image object
             return hashMap.get(card);
-        } else {
-            // Put it in HashMap
+        } else { // Create new image
             Image newImage = new Image(card.getImageResource());
             hashMap.put(card, newImage);
             return newImage;

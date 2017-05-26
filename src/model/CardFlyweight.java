@@ -9,8 +9,7 @@ import java.util.HashMap;
 /**
  * Flyweight pattern.
  * Keeps on object of each card in cardHashMap.
- * If it doesn't contain card object requested it asks the factory to produce
- * one
+ * If it doesn't contain card object requested it asks the factory to produce one
  *
  * @author Fabio Monsalve s3585826
  */

@@ -49,9 +49,6 @@ public class GameBoardListener implements EventHandler<MouseEvent> {
                 } else {
                     GameNotification.showAlertBoxErrorMessage("Cannot play this type of card to board");
                 }
-//            else if (selCard instanceof PersonalCard) {
-//                game.playPersonalCard(x, y);
-//            }
             } else {
                 GameNotification.showAlertBoxErrorMessage("Cannot play card: No card is currently selected");
             }

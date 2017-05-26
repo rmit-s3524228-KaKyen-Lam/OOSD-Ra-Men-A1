@@ -14,6 +14,7 @@ import model.board.Grid;
 import model.card.Card;
 import model.card.pathcard.PathCard;
 import model.card.pathcard.PathCard_Empty;
+import model.card.personalcard.PersonalCard;
 
 /**
  * This class is responsible for drawing the board and the label associated with it
@@ -67,6 +68,9 @@ public class BoardDraw {
         }
     }
 
+    /**
+     * Redraws the section that depicts other players
+     */
     public void redrawUsers() {
         int currentPlayerNumber = game.getPlayerTurnNumber();
         int drawCount = 0, playerIndex = 0;
@@ -75,6 +79,21 @@ public class BoardDraw {
                 Player player = game.getPlayers()[playerIndex];
                 ImageView imageView = new ImageView(player.getImageResource());
                 imageView.setOnMouseClicked(new PlayerTargetListener(playerIndex, game));
+
+                // Highlight the grid when mouse enters the ImageView, by checking selected card and if it can be placed or not
+                imageView.setOnMouseEntered((mouseEvent) ->
+                        {
+                            if (game.getSelectedCard() instanceof PersonalCard) {
+                                imageView.setEffect(ImageViewTinter.getInstance().grayToRedTint);
+                            }
+                        }
+                );
+
+                // Remove the highlight tint and tint the grid back to normal
+                imageView.setOnMouseExited((mouseEvent) ->
+                        imageView.setEffect(ImageViewTinter.getInstance().noTint)
+                );
+
                 gridTargets[drawCount].add(imageView, 0, 0);
 
                 StringBuilder playerLabel = new StringBuilder();
@@ -119,6 +138,7 @@ public class BoardDraw {
         Grid[][] gameBoard = game.getBoard().getGrid();
         Card currentGridCard = gameBoard[x][y].getCard();
 
+        // Use flyweight to ask for Image object
         imageToDrawOnGrid = new ImageView(imageFlyweight.requestImage(currentGridCard));
         if (currentGridCard instanceof PathCard) {
             int rotateVal = 0;
@@ -127,46 +147,50 @@ public class BoardDraw {
             }
             imageToDrawOnGrid.setRotate(rotateVal);
         }
-        drawNormal(imageToDrawOnGrid, gameBoard[x][y]);
+        drawImageViewDefault(imageToDrawOnGrid, gameBoard[x][y]);
         images[x][y] = imageToDrawOnGrid;
 
-        imageToDrawOnGrid.setOnMouseEntered(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                Card selectedCard = game.getSelectedCard();
-                if (selectedCard != null && selectedCard instanceof PathCard) {
-                    if (game.getBoard().getGridAtLocation(x, y).getCard() instanceof PathCard_Empty) {
-                        if (LogicCheckerBridge.checkIfValid((PathCard) selectedCard, x, y)) {
-                            images[x][y].setEffect(ImageViewTinter.getInstance().blueToGreenTint);
-                            return;
-                        } else {
-                            images[x][y].setEffect(ImageViewTinter.getInstance().blueToRedTint);
-                            return;
+        // Highlight the grid when mouse enters the ImageView, by checking selected card and if it can be placed or not
+        imageToDrawOnGrid.setOnMouseEntered((mouseEvent) ->
+                {
+                    Card selectedCard = game.getSelectedCard();
+                    if (selectedCard != null && selectedCard instanceof PathCard) {
+                        if (game.getBoard().getGridAtLocation(x, y).getCard() instanceof PathCard_Empty) {
+                            if (LogicCheckerBridge.checkIfValid((PathCard) selectedCard, x, y)) {
+                                images[x][y].setEffect(ImageViewTinter.getInstance().blueToGreenTint);
+                                return;
+                            } else {
+                                images[x][y].setEffect(ImageViewTinter.getInstance().blueToRedTint);
+                                return;
+                            }
                         }
+                        images[x][y].setEffect(ImageViewTinter.getInstance().grayToRedTint);
                     }
-                    images[x][y].setEffect(ImageViewTinter.getInstance().grayToRedTint);
                 }
-            }
-        });
+        );
 
-        imageToDrawOnGrid.setOnMouseExited(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                drawNormal(images[x][y], gameBoard[x][y]);
-            }
-        });
+        // Remove the highlight tint and tint the grid back to normal
+        imageToDrawOnGrid.setOnMouseExited((event) ->
+                drawImageViewDefault(images[x][y], gameBoard[x][y])
+        );
 
         gridGameBoard.add(imageToDrawOnGrid, x, y);
         imageToDrawOnGrid.setOnMouseClicked(new GameBoardListener(x, y, game));
     }
 
-    private void drawNormal(ImageView imageView, Grid grid) {
+    /**
+     * A method that tints ImageView based on whether the grid is disabled, unconnected or connected to the main start.
+     *
+     * @param imageView ImageView to be tinted
+     * @param grid      Grid related to the imageView that is about to be rendered
+     */
+    private void drawImageViewDefault(ImageView imageView, Grid grid) {
         if (grid.isDisabled()) {
             imageView.setEffect(ImageViewTinter.getInstance().disabledTint);
         } else if ((!(grid.getCard() instanceof PathCard_Empty) && grid.getCard() instanceof PathCard && !grid.isConnectedToMain())) {
             imageView.setEffect(ImageViewTinter.getInstance().unconnectedTint);
         } else {
-            imageView.setEffect(ImageViewTinter.getInstance().removeTint);
+            imageView.setEffect(ImageViewTinter.getInstance().noTint);
         }
     }
 }

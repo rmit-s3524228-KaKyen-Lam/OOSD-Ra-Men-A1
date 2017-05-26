@@ -23,6 +23,7 @@ public class Player extends Drawable implements Serializable {
     private int undoCount = 0;
     private int sickTurn = 0;
 
+    public static int HAND_LIMIT = 7;
     public static String ROLE_MINER = "miner";
     public static String ROLE_SABOTEUR = "saboteur";
 
@@ -110,14 +111,17 @@ public class Player extends Drawable implements Serializable {
         return -1;
     }
 
-    public void addScore(int score) {
-        this.score += score;
+    public void resetUndoCount() {
+        undoCount = 0;
     }
 
     public void incrementUndoCount() {
         undoCount++;
     }
 
+    public void addScore(int score) {
+        this.score += score;
+    }
 
     public int getScore() {
         return score;

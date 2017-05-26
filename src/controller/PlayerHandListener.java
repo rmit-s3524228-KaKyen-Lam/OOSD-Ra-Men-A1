@@ -4,6 +4,7 @@ import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import model.Game;
 import view.PlayerHandListenerCallback;
+import view.alertWindow.GameNotification;
 
 /**
  * This is a class specifically dedicated for listening to click events on player's hand GridPane
@@ -42,7 +43,9 @@ public class PlayerHandListener implements EventHandler<MouseEvent> {
             callback.highlightSelectedCard(cardNum);
         }
         if (event.getButton().toString().equals("SECONDARY")) {
-            game.rotateCard(cardNum);
+            if (!game.rotateCard(cardNum)) {
+                GameNotification.showAlertBoxErrorMessage("Cannot rotate non-path card");
+            }
         }
     }
 }

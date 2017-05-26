@@ -79,7 +79,7 @@ public class GameLogic {
      * @param x           x coordinate on the board where the card is about to be placed
      * @param y           y coordinate on the board where the card is about to be placed
      * @param cardToPlace card to be placed in the board at location x,y
-     * @return true if card placement is valid and selectedCard is not null, otherwise false
+     * @return true if card can be placed on the board at x,y. Otherwise, false
      */
     public boolean cardPlacementCheck(int x, int y, PathCard cardToPlace) {
         boolean westConnectCheck = false;
@@ -185,10 +185,6 @@ public class GameLogic {
         }
 
         return westConnectCheck && northConnectCheck && eastConnectCheck && southConnectCheck && atLeastOneValidPath;
-    }
-
-    public Board getBoard() {
-        return board;
     }
 
     public void setBoard(Board board) {

@@ -16,6 +16,7 @@ import model.command.Command_PlayCard;
 import view.alertWindow.GameNotification;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * This is the class that contains all the information regarding the game itself,
@@ -39,9 +40,7 @@ public class Game {
     private CommandHistory commandHistory;
 
     private int gameTurnNumber = 0;
-    static int playerTurnNumber = 0;
-    private int nextPlayerTurnNumber = 1;
-    private int numOfSaboteurs = 0;
+    private static int playerTurnNumber = 0;
     private boolean noMoreCardNotifiedOnce = false;
 
     private Card selectedCard = null;
@@ -52,11 +51,14 @@ public class Game {
     public Game() {
         players = new Player[NUM_OF_PLAYER];
         for (int i = 0; i < players.length; i++) {
-            players[i] = new Player(0, "miner", new ArrayList<String>(), new ArrayList<Card>(), "" + i);
+            players[i] = new Player(0, null, new ArrayList<>(), new ArrayList<>(), "" + i);
         }
         commandHistory = new CommandHistory(board, deck, players);
     }
 
+    /**
+     * Initialize the game, needed to be called during configuration stage
+     */
     public void gameInitialize() {
         // Assigns the GameController so that Game can communicate with the viewer
         gameLogic = new GameLogic(board);
@@ -64,9 +66,9 @@ public class Game {
     }
 
     /**
-     * Start a new game.
-     * Reinitialize the board, deck, each player's hand, and reassign player to different role.
-     * Lastly, redraw the game window.
+     * A method to start the game for the first time.
+     *
+     * Do not call this method to restart the game, use gameRestart() instead to accomplish this.
      */
     public void gameStart() {
         noMoreCardNotifiedOnce = false;
@@ -74,13 +76,9 @@ public class Game {
 
         gameTurnNumber = 0;
         playerTurnNumber = 0;
-        nextPlayerTurnNumber = 1;
 
-        // Initialize players
-        numOfSaboteurs = 0;
-        for (int i = 0; i < players.length; i++) {
-            players[i].setHand(deck.draw(7));
-        }
+        initPlayer();
+        commandHistory.clearHistory();
 
         GameController.redrawUsers();
         GameController.redrawGrid();
@@ -88,7 +86,10 @@ public class Game {
         GameController.changePlayerLabel(getPlayerTurnNumber(), players[getPlayerTurnNumber()]);
     }
 
-    public void gameRestart() {
+    /**
+     * A method to restart the game, not to be confused with the gameInitialize and gameStart
+     */
+    private void gameRestart() {
         ArrayList<String> golds = new ArrayList<>();
         ArrayList<String> coals = new ArrayList<>();
 
@@ -112,7 +113,27 @@ public class Game {
             board.configureGoalPos("coal", Integer.parseInt(location[0]), Integer.parseInt(location[1]));
         }
         board.initBoardNew();
+
+        initPlayer();
+
         gameStart();
+    }
+
+    /**
+     * Initialize players' deck and their role.
+     * This method is to be called during creation of new game.
+     */
+    private void initPlayer() {
+        Random rng = new Random();
+        for (Player player : players) {
+            if (rng.nextInt(4) == 0) {
+                player.setRole(Player.ROLE_SABOTEUR);
+            } else {
+                player.setRole(Player.ROLE_MINER);
+            }
+            player.resetUndoCount();
+            player.setHand(deck.draw(7));
+        }
     }
 
     /**
@@ -127,7 +148,7 @@ public class Game {
         String winningRole = players[winnerPlayerNumber].getRole();
 
         if (winningRole.equals(Player.ROLE_MINER)) {
-            ArrayList<Integer> goldPool = deck.getGoldPool(NUM_OF_PLAYER - numOfSaboteurs);
+            ArrayList<Integer> goldPool = deck.getGoldPool(NUM_OF_PLAYER);
             int j = 1;
             for (int i = 0; i < players.length; i++) {
                 if (players[i].getRole().equals(Player.ROLE_MINER)) {
@@ -145,7 +166,7 @@ public class Game {
     }
 
     /**
-     * Deletes the card and move to next turn
+     * Deletes card on hand and move to next turn
      */
     public void playDiscardCard() {
         Command command = new Command_DiscardCard(playerTurnNumber, selectedCard,
@@ -158,7 +179,9 @@ public class Game {
     }
 
     /**
+     * Method to place a personal card on the board.
      *
+     * @param playerNumberTarget player number to be targeted
      */
     public void playPersonalCard(int playerNumberTarget) {
         Object[] target = {players[playerNumberTarget]};
@@ -185,7 +208,7 @@ public class Game {
     public void playPathCard(int x, int y) {
         if (board.getGridAtLocation(x, y).getCard() instanceof PathCard_Empty) {
             Object[] target = new Object[2];
-            target[0] = board.getGridAtLocation(x, y);
+            target[0] = board.getGridAtLocation(x, y); // Targeted grid
             target[1] = board;
             Command command = new Command_PlayCard(playerTurnNumber, selectedCard,
                     players[playerTurnNumber].getRecentlyDrawnCard(), target);
@@ -202,18 +225,19 @@ public class Game {
     }
 
     /**
-     * Handle action cards
-     * <p>
-     * precondition, selectedCard must not be null
+     * Method to play an action card.
+     *
+     * @param x column number of the board
+     * @param y row number of the board
      */
     public void playActionCard(int x, int y) {
         if (board.getGridAtLocation(x, y).getCard() instanceof PathCard) {
             Object[] target = new Object[6];
-            target[0] = board.getGridAtLocation(x, y);
-            target[1] = board.getGridAtLocation(x - 1, y);
-            target[2] = board.getGridAtLocation(x, y - 1);
-            target[3] = board.getGridAtLocation(x + 1, y);
-            target[4] = board.getGridAtLocation(x, y + 1);
+            target[0] = board.getGridAtLocation(x, y); // Targeted grid
+            target[1] = board.getGridAtLocation(x - 1, y); // Targeted grid's west neighbor
+            target[2] = board.getGridAtLocation(x, y - 1); // Targeted grid's north neighbor
+            target[3] = board.getGridAtLocation(x + 1, y); // Targeted grid's east neighbor
+            target[4] = board.getGridAtLocation(x, y + 1); // Targeted grid's south neighbor
             target[5] = board;
             Command command = new Command_PlayCard(playerTurnNumber, selectedCard,
                     players[playerTurnNumber].getRecentlyDrawnCard(), target);
@@ -228,6 +252,12 @@ public class Game {
         }
     }
 
+    /**
+     * Method to rotate a card in current player's possession, only applies for PathCard
+     *
+     * @param cardNum card index number in current player's hand
+     * @return True if it rotates, false otherwise
+     */
     public boolean rotateCard(int cardNum) {
         ArrayList<Card> playerHand = players[playerTurnNumber].getHand();
         if (playerHand.get(cardNum) instanceof PathCard) {
@@ -239,6 +269,11 @@ public class Game {
         return false;
     }
 
+    /**
+     * Method to undo a player's turn all the way to his/her previous turn
+     *
+     * @return True if undo is possible and executed, false when undo is not possible
+     */
     public boolean undoTurn() {
         if (players[playerTurnNumber].getUndoCount() < 2 && commandHistory.undoTurn(playerTurnNumber)) {
             players[playerTurnNumber].incrementUndoCount();
@@ -246,9 +281,8 @@ public class Game {
             GameController.redrawDeck(players[getPlayerTurnNumber()].getHand());
             GameController.changePlayerLabel(getPlayerTurnNumber(), players[getPlayerTurnNumber()]);
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     /**
@@ -300,6 +334,11 @@ public class Game {
 
     }
 
+    /**
+     * Save current game state into a file
+     *
+     * @param filename Filename to store the save file into
+     */
     public void saveGame(String filename) {
         GameState state = new GameState(this);
         if (state.saveState(filename)) {
@@ -309,6 +348,11 @@ public class Game {
         }
     }
 
+    /**
+     * Load an on-going game from a file
+     *
+     * @param filename Filename to load the save file from
+     */
     public void loadGame(String filename) {
         GameState loadState = GameState.loadState(filename);
         if (loadState != null) {
@@ -318,7 +362,6 @@ public class Game {
             deck = loadState.getDeck();
             gameTurnNumber = loadState.getGameTurnNumber();
             playerTurnNumber = loadState.getPlayerTurnNumber();
-            nextPlayerTurnNumber = loadState.getNextPlayerTurnNumber();
             noMoreCardNotifiedOnce = loadState.isNoMoreCardNotifiedOnce();
             gameLogic.setBoard(board);
             GameController.redrawGrid();
@@ -354,10 +397,6 @@ public class Game {
         return players;
     }
 
-    public int getNextPlayerTurnNumber() {
-        return nextPlayerTurnNumber;
-    }
-
     public void removeSelectedCard() {
         this.selectedCard = null;
     }
@@ -373,10 +412,6 @@ public class Game {
      */
     public void setSelectedCard(int cardNumberInCurrentHand) {
         this.selectedCard = players[playerTurnNumber].getHand().get(cardNumberInCurrentHand);
-    }
-
-    public void setNextPlayerTurnNumber(int nextPlayerTurnNumber) {
-        this.nextPlayerTurnNumber = nextPlayerTurnNumber;
     }
 
     public CommandHistory getCommandHistory() {

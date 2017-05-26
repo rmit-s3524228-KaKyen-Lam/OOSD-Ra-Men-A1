@@ -15,21 +15,15 @@ public class GameState implements Serializable {
     private CommandHistory commandHistory;
     private int gameTurnNumber;
     private int playerTurnNumber;
-    private int nextPlayerTurnNumber;
     private boolean noMoreCardNotifiedOnce;
 
     public GameState(Game game) {
-        setState(game);
-    }
-
-    public void setState(Game game) {
         board = game.getBoard();
         deck = game.getDeck();
         players = game.getPlayers();
         commandHistory = game.getCommandHistory();
         gameTurnNumber = game.getGameTurnNumber();
         playerTurnNumber = game.getPlayerTurnNumber();
-        nextPlayerTurnNumber = game.getPlayerTurnNumber();
         noMoreCardNotifiedOnce = game.isNoMoreCardNotifiedOnce();
     }
 
@@ -82,10 +76,6 @@ public class GameState implements Serializable {
 
     public int getPlayerTurnNumber() {
         return playerTurnNumber;
-    }
-
-    public int getNextPlayerTurnNumber() {
-        return nextPlayerTurnNumber;
     }
 
     public boolean isNoMoreCardNotifiedOnce() {

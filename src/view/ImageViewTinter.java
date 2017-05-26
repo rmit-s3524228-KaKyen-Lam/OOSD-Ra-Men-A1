@@ -3,7 +3,7 @@ package view;
 import javafx.scene.effect.ColorAdjust;
 
 /**
- * This class is a library for tinting ImageView
+ * This is a library class containing multiple ColorAdjust objects for tinting ImageView
  *
  * @author David Limantoro s3503728
  */
@@ -17,7 +17,7 @@ public class ImageViewTinter {
     ColorAdjust blueToGreenTint = new ColorAdjust(-0.4, 1, 0.6, 1);
     ColorAdjust disabledTint = new ColorAdjust(0, 0, 0.2, 1);
     ColorAdjust unconnectedTint = new ColorAdjust(0, 1, .5, 1);
-    ColorAdjust removeTint = new ColorAdjust();
+    ColorAdjust noTint = new ColorAdjust();
 
     private static ImageViewTinter instance = null;
 
