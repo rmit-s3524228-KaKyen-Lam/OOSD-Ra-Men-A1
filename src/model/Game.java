@@ -13,7 +13,7 @@ import model.command.Command;
 import model.command.CommandHistory;
 import model.command.Command_DiscardCard;
 import model.command.Command_PlayCard;
-import view.GameNotification;
+import view.alertWindow.GameNotification;
 
 import java.util.ArrayList;
 

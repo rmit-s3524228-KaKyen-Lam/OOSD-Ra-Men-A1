@@ -3,7 +3,7 @@ package controller;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import model.Game;
-import view.GameNotification;
+import view.alertWindow.GameNotification;
 
 /**
  * This is a class specifically dedicated for listening to click events on player's hand GridPane

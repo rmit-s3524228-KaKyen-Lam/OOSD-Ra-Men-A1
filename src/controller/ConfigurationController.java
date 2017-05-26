@@ -11,7 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.board.Board;
-import view.GameNotification;
+import view.alertWindow.GameNotification;
 
 import java.io.IOException;
 import java.net.URL;

@@ -6,7 +6,7 @@ import model.card.actioncard.ActionCard;
 import model.card.Card;
 import model.Game;
 import model.card.pathcard.PathCard;
-import view.GameNotification;
+import view.alertWindow.GameNotification;
 
 /**
  * This is a class specifically dedicated for listening to click events on the gameLogic board GridPane

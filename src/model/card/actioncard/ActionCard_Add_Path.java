@@ -4,7 +4,7 @@ import model.*;
 import model.board.Board;
 import model.board.Grid;
 import model.card.pathcard.PathCard;
-import view.GameNotification;
+import view.alertWindow.GameNotification;
 
 import java.util.Random;
 

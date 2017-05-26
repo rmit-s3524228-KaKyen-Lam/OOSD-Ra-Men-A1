@@ -3,7 +3,7 @@ package model.card.actioncard;
 import model.board.Board;
 import model.board.Grid;
 import model.card.pathcard.PathCard_Empty;
-import view.GameNotification;
+import view.alertWindow.GameNotification;
 
 /**
  * Action card for the ability to destroy a particular path card

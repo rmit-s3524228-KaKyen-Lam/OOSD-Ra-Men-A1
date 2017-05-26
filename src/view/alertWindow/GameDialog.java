@@ -1,4 +1,4 @@
-package view;
+package view.alertWindow;
 
 import javafx.application.Platform;
 import javafx.geometry.Insets;

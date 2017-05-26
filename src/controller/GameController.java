@@ -9,6 +9,8 @@ import javafx.scene.layout.GridPane;
 import model.*;
 import model.card.Card;
 import view.*;
+import view.alertWindow.GameDialog;
+import view.alertWindow.GameNotification;
 
 import java.net.URL;
 import java.util.ArrayList;
