@@ -3,8 +3,9 @@ package controller;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import model.*;
+import model.card.Card;
+import model.card.personalcard.PersonalCard;
 import view.GameNotification;
-import view.PlayerHandListenerCallback;
 
 /**
  * @author David Limantoro s3503728 on 2017/05/25.

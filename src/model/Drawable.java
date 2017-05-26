@@ -12,14 +12,14 @@ import java.io.Serializable;
  */
 public abstract class Drawable implements Serializable {
 
-    protected String imageResource;
+    private String imageResource;
 
     /**
      * Creates a drawable object with associated imageResource
      *
      * @param imageResource all objects that will appear on the board in the GUI will have a corresponding image
      */
-    Drawable(String imageResource) {
+    public Drawable(String imageResource) {
         this.imageResource = imageResource;
     }
 

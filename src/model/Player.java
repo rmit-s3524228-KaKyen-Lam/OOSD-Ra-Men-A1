@@ -1,6 +1,7 @@
 package model;
 
 import library.DeepCopier;
+import model.card.Card;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -47,7 +48,7 @@ public class Player extends Drawable implements Serializable {
      *
      * @param card Card to be added
      */
-    void addCard(Card card) {
+    public void addCard(Card card) {
         recentlyDrawnCard = card;
         hand.add(card);
     }
@@ -55,7 +56,7 @@ public class Player extends Drawable implements Serializable {
     /**
      * @param cardID
      */
-    void removeCard(String cardID) {
+    public void removeCard(String cardID) {
         for (int i = 0; i < hand.size(); i++) {
             if (hand.get(i).getId().equals(cardID)) {
                 hand.remove(i);

@@ -1,8 +1,13 @@
 package controller;
 
 import model.*;
-import model.goalcard.GoalCard_Gold;
-import model.pathcard.PathCard_Empty;
+import model.board.Board;
+import model.board.Grid;
+import model.card.Card;
+import model.card.goalcard.GoalCard;
+import model.card.goalcard.GoalCard_Gold;
+import model.card.pathcard.PathCard;
+import model.card.pathcard.PathCard_Empty;
 
 /**
  * This class handles the higher level logic of the gameLogic.

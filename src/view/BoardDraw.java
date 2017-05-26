@@ -9,7 +9,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import model.*;
-import model.pathcard.PathCard_Empty;
+import model.board.Board;
+import model.board.Grid;
+import model.card.Card;
+import model.card.pathcard.PathCard;
+import model.card.pathcard.PathCard_Empty;
 
 /**
  * This class is responsible for drawing the board and the label associated with it
@@ -55,9 +59,9 @@ public class BoardDraw {
      * Redraws the whole game board
      */
     public void redrawGridXY() {
-        images = new ImageView[model.Board.gridMaxWidth][Board.gridMaxHeight];
-        for (int i = 0; i < model.Board.gridMaxWidth; i++) {
-            for (int j = 0; j < model.Board.gridMaxHeight; j++) {
+        images = new ImageView[Board.gridMaxWidth][Board.gridMaxHeight];
+        for (int i = 0; i < Board.gridMaxWidth; i++) {
+            for (int j = 0; j < Board.gridMaxHeight; j++) {
                 redrawGridXY(i, j);
             }
         }

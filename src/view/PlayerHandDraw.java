@@ -5,9 +5,9 @@ import controller.PlayerHandListener;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import model.Card;
+import model.card.Card;
 import model.Game;
-import model.PathCard;
+import model.card.pathcard.PathCard;
 
 import java.util.ArrayList;
 

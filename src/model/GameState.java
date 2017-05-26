@@ -1,5 +1,8 @@
 package model;
 
+import model.board.Board;
+import model.command.CommandHistory;
+
 import java.io.*;
 
 /**

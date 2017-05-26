@@ -3,9 +3,16 @@ package model;
 import controller.GameController;
 import controller.GameLogic;
 import controller.LogicCheckerBridge;
-import model.goalcard.GoalCard_Coal;
-import model.goalcard.GoalCard_Gold;
-import model.pathcard.PathCard_Empty;
+import model.board.Board;
+import model.card.Card;
+import model.card.goalcard.GoalCard_Coal;
+import model.card.goalcard.GoalCard_Gold;
+import model.card.pathcard.PathCard;
+import model.card.pathcard.PathCard_Empty;
+import model.command.Command;
+import model.command.CommandHistory;
+import model.command.Command_DiscardCard;
+import model.command.Command_PlayCard;
 import view.GameNotification;
 
 import java.util.ArrayList;
@@ -51,8 +58,6 @@ public class Game {
     }
 
     public void gameInitialize() {
-        //board.initBoard();
-
         // Assigns the GameController so that Game can communicate with the viewer
         gameLogic = new GameLogic(board);
         LogicCheckerBridge.initialize(gameLogic);
@@ -225,10 +230,13 @@ public class Game {
 
     public boolean rotateCard(int cardNum) {
         ArrayList<Card> playerHand = players[playerTurnNumber].getHand();
-        playerHand.set(cardNum, CardFlyweight.getCard(playerHand.get(cardNum).getId(),
-                ((PathCard) playerHand.get(cardNum)).getRotateVal() + 1));
-        GameController.redrawDeck(playerHand);
-        return true;
+        if (playerHand.get(cardNum) instanceof PathCard) {
+            playerHand.set(cardNum, CardFlyweight.getCard(playerHand.get(cardNum).getId(),
+                    ((PathCard) playerHand.get(cardNum)).getRotateVal() + 1));
+            GameController.redrawDeck(playerHand);
+            return true;
+        }
+        return false;
     }
 
     public boolean undoTurn() {

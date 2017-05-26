@@ -10,8 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import model.Board;
-import view.GameDialog;
+import model.board.Board;
 import view.GameNotification;
 
 import java.io.IOException;

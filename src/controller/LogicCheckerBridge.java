@@ -1,7 +1,6 @@
 package controller;
 
-import model.Game;
-import model.PathCard;
+import model.card.pathcard.PathCard;
 
 /**
  * @author HP on 4/05/2017.

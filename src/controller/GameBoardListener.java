@@ -2,10 +2,10 @@ package controller;
 
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
-import model.ActionCard;
-import model.Card;
+import model.card.actioncard.ActionCard;
+import model.card.Card;
 import model.Game;
-import model.PathCard;
+import model.card.pathcard.PathCard;
 import view.GameNotification;
 
 /**

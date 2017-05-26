@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import model.*;
+import model.card.Card;
 import view.*;
 
 import java.net.URL;

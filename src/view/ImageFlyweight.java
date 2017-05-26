@@ -1,7 +1,7 @@
 package view;
 
 import javafx.scene.image.Image;
-import model.Card;
+import model.card.Card;
 
 /**
  * @author David Limantoro s3503728 on 2017/05/22.
