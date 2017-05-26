@@ -3,7 +3,7 @@ package controller;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import model.Game;
-import view.Notification;
+import view.alertWindow.GameNotification;
 
 /**
  * This is a class specifically dedicated for listening to click events on player's hand GridPane
@@ -16,7 +16,7 @@ public class DiscardPileListener implements EventHandler<MouseEvent> {
     /**
      * Creates a listener for the discard pile ImageView
      *
-     * @param game The game entity
+     * @param game The gameLogic entity
      */
     public DiscardPileListener(Game game) {
         this.game = game;
@@ -25,16 +25,16 @@ public class DiscardPileListener implements EventHandler<MouseEvent> {
     /**
      * Handle a click button.
      *
-     * Clicking on a discard pile will remove the card and moves the game to next turn.
+     * Clicking on a discard pile will remove the card and moves the gameLogic to next turn.
      *
      * @param event MouseEvent related to the click
      */
     @Override
     public void handle(MouseEvent event) {
         if (game.getSelectedCard() != null) {
-            game.nextTurn();
+            game.playDiscardCard();
         } else {
-            Notification.showAlertBoxErrorMessage("Cannot discard card: No card is currently selected");
+            GameNotification.showAlertBoxErrorMessage("Cannot discard card: No card is currently selected");
         }
     }
 }

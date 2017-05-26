@@ -41,7 +41,7 @@
                                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                     </rowConstraints>
                                 </GridPane>
-                        <Label fx:id="boardLabel" layoutX="14.0" layoutY="14.0" text="Game Board" />
+                                <Label fx:id="boardLabel" layoutX="14.0" layoutY="14.0" text="Game Board" />
                             </children>
                         </AnchorPane>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
@@ -60,11 +60,11 @@
                                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                     </rowConstraints>
                                 </GridPane>
-                        <Label fx:id="playerLabel" layoutX="14.0" layoutY="14.0" text="Player X's Hand" />
-                        <ImageView fx:id="trashcanImageView" fitHeight="100.0" fitWidth="100.0" layoutX="755.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@Trash.png" />
-                           </image></ImageView>
+                                <Label fx:id="playerLabel" layoutX="14.0" layoutY="14.0" text="Player X's Hand" />
+                                <ImageView fx:id="trashcanImageView" fitHeight="100.0" fitWidth="100.0" layoutX="755.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@Trash.png" />
+                                    </image></ImageView>
                             </children>
                         </AnchorPane>
                     </items>

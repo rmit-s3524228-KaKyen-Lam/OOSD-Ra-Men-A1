@@ -2,11 +2,14 @@ package controller;
 
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
+import model.card.actioncard.ActionCard;
+import model.card.Card;
 import model.Game;
-import view.Notification;
+import model.card.pathcard.PathCard;
+import view.alertWindow.GameNotification;
 
 /**
- * This is a class specifically dedicated for listening to click events on the game board GridPane
+ * This is a class specifically dedicated for listening to click events on the gameLogic board GridPane
  *
  * @author David Limantoro s3503728
  */
@@ -18,7 +21,7 @@ public class GameBoardListener implements EventHandler<MouseEvent> {
     /**
      * @param x    x location of the grid
      * @param y    y location of the grid
-     * @param game The game entity
+     * @param game The gameLogic entity
      */
     public GameBoardListener(int x, int y, Game game) {
         this.x = x;
@@ -36,10 +39,19 @@ public class GameBoardListener implements EventHandler<MouseEvent> {
      */
     @Override
     public void handle(MouseEvent event) {
-        if (game.getSelectedCard() != null) {
-            game.placeCard(x, y);
-        } else {
-            Notification.showAlertBoxErrorMessage("Cannot play card: No card is currently selected");
+        if (event.getButton().toString().equals("PRIMARY")) {
+            Card selCard = game.getSelectedCard();
+            if (selCard != null) {
+                if (selCard instanceof PathCard) {
+                    game.playPathCard(x, y);
+                } else if (selCard instanceof ActionCard) {
+                    game.playActionCard(x, y);
+                } else {
+                    GameNotification.showAlertBoxErrorMessage("Cannot play this type of card to board");
+                }
+            } else {
+                GameNotification.showAlertBoxErrorMessage("Cannot play card: No card is currently selected");
+            }
         }
     }
 }

@@ -1,5 +1,9 @@
 package model;
 
+import library.DeepCopier;
+import model.card.Card;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -8,12 +12,20 @@ import java.util.Collections;
  *
  * @author Ka Kyen Lam s3524228
  */
-public class Player {
+public class Player extends Drawable implements Serializable {
 
+    private String id;
     private int score;
     private String role;
     private ArrayList<String> brokenTool;
     private ArrayList<Card> hand;
+    private Card recentlyDrawnCard;
+    private int undoCount = 0;
+    private int sickTurn = 0;
+
+    public static int HAND_LIMIT = 7;
+    public static String ROLE_MINER = "miner";
+    public static String ROLE_SABOTEUR = "saboteur";
 
     /**
      * Creates a player with initial values, if any (in case if the game implements save/load feature)
@@ -23,7 +35,9 @@ public class Player {
      * @param brokenTool ArrayList of broken tools (this should be an empty ArrayList by default)
      * @param hand       The cards of the player object is holding
      */
-    public Player(int score, String role, ArrayList<String> brokenTool, ArrayList<Card> hand) {
+    public Player(int score, String role, ArrayList<String> brokenTool, ArrayList<Card> hand, String id) {
+        super("resources/Player.png");
+        this.id = id;
         this.score = score;
         this.role = role;
         this.brokenTool = brokenTool;
@@ -35,17 +49,21 @@ public class Player {
      *
      * @param card Card to be added
      */
-    void addCard(Card card) {
+    public void addCard(Card card) {
+        recentlyDrawnCard = card;
         hand.add(card);
     }
 
     /**
-     * Remove card from hand
-     *
-     * @param card Card to be removed
+     * @param cardID
      */
-    void removeCard(Card card) {
-        hand.remove(card);
+    public void removeCard(String cardID) {
+        for (int i = 0; i < hand.size(); i++) {
+            if (hand.get(i).getId().equals(cardID)) {
+                hand.remove(i);
+                return;
+            }
+        }
     }
 
     /**
@@ -54,8 +72,30 @@ public class Player {
      * @param hand Initial starting hand
      */
     void setHand(Card[] hand) {
-        this.hand = new ArrayList<>();
+        if (this.hand == null) {
+            this.hand = new ArrayList<>();
+        } else {
+            this.hand.clear();
+        }
         Collections.addAll(this.hand, hand);
+    }
+
+    public boolean addStatus(String status) {
+        if (brokenTool.indexOf(status) == -1) {
+            brokenTool.add(status);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean removeStatus(String status) {
+        if (brokenTool.indexOf(status) > -1) {
+            brokenTool.remove(status);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -71,6 +111,17 @@ public class Player {
         return -1;
     }
 
+    public void resetUndoCount() {
+        undoCount = 0;
+    }
+
+    public void incrementUndoCount() {
+        undoCount++;
+    }
+
+    public void addScore(int score) {
+        this.score += score;
+    }
 
     public int getScore() {
         return score;
@@ -98,5 +149,29 @@ public class Player {
 
     public ArrayList<Card> getHand() {
         return hand;
+    }
+
+    public int getUndoCount() {
+        return undoCount;
+    }
+
+    public Card getRecentlyDrawnCard() {
+        return (Card) DeepCopier.copy(recentlyDrawnCard);
+    }
+
+    public void setRecentlyDrawnCard(Card recentlyDrawnCard) {
+        this.recentlyDrawnCard = recentlyDrawnCard;
+    }
+
+    public int getSickTurn() {
+        return sickTurn;
+    }
+
+    public void setSickTurn(int sickTurn) {
+        this.sickTurn = sickTurn;
+    }
+
+    public String getId() {
+        return id;
     }
 }
