@@ -15,6 +15,7 @@ import java.util.Queue;
 /*http://stackoverflow.com/questions/9369368/2d-arraylist-in-java
  https://www.thoughtco.com/generating-unique-random-numbers-2034208
  http://stackoverflow.com/questions/5262308/how-do-implement-a-breadth-first-traversal
+*/
 
 /**
  * Game board containing Grids.
@@ -48,12 +49,18 @@ public class Board implements Serializable {
     Queue<Node> queue = new LinkedList<>();
     private ArrayList<Grid> goalList = new ArrayList<>();
 
+    /**
+     * Configure board based on user input of width and height
+     *
+     * @param widthMax  board width
+     * @param heightMax board height
+     */
     public void configureBoard(int widthMax, int heightMax) {
         gridMaxWidth = widthMax;
         gridMaxHeight = heightMax;
         grid = new Grid[gridMaxWidth][gridMaxHeight];
-
         isFilled = new boolean[gridMaxWidth][gridMaxHeight];
+
         for (int i = 0; i < gridMaxHeight; i++) {
             for (int j = 0; j < gridMaxWidth; j++) {
                 isFilled[j][i] = false;
@@ -61,25 +68,17 @@ public class Board implements Serializable {
         }
     }
 
-
-    public boolean inputCheck(int width, int height) {
-        if (width < 0 || width > gridMaxWidth) {
-            System.out.println("Invalid width. Please input width between 0 - " + gridMaxWidth);
-            return false;
-        } else if (height < 0 || height > gridMaxHeight) {
-            System.out.println("Invalid height. Please input width between 0 - " + gridMaxHeight);
-            return false;
-        } else if (isFilled[width][height] == true) {
-            System.out.println("Invalid position. That grid has been occupied.");
-            return false;
-        } else {
-            return true;
-        }
-
-    }
-
+    /**
+     * Configure position of goal cards based on user input of width and height
+     *
+     * @param name name of goal card ("coal" and "gold")
+     * @param width width position of goal card
+     * @param height height position of goal card
+     * @return
+     */
     public String configureGoalPos(String name, int width, int height) {
         boolean isValid = true;
+
         if (width < 0 || width > gridMaxWidth) {
             isValid = false;
             return ("Invalid width. Please input width between 0 - " + gridMaxWidth);
@@ -98,17 +97,24 @@ public class Board implements Serializable {
         if (isValid) {
             isFilled[width][height] = true;
             if (name.equals("coal")) {
+
                 grid[width][height] = new Grid(width, height, CardFlyweight.getCard("GOAL_COAL_HIDDEN", 0));
                 return ("Coal created at (" + width + ", " + height + ")");
+
             } else if (name.equals("gold")) {
+
                 grid[width][height] = new Grid(width, height, CardFlyweight.getCard("GOAL_GOLD_HIDDEN", 0));
                 goldLocation = grid[width][height];
+
                 return ("Gold created at (" + width + ", " + height + ")");
             }
         }
         return ("Internal error. No loop triggered.");
     }
 
+    /**
+     * Calculation method to check if Path Cards are still connected to main
+     */
     public void calculateBoard() {
         for (int i = 0; i < gridMaxHeight; i++) {
             for (int j = 0; j < gridMaxWidth; j++) {
@@ -121,7 +127,10 @@ public class Board implements Serializable {
         breadth(root);
     }
 
-
+    /**
+     * Breadth-first-search used in checking adjacent Path Cards
+     * @param root root
+     */
     public void breadth(Node root) {
         if (root == null)
             return;
@@ -202,34 +211,12 @@ public class Board implements Serializable {
                 if (!isFilled[j][i]) {
                     if (i == startPathY && j == startPathX) {
                         grid[j][i] = new Grid(j, i, CardFlyweight.getCard("PATH_CROSS_SHAPE", 0));
-//                        ((PathCard) (grid[j][i].getCard())).setValid(true);
                         grid[j][i].setConnectedToMain(true);
                         isFilled[j][i] = true;
                     } else {
                         grid[j][i] = new Grid(j, i, CardFlyweight.getCard("PATH_EMPTY", 0));
                         isFilled[j][i] = true;
                     }
-                }
-            }
-        }
-    }
-
-
-    void initBoard() {
-        ArrayList<Integer> startGoalYList = randomPosition();
-        for (int i = 0; i < gridMaxHeight; i++) {
-            for (int j = 0; j < gridMaxWidth; j++) {
-                if ((i == startGoalYList.get(0) || i == startGoalYList.get(1)) && j == startGoalX) {
-                    grid[j][i] = new Grid(j, i, CardFlyweight.getCard("GOAL_COAL_HIDDEN", 0));
-                } else if (i == startGoalYList.get(2) && j == startGoalX) {
-                    grid[j][i] = new Grid(j, i, CardFlyweight.getCard("GOAL_GOLD_HIDDEN", 0));
-                    goldLocation = grid[j][i];
-                } else if (i == startPathY && j == startPathX) {
-                    grid[j][i] = new Grid(j, i, CardFlyweight.getCard("GOAL_CROSS_SHAPE", 0));
-                    grid[j][i].setConnectedToMain(true);
-//                    ((PathCard) (grid[j][i].getCard())).setValid(true);
-                } else {
-                    grid[j][i] = new Grid(j, i, CardFlyweight.getCard("PATH_EMPTY", 0));
                 }
             }
         }
