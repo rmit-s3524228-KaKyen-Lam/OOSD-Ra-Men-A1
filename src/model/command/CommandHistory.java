@@ -3,7 +3,6 @@ package model.command;
 import controller.GameController;
 import model.board.Board;
 import model.Deck;
-import model.Game;
 import model.Player;
 import model.board.Grid;
 
@@ -70,7 +69,9 @@ public class CommandHistory implements Serializable {
         }
     }
 
-
+    /**
+     * Method to play the history (i.e. replaying the game)
+     */
     public void playHistory() {
         for (int i = 0; i < commandHistory.size(); i++) {
             Object[] originalTarget = commandHistory.get(i).getTarget();
@@ -88,6 +89,7 @@ public class CommandHistory implements Serializable {
             }
             commandHistory.get(i).setTarget(originalTarget);
             commandHistory.get(i).doAction();
+
             GameController.redrawGrid();
         }
     }
