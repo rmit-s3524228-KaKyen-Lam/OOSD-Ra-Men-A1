@@ -55,4 +55,8 @@ public abstract class CommandAbstract implements Command, Serializable {
     public Object[] getTarget() {
         return DeepCopier.copyArray(target);
     }
+
+    public void setTarget(Object[] target) {
+        this.target = target;
+    }
 }

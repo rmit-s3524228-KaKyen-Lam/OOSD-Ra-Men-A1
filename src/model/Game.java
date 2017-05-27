@@ -13,6 +13,7 @@ import model.command.Command;
 import model.command.CommandHistory;
 import model.command.Command_DiscardCard;
 import model.command.Command_PlayCard;
+import view.alertWindow.GameDialog;
 import view.alertWindow.GameNotification;
 
 import java.util.ArrayList;
@@ -259,6 +260,7 @@ public class Game {
      * @return True if it rotates, false otherwise
      */
     public boolean rotateCard(int cardNum) {
+        loadReplay();
         ArrayList<Card> playerHand = players[playerTurnNumber].getHand();
         if (playerHand.get(cardNum) instanceof PathCard) {
             playerHand.set(cardNum, CardFlyweight.getCard(playerHand.get(cardNum).getId(),
@@ -298,6 +300,10 @@ public class Game {
         if (board.goldIsFound()) {
             shareGold(playerTurnNumber);
             GameNotification.showAlertBoxNotificationMessage("The gold is found. This round is over");
+            String response = GameDialog.askUserTwoOptions("Save replay?", "Yes", "No");
+            if (response.equals("Yes")) {
+                saveReplay();
+            }
             gameRestart();
             return;
         }
@@ -332,6 +338,15 @@ public class Game {
             nextTurn();
         }
 
+    }
+
+    public void saveReplay() {
+        commandHistory.saveHistory("test.dat");
+    }
+
+    public void loadReplay(){
+        commandHistory.loadHistory("test.dat");
+        commandHistory.playHistory();
     }
 
     /**

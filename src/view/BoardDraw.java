@@ -3,10 +3,8 @@ package view;
 import controller.GameBoardListener;
 import controller.LogicCheckerBridge;
 import controller.PlayerTargetListener;
-import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import model.*;
 import model.board.Board;
@@ -59,7 +57,7 @@ public class BoardDraw {
     /**
      * Redraws the whole game board
      */
-    public void redrawGridXY() {
+    public void redrawGrid() {
         images = new ImageView[Board.gridMaxWidth][Board.gridMaxHeight];
         for (int i = 0; i < Board.gridMaxWidth; i++) {
             for (int j = 0; j < Board.gridMaxHeight; j++) {

@@ -112,7 +112,7 @@ public class GameController implements Initializable {
      * Redraws the whole gameLogic board
      */
     public static void redrawGrid() {
-        boardDraw.redrawGridXY();
+        boardDraw.redrawGrid();
     }
 
     /**

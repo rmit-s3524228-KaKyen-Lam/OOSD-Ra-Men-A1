@@ -28,4 +28,6 @@ public interface Command {
 
     Object[] getTarget();
 
+    void setTarget(Object[] target);
+
 }

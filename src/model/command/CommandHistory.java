@@ -1,9 +1,11 @@
 package model.command;
 
+import controller.GameController;
 import model.board.Board;
 import model.Deck;
 import model.Game;
 import model.Player;
+import model.board.Grid;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -65,6 +67,28 @@ public class CommandHistory implements Serializable {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
+        }
+    }
+
+
+    public void playHistory() {
+        for (int i = 0; i < commandHistory.size(); i++) {
+            Object[] originalTarget = commandHistory.get(i).getTarget();
+            for (int j = 0; j < originalTarget.length; j++) {
+                Object curTarget = originalTarget[j];
+                if (curTarget instanceof Grid) {
+                    Grid curGrid = (Grid) curTarget;
+                    originalTarget[j] = board.getGridAtLocation(curGrid.getX(), curGrid.getY());
+                } else if (curTarget instanceof Player) {
+                    Player curGrid = (Player) curTarget;
+                    originalTarget[j] = players[Integer.parseInt(curGrid.getId())];
+                } else if (curTarget instanceof Board) {
+                    originalTarget[j] = board;
+                }
+            }
+            commandHistory.get(i).setTarget(originalTarget);
+            commandHistory.get(i).doAction();
+            GameController.redrawGrid();
         }
     }
 
