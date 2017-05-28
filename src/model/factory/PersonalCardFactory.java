@@ -6,8 +6,9 @@ import model.card.pathcard.PathCard;
 import model.card.personalcard.*;
 
 /**
- * Created by orlandok on 25/5/17.
- * *
+ * Factory for personal cards
+ *
+ * @author Fabio Monsalve s3585826
  */
 public class PersonalCardFactory extends AbstractCardFactory {
     @Override
@@ -25,6 +26,7 @@ public class PersonalCardFactory extends AbstractCardFactory {
         return null;
     }
 
+    // Returns personal card requested
     @Override
     public PersonalCard getPersonalCard(String cardType) {
         switch (cardType) {

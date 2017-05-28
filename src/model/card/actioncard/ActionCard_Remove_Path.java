@@ -18,6 +18,10 @@ public class ActionCard_Remove_Path extends ActionCard {
         super("resources/Action_Remove_Path.png", id);
     }
 
+
+    /**
+     * Method to remove a path card. Also check is PathCard can be removed.
+     */
     @Override
     public boolean cardAction(Object[] target) {
         Grid targetGrid = (Grid) target[0];

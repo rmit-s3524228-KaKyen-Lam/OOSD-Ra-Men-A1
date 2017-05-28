@@ -10,8 +10,9 @@ import model.card.personalcard.PersonalCard;
 import model.factory.AbstractCardFactory;
 
 /**
- * Created by orlandok on 25/5/17.
- * *
+ * Factory for Goal cards
+ *
+ * @author Fabio Monsalve s3585826
  */
 public class GoalCardFactory extends AbstractCardFactory {
     @Override
@@ -24,6 +25,7 @@ public class GoalCardFactory extends AbstractCardFactory {
         return null;
     }
 
+    // Returns goal card requested
     @Override
     public GoalCard getGoalCard(String cardType) {
         switch (cardType) {

@@ -14,6 +14,10 @@ public class ActionCard_Corrupt_Path_Card extends ActionCard {
         super("resources/Action_Corrupt.png", id);
     }
 
+    /**
+     * Method to corrupt (make unusable), also checks if card targeted is a Path
+     * Card
+     */
     @Override
     public boolean cardAction(Object[] target) {
         Grid targetGrid = (Grid) target[0];

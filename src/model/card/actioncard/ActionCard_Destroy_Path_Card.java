@@ -15,6 +15,9 @@ public class ActionCard_Destroy_Path_Card extends ActionCard {
         super("resources/Action_Destroy_one_Path.png", id);
     }
 
+    /**
+     * Method to destroy a path card. Also check is PathCard can be destroyed.
+     */
     @Override
     public boolean cardAction(Object[] target) {
         Grid targetGrid = (Grid) target[0];

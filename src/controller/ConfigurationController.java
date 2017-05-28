@@ -18,8 +18,12 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
- * Created by orlandok on 21/5/17.
- * *
+ * Controller class for configurations window. It talks to the game controller
+ * passing onto it the configuration preferences of the player before
+ * initialising the game. It also checks is width and height of grid, coal and
+ * gold locations are valid.
+ *
+ * @author Fabio Monsalve s3585826
  */
 public class ConfigurationController implements Initializable {
     @FXML
@@ -58,6 +62,7 @@ public class ConfigurationController implements Initializable {
 
             int width, height;
 
+            // Checks if width and height are valid for board creation
             try {
                 width = Integer.parseInt(boardWidth.getText());
                 height = Integer.parseInt((boardHeight.getText()));
@@ -100,6 +105,7 @@ public class ConfigurationController implements Initializable {
 
             int x, y;
 
+            // Checks if width and height are valid for coal locations
             try {
                 x = Integer.parseInt(coalWidth.getText()) - 1;
                 y = Integer.parseInt(coalHeight.getText()) - 1;
@@ -109,6 +115,7 @@ public class ConfigurationController implements Initializable {
                 return;
             }
 
+            // Warning label is shown if locations are invalid
             if (y >= Board.gridMaxHeight || x >= Board.gridMaxWidth || x < 0 || y < 0) {
                 warningLabel.setText("Location must be between 1,1 and " + Integer.parseInt(boardWidth.getText()) +
                         "," + Integer.parseInt(boardHeight.getText()));
@@ -117,8 +124,12 @@ public class ConfigurationController implements Initializable {
                 if (GameController.game.getBoard().getIsFilled() == null) {
                     int bWidth = Integer.parseInt(boardWidth.getText());
                     int bHeight = Integer.parseInt((boardHeight.getText()));
+
+                    // Grid width and height is configured
                     GameController.game.getBoard().configureBoard(bWidth, bHeight);
                 }
+
+                // Coal is added
                 String reply = GameController.game.getBoard().configureGoalPos("coal", x, y);
                 if (reply.contains("Invalid")) {
                     warningLabel.setText(reply);
@@ -135,6 +146,7 @@ public class ConfigurationController implements Initializable {
 
             int x, y;
 
+            // Checks if width and height are valid for gold locations
             try {
                 x = Integer.parseInt(goldWidth.getText()) - 1;
                 y = Integer.parseInt(goldHeight.getText()) - 1;
@@ -152,8 +164,12 @@ public class ConfigurationController implements Initializable {
                 if (GameController.game.getBoard().getIsFilled() == null) {
                     int bWidth = Integer.parseInt(boardWidth.getText());
                     int bHeight = Integer.parseInt((boardHeight.getText()));
+
+                    // Grid width and height is configured
                     GameController.game.getBoard().configureBoard(bWidth, bHeight);
                 }
+
+                // Gold is added
                 String reply = GameController.game.getBoard().configureGoalPos("gold", x, y);
                 if (reply.contains("Invalid")) {
                     warningLabel.setText(reply);
@@ -166,8 +182,11 @@ public class ConfigurationController implements Initializable {
         });
     }
 
+    // Method to change to main game scene
     private void replaceSceneContent() throws IOException {
         Stage stage = new Stage();
+
+        // Load game layout
         Parent page = (Parent) FXMLLoader.load(getClass().getResource("/resources/gameLayoutNew.fxml"), null, new JavaFXBuilderFactory());
         Scene scene = stage.getScene();
 
@@ -178,6 +197,8 @@ public class ConfigurationController implements Initializable {
             stage.getScene().setRoot(page);
         }
         stage.sizeToScene();
+
+        // Show new game
         stage.show();
 
     }

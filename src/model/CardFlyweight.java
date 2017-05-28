@@ -14,6 +14,8 @@ import java.util.HashMap;
  * @author Fabio Monsalve s3585826
  */
 public class CardFlyweight {
+
+    // Unique factory for each type of card
     private static ActionCardFactory actionCardFactory = new ActionCardFactory();
     private static PathCardFactory pathCardFactory = new PathCardFactory();
     private static GoalCardFactory goalCardFactory = new GoalCardFactory();
@@ -27,10 +29,10 @@ public class CardFlyweight {
      * cardType and the Object being an array of Cards where it stores single
      * objects of the possible rotation values.
      *
-     * @param cardType      Key for hashmap and also used to create objects through the
-     *                      Factory
-     * @param rotationValue There are a total of 4 possible rotations, an array of
-     *                      size 4 is created for each.
+     * @param cardType      Key for hashmap and also used to create objects
+     *                      through the their respective factory
+     * @param rotationValue There are a total of 4 possible rotations
+     *
      * @return Requested card
      */
     public static Card getCard(String cardType, int rotationValue) {
@@ -82,6 +84,11 @@ public class CardFlyweight {
         }
     }
 
+    /**
+     * Method for obtaining rotating cards when an Action card that modifies the
+     * paths on the grid is played e.g. PathCard_Add_Path or
+     * PathCard_Remove_Path
+     */
     public static PathCard getPathCard(boolean west, boolean north, boolean east, boolean south, boolean centre) {
         int pathCount = 0;
         if (west) {

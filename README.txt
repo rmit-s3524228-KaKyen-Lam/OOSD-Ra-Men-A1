@@ -23,3 +23,18 @@ Game's instruction:
   to the right of player's hand
 - To rotate card, right click the card directly on player's hand section
 - To use personal card on other player, select personal card and click on the target player (cannot target self)
+
+Inclusion of SOLID, GRASP, DBC and DESIGN PATTERNS:
+
+SOLID PRINCIPLES:
+- The Single-Responsibility principle was implemented in Card.java  as it only has a single responsibility
+- The Open-Closed principle was implemented in Card.java which allows for future additions of new types of Cards
+- The Dependency Inversion Principle was implemented in Card.java as the dependence of the Card types is abstract and not concrete
+
+GRASP PRINCIPLES:
+- The Creator principle was used in Deck.java only using objects of type Card.
+
+PATTERNS:
+- The Protected Variations principle was implemented in Deck by using cardConfig.txt as an external representation.
+- The Flyweight pattern was implemented in CardFlyweight.java.
+- The Abstract Factory patter was implemented in AbstractCardFactory.java, ActionCardFactory, GoalCardFactory and PersonalCardFactory.

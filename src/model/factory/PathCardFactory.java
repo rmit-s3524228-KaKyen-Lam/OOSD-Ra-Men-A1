@@ -6,8 +6,9 @@ import model.card.pathcard.*;
 import model.card.personalcard.PersonalCard;
 
 /**
- * Created by orlandok on 25/5/17.
- * *
+ * Factory for Path Cards
+ *
+ * @author Fabio Monsalve s3585826
  */
 public class PathCardFactory extends AbstractCardFactory {
 
@@ -16,6 +17,8 @@ public class PathCardFactory extends AbstractCardFactory {
         return null;
     }
 
+    // Returns PathCard requested, also makes use of the rotation method if
+    // rotation value is not 0
     @Override
     public PathCard getPathCard(String cardType, int rotation) {
 
@@ -72,6 +75,7 @@ public class PathCardFactory extends AbstractCardFactory {
         return null;
     }
 
+    //Method to rotate cards
     private PathCard rotateCard(PathCard card, int rotationValue) {
         switch (rotationValue) {
             case 1:

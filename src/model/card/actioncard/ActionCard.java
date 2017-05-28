@@ -13,10 +13,11 @@ public abstract class ActionCard extends Card {
         super(imageResource, id);
     }
 
+    // returns true if action was successful
     @Override
     public abstract boolean cardAction(Object[] target);
 
-
+    // Undoes last action with current target and previous target
     @Override
     public abstract void undoCardAction(Object[] target, Object[] undoExtraInformation);
 }

@@ -6,12 +6,13 @@ import model.card.pathcard.PathCard;
 import model.card.personalcard.PersonalCard;
 
 /**
- * Created by orlandok on 25/5/17.
- * *
+ * Factory for Action cards
+ *
+ * @author Fabio Monsalve s3585826
  */
 public class ActionCardFactory extends AbstractCardFactory {
 
-
+    // Returns action card requested
     @Override
     public ActionCard getActionCard(String cardType) {
         switch (cardType) {

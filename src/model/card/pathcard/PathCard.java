@@ -127,6 +127,11 @@ public abstract class PathCard extends Card {
         return rotateVal;
     }
 
+    /**
+     * Method for card actions
+     * @param target contains board and grid location
+     * @return true if cardAction is valid
+     */
     @Override
     public boolean cardAction(Object[] target) {
         Grid targetGrid = (Grid) target[0];
@@ -138,6 +143,11 @@ public abstract class PathCard extends Card {
         return false;
     }
 
+    /**
+     * Method for undoing card action
+     * @param target current grid location
+     * @param undoExtraInformation  previous grid location
+     */
     @Override
     public void undoCardAction(Object[] target, Object[] undoExtraInformation) {
         Grid targetGrid = (Grid) target[0];

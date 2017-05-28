@@ -6,11 +6,14 @@ import model.card.pathcard.PathCard;
 import model.card.personalcard.PersonalCard;
 
 /**
- * Created by orlandok on 25/5/17.
- * *
+ * Abstract Factory
+ *
+ * @author Fabio Monsalve s3585826
  */
 public abstract class AbstractCardFactory {
 
+    // Methods for all 4 card factories, all the same except for PathCard which
+    // requires a rotation value
     public abstract ActionCard getActionCard(String cardType);
 
     public abstract PathCard getPathCard(String cardType, int rotation);

@@ -15,6 +15,7 @@ public class ActionCard_Destroy_Multiple_Paths extends ActionCard {
         super("resources/Action_Destroy_Path_And_Neighbour.png", id);
     }
 
+    // Removes multiple PathCards, checks if cards to be removed are PathCards
     @Override
     public boolean cardAction(Object[] target) {
         Grid targetGrid = (Grid) target[0];

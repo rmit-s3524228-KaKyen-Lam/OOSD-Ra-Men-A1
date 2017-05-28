@@ -15,6 +15,9 @@ public class ActionCard_Rotate_Path_Card extends ActionCard {
         super("resources/Action_Rotate.png", id);
     }
 
+    /**
+     * Method to rotate current pathcard on board
+     */
     @Override
     public boolean cardAction(Object[] target) {
         //show all possible option and listen for response
