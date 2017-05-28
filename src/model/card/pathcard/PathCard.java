@@ -32,6 +32,7 @@ public abstract class PathCard extends Card {
      * @param south       true if south path is valid
      * @param centre      true if center of the path is valid
      * @param imgResource imageResource for this path card
+     * @param id          id of the card
      */
     public PathCard(boolean west, boolean north, boolean east, boolean south, boolean centre, String imgResource, String id) {
         super(imgResource, id);
@@ -129,6 +130,11 @@ public abstract class PathCard extends Card {
 
     /**
      * Method for card actions
+     *
+     * Prerequisites:
+     * - target first element contains Grid object
+     * - target second element contains Board object where the Grid is part of
+     *
      * @param target contains board and grid location
      * @return true if cardAction is valid
      */
@@ -145,8 +151,13 @@ public abstract class PathCard extends Card {
 
     /**
      * Method for undoing card action
-     * @param target current grid location
-     * @param undoExtraInformation  previous grid location
+     *
+     * Prerequisites:
+     * - target first element contains Grid object
+     * - undoExtraInformation first element contains Grid object
+     *
+     * @param target               current grid to be replaced, single grid
+     * @param undoExtraInformation original grid prior to cardAction, single grid
      */
     @Override
     public void undoCardAction(Object[] target, Object[] undoExtraInformation) {

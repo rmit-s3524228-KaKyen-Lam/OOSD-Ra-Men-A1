@@ -167,6 +167,9 @@ public class Game {
 
     /**
      * Deletes card on hand and move to next turn
+     *
+     * precondition:
+     * 1. selectedCard must not be null
      */
     public void playDiscardCard() {
         Command command = new Command_DiscardCard(playerTurnNumber, selectedCard,
@@ -180,6 +183,10 @@ public class Game {
 
     /**
      * Method to place a personal card on the board.
+     *
+     * precondition:
+     * 1. selectedCard must not be null
+     * 2. selectedCard must be subclass of PersonalCard
      *
      * @param playerNumberTarget player number to be targeted
      */
@@ -200,7 +207,7 @@ public class Game {
      * <p>
      * precondition:
      * 1. selectedCard must not be null
-     * 2. selectedCard must be either subclass of PathCard or ActionCard
+     * 2. selectedCard must be subclass of PathCard
      *
      * @param x column number of the board
      * @param y row number of the board
@@ -226,6 +233,10 @@ public class Game {
 
     /**
      * Method to play an action card.
+     *
+     * precondition:
+     * 1. selectedCard must not be null
+     * 2. selectedCard must be subclass of ActionCard
      *
      * @param x column number of the board
      * @param y row number of the board

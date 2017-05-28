@@ -23,6 +23,7 @@ Game's instruction:
   to the right of player's hand
 - To rotate card, right click the card directly on player's hand section
 - To use personal card on other player, select personal card and click on the target player (cannot target self)
+- Saving and loading should be quite self-explanatory, however, you can only load a game after the configuration menu.
 
 Inclusion of SOLID, GRASP, DBC and DESIGN PATTERNS:
 
@@ -33,8 +34,17 @@ SOLID PRINCIPLES:
 
 GRASP PRINCIPLES:
 - The Creator principle was used in Deck.java only using objects of type Card.
+- The Protected Variations principle was implemented in Deck by using cardConfig.txt as an external representation.
+
+DBC:
+- Some methods in Game.java class requires certain preconditions such as playPathCard, playActionCard, playPersonalCard, shareGold method
+- Pathcard, ActionCard, PersonalCard contains cardAction and undoCardAction methods that have prerequisites.
 
 PATTERNS:
-- The Protected Variations principle was implemented in Deck by using cardConfig.txt as an external representation.
-- The Flyweight pattern was implemented in CardFlyweight.java.
-- The Abstract Factory patter was implemented in AbstractCardFactory.java, ActionCardFactory, GoalCardFactory and PersonalCardFactory.
+- Flyweight pattern is implemented in CardFlyweight, as well as ImageFlyweight.
+- Abstract Factory pattern is implemented in AbstractCardFactory, ActionCardFactory, GoalCardFactory and PersonalCardFactory.
+- Composite and Template pattern is implemented mainly in Card and its subclasses (Action card, personal card, path card, goal card, etc)
+- Command pattern is implemented in the Command, CommandAbstract, Command_DiscardCard and Command_PlayCard. Also,
+  in addition to these classes, CommandHistory is also created as part of the pattern that executes the Command and
+  keeping track of the history
+- Singleton pattern is used in ImageTinter class since having more ImageTinter class is waste of memory.

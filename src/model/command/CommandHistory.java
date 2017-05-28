@@ -2,7 +2,6 @@ package model.command;
 
 import model.board.Board;
 import model.Deck;
-import model.Game;
 import model.Player;
 
 import java.io.*;
